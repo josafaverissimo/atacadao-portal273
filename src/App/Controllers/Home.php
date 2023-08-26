@@ -7,12 +7,10 @@ use Src\Core\View;
 class Home
 {
     public function index(): void
-    {            
-      $homeIndexView = new View();
-      
-      $homeIndexView->setTemplate("base");
-      $homeIndexView->render("/home/index", [
-        "title" => "Portal"
-      ]);
+    {
+        $homeIndexView = new View();
+        $homeIndexView->render("/home/index", [
+            "title" => "Portal"
+        ]);
     }
 }

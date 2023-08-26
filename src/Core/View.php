@@ -4,57 +4,81 @@ namespace Src\Core;
 
 class View
 {
-  private string $template;
-  private bool $isTemplateLoaded;
-  
-  private function getViewPath(string $viewPath): string
-  {
-    return Helpers::baseViewPath($viewPath) . ".php";
-  }
+    private array $template;
+    private array $sections;
+    private string $viewHtml;
 
-  public function setTemplate(string $templatePath): void
-  {
-    $this->template = Helpers::baseViewPath("/templates/{$templatePath}") . ".php";
-    $this->isTemplateLoaded = false;
-  }
-
-  private function getViewHtml($viewPath, $data): string
-  {
-    ob_start();
-    
-    extract($data);
-    
-    require $viewPath;
-    
-    return ob_get_clean();    
-  }
-
-  private function hasTemplateToLoad(): bool
-  {
-    if(isset($this->template)) {
-      return !$this->isTemplateLoaded;
+    public function __construct()
+    {
+        $this->sections = [];
     }
 
-    return false;
-  }
-
-  public function render(string $viewPath, array $data = []): void
-  {
-    $viewPath = $this->getViewPath($viewPath);
-    $data = [$this, ...$data];
-
-    if($this->hasTemplateToLoad()) {
-      $this->isTemplateLoaded = true;
-      
-      $data["viewHtmlBody"] = $this->getViewHtml($viewPath, $data);
-      $templateHtml = $this->getViewHtml($this->template, $data);
-        
-      echo Helpers::minify($templateHtml);
-      
-      return;
+    private function getViewPath(string $viewPath): string
+    {
+        return Helpers::baseViewPath($viewPath) . ".php";
     }
 
-    $viewHtml = $this->getViewHtml($viewPath, $data);
-    echo Helpers::minify($viewHtml);
-  }
+    public function template(string $templatePath, ?array $data = []): void
+    {
+        $this->template = [
+            "path" => "templates/{$templatePath}",
+            "data" => $data
+        ];
+
+
+    }
+
+    public function getViewHtml(string $viewPath, array $data = []): string
+    {
+        $viewPath = $this->getViewPath($viewPath);
+        ob_start();
+
+        extract($data);
+
+        require $viewPath;
+
+        return ob_get_clean();
+    }
+
+    public function render(string $viewPath, array $data = []): void
+    {
+        $data = [$this, ...$data];
+
+        $viewHtml = $this->getViewHtml($viewPath, $data);
+
+        if(isset($this->template)) {
+            $templateHtml = $this->getViewHtml($this->template["path"], [
+                $this,
+                "viewHtml" => $viewHtml,
+                ...$this->template["data"]
+            ]);
+
+            echo Helpers::minify($templateHtml);
+            unset($this->template);
+            return;
+        }
+
+        echo Helpers::minify($viewHtml);
+    }
+
+    public function setSection(string $name): void
+    {
+        $this->sections[$name] = $this->sections[$name] ?? [];
+
+        ob_start();
+    }
+
+    public function endSection(string $name): void
+    {
+        $this->sections[$name][] = ob_get_clean();
+    }
+
+    public function getSection(string $name): string
+    {
+        if (isset($this->sections[$name])) {
+            return implode($this->sections[$name]);
+        }
+
+        return "";
+    }
 }

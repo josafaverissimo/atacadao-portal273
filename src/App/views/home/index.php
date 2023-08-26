@@ -1,5 +1,9 @@
-<?php $this->render("/components/navbar"); ?>
+<?php $this->template("base", [
+    "title" => $title
+]); ?>
+
+<?= $this->getViewHtml("/components/navbar"); ?>
 
 <main>
-  Hello world
+  Josafá veríssimo gomes
 </main>
