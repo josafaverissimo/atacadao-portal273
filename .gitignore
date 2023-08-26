@@ -1,0 +1,6 @@
+.config
+composer
+up_server.sh
+replit.nix
+.replit
+.cache

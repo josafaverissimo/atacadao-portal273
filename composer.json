@@ -1,0 +1,22 @@
+{
+    "name": "josafaverissimo/krcp",
+    "description": "my mvc framework",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        },
+        "files": [
+            "src/Core/config.php",
+            "src/Core/Helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Josafá Veríssimo Gomes",
+            "email": "josafaverissimo98@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
