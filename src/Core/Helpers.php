@@ -27,7 +27,6 @@ final class Helpers
 
     public static function minify(string $string): string
     {
-        return $string;
         return preg_replace(
             "/> +</",
             "><",

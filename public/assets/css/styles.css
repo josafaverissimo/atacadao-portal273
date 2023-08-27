@@ -5,3 +5,11 @@
 .ml-3 {
   margin-left: 1rem;
 }
+
+.border-radius-none {
+    border-radius: 0px !important;
+}
+
+main {
+    margin-bottom: 60px;
+}
