@@ -1,5 +1,6 @@
 <?php use Src\Core\Helpers; ?>
 
+<?php $navbar =  $this->getViewHtml("/components/navbar"); ?>
 <?php $stickyFooter = $this->getViewHtml("/components/sticky_footer"); ?>
 
 <!doctype html>
@@ -14,6 +15,7 @@
       <?= $this->getSection("head"); ?>
   </head>
   <body>
+    <?= $navbar; ?>
     
     <?= $viewHtml; ?>
     

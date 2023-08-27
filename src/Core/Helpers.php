@@ -15,7 +15,7 @@ final class Helpers
 
     public static function baseUrl(string $subpath = ""): string
     {
-        $subpath = "/{$subpath}";
+        $subpath = "{$subpath}";
         return CONF_BASE_URL . self::replaceMultiples($subpath, "\\/", "/");
     }
 
