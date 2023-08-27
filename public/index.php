@@ -9,6 +9,6 @@ $routes = new Router();
 $routes->get("/", CONF_DEFAULT_CONTROLLER);
 $routes->get("/reports", CONF_DEFAULT_CONTROLLER);
 $routes->get("/links-center", CONF_DEFAULT_CONTROLLER);
-$routes->get("/timer", "Timer:index");
+$routes->get("/clock", "Clock:index");
 
 $routes->dispatch();

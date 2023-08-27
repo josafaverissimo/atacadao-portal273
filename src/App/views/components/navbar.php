@@ -3,11 +3,11 @@
 ?>
 
 <div class="d-flex justify-content-center my-1 mb-5">
-  <nav class="navbar navbar-expand-lg shadow-lg width-90vw rounded d-flex justify-content-center">
+  <nav class="navbar navbar-expand-lg shadow-lg width-90vw rounded d-flex justify-content-center px-3">
     <div class="d-flex w-100 justify-content-between">
         <div>
           <a class="navbar-brand" href="<?= Helpers::baseUrl(); ?>">
-            <img class="ml-3" src="<?= Helpers::baseUrl("/assets/imgs/atacadao-logo.png"); ?>" alt="Logo do atacadão">
+            <img src="<?= Helpers::baseUrl("/assets/imgs/atacadao-logo.png"); ?>" alt="Logo do atacadão">
           </a>
         </div>
          
@@ -24,6 +24,11 @@
                             "name" => "Relatórios",
                             "url" => Helpers::baseUrl("/reports"),
                             "uri" => "/reports"
+                        ],
+                        [
+                                "name" => "Relógio",
+                                "url" => Helpers::baseUrl("/clock"),
+                                "uri" => "/clock"
                         ],
                         [
                             "name" => "Intranet Matriz",
