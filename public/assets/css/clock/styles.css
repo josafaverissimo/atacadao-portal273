@@ -1,8 +1,14 @@
-.time {
+.clock {
+    display: flex;
+    flex-direction: column;
+}
+
+.clock .time {
     font-size: 10rem;
     font-weight: 200;
 }
 
-.date {
+.clock .date {
+    font-size: 3rem;
     font-weight: 200;
 }

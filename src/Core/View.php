@@ -42,13 +42,10 @@ class View
 
     public function render(string $viewPath, array $data = []): void
     {
-        $data = [$this, ...$data];
-
         $viewHtml = $this->getViewHtml($viewPath, $data);
 
         if(isset($this->template)) {
             $templateHtml = $this->getViewHtml($this->template["path"], [
-                $this,
                 "viewHtml" => $viewHtml,
                 ...$this->template["data"]
             ]);

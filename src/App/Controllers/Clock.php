@@ -9,8 +9,8 @@ class Clock
     public function index()
     {
         $timerView = new View();
-        $timerView->render("/clock/index", [
-            "title" => "Portal"
+        $timerView->render("/pages/clock/index", [
+            "title" => "Relógio"
         ]);
     }
 }

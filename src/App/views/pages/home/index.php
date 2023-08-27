@@ -7,19 +7,24 @@
 <?php $this->endSection("head"); ?>
 
 <main class="container">
-    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-        <div class="col-lg-6 px-0">
-            <h1 class="display-3 fst-italic">Portal Interno Maceió Petrópolis</h1>
-            <p class="lead my-3">Aqui está tudo o que você precisa encontrar para navegar entre os sistemas e documentos
-                da empresa.</p>
-            <p class="lead mb-0"><a href="<?= Helpers::baseUrl("/links-center"); ?>" class="text-body-emphasis fw-bold">Veja
-                    a central de links</a></p>
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-3 fst-italic">Portal Interno<br>Maceió Petrópolis</h1>
+            <p class="lead my-3">
+                Aqui se encontra o que você precisa para navegar entre os sistemas e documentos da empresa.
+            </p>
+
+            <p class="lead mb-0">
+                <a href="<?= Helpers::baseUrl("/link-center"); ?>" class="text-body-emphasis fw-bold">
+                    Veja a central de links
+                </a>
+            </p>
         </div>
     </div>
 
-    <div class="row align-items-md-stretch">
+    <div class="row align-items-md-stretch wrapper">
         <div class="col-md-6">
-            <div class="h-100 p-5">
+            <div class="h-100 p-5 shadow-sm target">
                 <h2 class="text-center">Aniversariantes do mês</h2>
 
                 <?php
@@ -46,7 +51,7 @@
             </div>
         </div>
         <div class="col-md-6 align-self-start">
-            <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <div class="h-100 p-5 shadow-sm target">
                 <h2 class="text-center">Lista de ramais</h2>
 
                 <form id="phones-search-form" class="d-flex mb-3" role="search">

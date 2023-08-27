@@ -19,7 +19,7 @@
     
     <?= $viewHtml; ?>
     
-    <footers>
+    <footer>
         <?= $stickyFooter; ?>
         <?= $this->getSection("footer"); ?>
         <script src="<?= Helpers::baseUrl("/assets/bootstrap/js/bootstrap.bundle.js"); ?>"></script>

@@ -9,8 +9,8 @@ class Home
     public function index(): void
     {
         $homeIndexView = new View();
-        $homeIndexView->render("/home/index", [
-            "title" => "Portal"
+        $homeIndexView->render("/pages/home/index", [
+            "title" => "Portal Interno Filial 273"
         ]);
     }
 }

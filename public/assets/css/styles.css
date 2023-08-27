@@ -7,9 +7,26 @@
 }
 
 .border-radius-none {
-    border-radius: 0px !important;
+    border-radius: 0 !important;
 }
 
 main {
     margin-bottom: 60px;
+}
+
+body {
+    background-color: #f0f0f0;
+}
+
+.wrapper div.target {
+    background-color: #efefef;
+    border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+    transition: background-color .4s, box-shadow .4s, border .4s, border-radius .4s;
+}
+.wrapper div.target:hover {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    background-color: #f8f9fa;
+    border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
+    border-radius: var(--bs-border-radius-lg)!important;
+
 }

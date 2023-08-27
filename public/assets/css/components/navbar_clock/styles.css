@@ -1,0 +1,4 @@
+.navbar-clock {
+    display: flex;
+    flex-direction: column;
+}
