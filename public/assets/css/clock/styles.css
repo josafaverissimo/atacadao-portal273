@@ -1,11 +1,13 @@
 .clock {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .clock .time {
     font-size: 10rem;
     font-weight: 200;
+    font-family: monospace;
 }
 
 .clock .date {

@@ -48,16 +48,19 @@
 <main class="container py-5 bg-white">
     <div class="bg-white">
         <div class="cards-wrapper">
-            <?php for($row = 0; $row < count($links); $row += 3): ?>
-                <div class="row">
+            <?php for($row = 0; $row < count($links); $row += 3): ?>    
+                <div class="row mb-2">
                     <?php for($column = 0; $column < 3; $column++): ?>
+                        <?php
+                            $index = $row + $column;
+
+                            if(!isset($links[$index])) break;
+    
+                            $link = $links[$index];
+                        ?>
                         <div class="col-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <?php
-                                        $index = $row + $column;
-                                        $link = $links[$index];
-                                    ?>
                                     <h5 class="card-title"><?= $link["name"]; ?></h5>
                                     <a class="btn btn-link" href="<?= $link["url"]; ?>">Link</a>
                                 </div>

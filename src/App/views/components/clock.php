@@ -1,6 +1,6 @@
 <?php use Src\Core\Helpers; ?>
 
-<span class="text-center time">
+<span class="time">
     <?php
     $months = [
         "janeiro",
@@ -28,7 +28,7 @@
         <?= $time; ?>
     </time>
 </span>
-<span class="text-center date"><time datetime="<?= $now->format("Y-m-d"); ?>"><?= $date; ?></time></span>
+<span class="date"><time datetime="<?= $now->format("Y-m-d"); ?>"><?= $date; ?></time></span>
 
 <?php $this->setSection("footer"); ?>
     <script src="<?= Helpers::baseUrl("/assets/js/clock/clock.js"); ?>"></script>
