@@ -6,13 +6,13 @@ use Src\Core\Helpers;
 
 class Dataset
 {
-    public static function get(string $file): array|object
+    public static function getData(string $file): array|object
     {
         return require Helpers::baseDatasetPath($file) . ".php";
         
     }
     
-    public static function getJson(string $jsonFile): array
+    public static function getJsonFileData(string $jsonFile): array
     {
         $filepath = Helpers::baseDatasetPath("/json/{$jsonFile}") . ".json";
         $jsonFileStream = fopen($filepath, "rb");
