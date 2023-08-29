@@ -11,7 +11,6 @@ class Router
     private array $routes;
     private array $options;
 
-
     public function __construct()
     {
         $this->options = [];
@@ -72,7 +71,7 @@ class Router
         echo "<h1>Página não encontrada. Por favor, volte à home</h1><a href='" . Helpers::baseUrl() . "'>Home</a>";
     }
 
-    private function getRoute(): ?Route
+    private function getRoute(): Route
     {
         foreach ($this->routes as $route) {
             if ($route->match()) {
@@ -80,18 +79,15 @@ class Router
             }
         }
 
-        return null;
+        return new Route(
+            "get",
+            "/ops",
+            CONF_CONTROLLER_ERROR_404
+        );
     }
 
     public function dispatch(): void
     {
-        $route = $this->getRoute();
-
-        if (empty($route)) {
-            $this->error404();
-            return;
-        }
-
-        $route->callTarget();
+        $this->getRoute()->callTarget();
     }
 }

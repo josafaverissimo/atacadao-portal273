@@ -45,7 +45,9 @@
                 ?>
                 <?php $targetBlank = !empty($link["blank"]) ? "target=\"_blank\"" : ""?>
 
-                <a class="nav-link <?= $active; ?>" <?= $targetBlank; ?> href="<?= $link["url"]; ?>"><?= $link["name"]; ?></a>
+                <a class="nav-link <?= $active; ?>" <?= $targetBlank; ?> href="<?= $link["url"]; ?>">
+                    <?= mb_convert_case($link["name"], MB_CASE_TITLE); ?>
+                </a>
             </li>
             <?php endforeach; ?>
         </ul>
