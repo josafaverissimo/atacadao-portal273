@@ -2,14 +2,13 @@
 
 namespace Src\App\Controllers;
 
-use Src\Core\View;
+use Src\Core\Controller;
 
-class Clock
+class Clock extends Controller
 {
-    public function index()
+    public function index(): void
     {
-        $timerView = new View();
-        $timerView->render("/pages/clock/index", [
+        $this->renderView("/pages/clock/index", [
             "title" => "Relógio"
         ]);
     }

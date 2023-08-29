@@ -3,20 +3,18 @@
 namespace Src\App\Controllers;
 
 use Src\App\Dataset;
-use Src\Core\View;
+use Src\Core\Controller;
 
-class Home
+class Home extends Controller
 {
     public function index(): void
     {
-        $homeIndexView = new View();
-
         $data = [
             "title" => "Portal Interno Filial 273",
-            "birthdayPeople" => Dataset::getJson("birthday_people"),
-            "phonesUnit" => Dataset::getJson("phones_unit")
+            "birthdayPeople" => Dataset::getJsonFileData("birthday_people"),
+            "phonesUnit" => Dataset::getJsonFileData("phones_unit")
         ];
         
-        $homeIndexView->render("/pages/home/index", $data);
+        $this->renderView("/pages/home/index", $data);
     }
 }

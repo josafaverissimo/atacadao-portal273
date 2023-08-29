@@ -3,19 +3,17 @@
 namespace Src\App\Controllers;
 
 use Src\App\Dataset;
-use Src\Core\View;
+use Src\Core\Controller;
 
-class LinkCenter
+class LinkCenter extends Controller
 {
-    public function index()
+    public function index(): void
     {
-        $linkCenterView = new View();
-
         $data = [
             "title" => "Central de links",
-            "linksByCategory" => Dataset::get("links_by_category")
+            "linksByCategory" => Dataset::getData("links_by_category")
         ];
         
-        $linkCenterView->render("/pages/link_center/index", $data);
+        $this->renderView("/pages/link_center/index", $data);
     }
 }
