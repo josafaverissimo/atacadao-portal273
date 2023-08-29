@@ -19,6 +19,10 @@ return [
                 "notTargetBlank" => true
             ],
             [
+              "name" => "Boas práticas",
+              "url" => Helpers::baseUrl("/best-practices")
+            ],
+            [
                 "name" => "Hodie Booking",
                 "url" => "https://atacadao.hodiebooking.com.br/"
             ],
@@ -37,7 +41,8 @@ return [
             ],
             [
                 "name" => "Lista de ramais",
-                "url" => "http://portal.atacadao.com.br/telefonia/ramais/index.html"
+                "url" => Helpers::baseUrl("/phones"),
+                "notTargetBlank" => true
             ]
         ]
     ],
