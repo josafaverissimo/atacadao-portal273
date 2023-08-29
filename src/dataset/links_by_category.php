@@ -3,8 +3,7 @@
 use Src\Core\Helpers;
 
 return [
-    [
-        "id" => "general-links",
+    "general-links" => [
         "description" => "Geral",
         "active" => true,
         "links" => [
@@ -46,8 +45,7 @@ return [
             ]
         ]
     ],
-    [
-        "id" => "management-links",
+    "management-links" => [
         "description" => "Gerência",
         "links" => [
             [
@@ -60,8 +58,7 @@ return [
             ]
         ]
     ],
-    [
-        "id" => "register-links",
+    "register-links" => [
         "description" => "Cadastro",
         "links" => [
             [
@@ -90,8 +87,7 @@ return [
             ]
         ]
     ],
-    [
-        "id" => "cpd-links",
+    "cpd-links" => [
         "description" => "Cpd",
         "links" => [
             [

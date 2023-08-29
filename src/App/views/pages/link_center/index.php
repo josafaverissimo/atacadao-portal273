@@ -9,15 +9,15 @@
             <div class="cards-wrapper">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <?php foreach($linksByCategory as $category): ?>
+                    <ul class="nav nav-tabs" id="links-tab" role="tablist">
+                        <?php foreach($linksByCategory as $categoryId => $category): ?>
                             <?php $active = !empty($category["active"]) ? " active" : ""; ?>
                             <li class="nav-item" role="presentation">
                                 <button
                                     class="nav-link<?=$active; ?>"
-                                    id="<?= $category["id"]; ?>-tab"
+                                    id="<?= $categoryId; ?>-tab"
                                     data-bs-toggle="tab"
-                                    data-bs-target="#<?= $category["id"]; ?>"
+                                    data-bs-target="#<?= $categoryId; ?>"
                                     type="button"
                                     role="tab"
                                     aria-controls="home"
@@ -30,7 +30,7 @@
                     </ul>
                 </div>
                 <div>
-                    <form class="d-flex" role="search">
+                    <form id="links-filter-form" class="d-flex" role="search">
                         <input
                             class="form-control me-2"
                             type="search"
@@ -41,11 +41,14 @@
                     </form>
                 </div>
             </div>
-            <div class="tab-content">
-                <?php foreach($linksByCategory as $category): ?>
+            <div id="links-tab-content" class="tab-content">
+                <div id="links-empty-message" class="py-5" hidden>
+                    <h1 class="fs-3 text-center">Link não encontrado</h1>
+                </div>
+                <?php foreach($linksByCategory as $categoryId => $category): ?>
                     <?php $active = !empty($category["active"]) ? " active show" : ""; ?>
     
-                    <div class="tab-pane fade<?= $active; ?>" id="<?= $category["id"]; ?>" role="tabpanel" aria-labelledby="<?= $category["id"]; ?>-tab">
+                    <div class="tab-pane fade<?= $active; ?>" id="<?= $categoryId; ?>" role="tabpanel" aria-labelledby="<?= $categoryId; ?>-tab">
                         <?php for($row = 0; $row < count($category["links"]); $row += 3): ?>
                             <div class="row mb-2 justify-content-center">
                                 <?php

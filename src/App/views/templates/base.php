@@ -20,9 +20,10 @@
     <?= $viewHtml; ?>
     
     <footer>
+        <script src="<?= Helpers::baseUrl("/assets/bootstrap/js/bootstrap.bundle.js"); ?>"></script>
+        <script src="<?= Helpers::baseUrl("/assets/js/scripts.js"); ?>"></script>
         <?= $stickyFooter; ?>
         <?= $this->getSection("footer"); ?>
-        <script src="<?= Helpers::baseUrl("/assets/bootstrap/js/bootstrap.bundle.js"); ?>"></script>
     </footer>
   </body>
 </html>
