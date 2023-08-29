@@ -19,10 +19,14 @@ final class Helpers
         return CONF_BASE_URL . self::replaceMultiples($subpath, "\\/", "/");
     }
 
+    public static function baseDatasetPath(string $subpath): string
+    {
+        return CONF_DATASET_PATH . self::replaceMultiples("/{$subpath}", "\\/", "/");
+    }
+
     public static function baseViewPath(string $subpath = ""): string
     {
-        $subpath = "/{$subpath}";
-        return CONF_BASE_VIEW_PATH . self::replaceMultiples($subpath, "\\/", "/");
+        return CONF_BASE_VIEW_PATH . self::replaceMultiples("/{$subpath}", "\\/", "/");
     }
 
     public static function minify(string $string): string

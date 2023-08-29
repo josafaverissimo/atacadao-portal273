@@ -2,6 +2,7 @@
 
 namespace Src\Core\Router;
 
+use Src\Core\Helpers;
 use Closure;
 
 class Router
@@ -68,7 +69,7 @@ class Router
     {
         http_response_code(404);
 
-        echo "Página não encontrada";
+        echo "<h1>Página não encontrada. Por favor, volte à home</h1><a href='" . Helpers::baseUrl() . "'>Home</a>";
     }
 
     private function getRoute(): ?Route

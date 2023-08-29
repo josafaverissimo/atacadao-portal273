@@ -2,6 +2,7 @@
 
 namespace Src\App\Controllers;
 
+use Src\App\Dataset;
 use Src\Core\View;
 
 class LinkCenter
@@ -9,8 +10,12 @@ class LinkCenter
     public function index()
     {
         $linkCenterView = new View();
-        $linkCenterView->render("/pages/link_center/index", [
-            "title" => "Central de links"
-        ]);
+
+        $data = [
+            "title" => "Central de links",
+            "linksByCategory" => Dataset::get("links_by_category")
+        ];
+        
+        $linkCenterView->render("/pages/link_center/index", $data);
     }
 }

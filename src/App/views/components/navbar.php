@@ -20,29 +20,14 @@
                 <?php
                     $links = [
                         [
-                            "name" => "Home",
-                            "url" => Helpers::baseUrl("/"),
-                            "uri" => "/"
-                        ],
-                        [
                             "name" => "Central de links",
                             "url" => Helpers::baseUrl("/link-center"),
                             "uri" => "/link-center"
                         ],
                         [
-                            "name" => "Relatórios",
-                            "url" => Helpers::baseUrl("/reports"),
-                            "uri" => "/reports"
-                        ],
-                        [
                             "name" => "Boas práticas",
                             "url" => Helpers::baseUrl("/best-practices"),
                             "uri" => "/best-practices"
-                        ],
-                        [
-                                "name" => "Relógio",
-                                "url" => Helpers::baseUrl("/clock"),
-                                "uri" => "/clock"
                         ],
                         [
                             "name" => "Intranet Matriz",
