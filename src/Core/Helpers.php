@@ -52,4 +52,22 @@ final class Helpers
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
+
+    public static function setCookie(string $name, string $value): void
+    {
+        $oneHour = time() + 3600;
+        $domain = str_replace("https://", "", Helpers::baseUrl());
+        setcookie($name, $value, $oneHour, "", $domain, true);
+    }
+
+    public static function setLocalStorage(array $dataToStorage): void
+    {
+        echo "<script>";
+        foreach ($dataToStorage as $data) {
+            $name = $data[0];
+            $value = $data[1];
+            echo "localStorage.setItem('$name', '$value')";
+        }
+        echo "</script>";
+    }
 }

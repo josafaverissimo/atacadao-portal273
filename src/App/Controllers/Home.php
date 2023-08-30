@@ -14,7 +14,7 @@ class Home extends Controller
             "birthdayPeople" => Dataset::getJsonFileData("birthday_people"),
             "phonesUnit" => Dataset::getJsonFileData("phones_unit")
         ];
-        
+
         $this->renderView("/pages/home/index", $data);
     }
 }

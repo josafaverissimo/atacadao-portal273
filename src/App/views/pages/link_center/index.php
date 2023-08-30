@@ -82,5 +82,10 @@
 </main>
 
 <?php $this->setSection("footer"); ?>
+    <?php
+        Helpers::setLocalStorage([
+            ["linksByCategory", json_encode($linksByCategory)]
+        ]);
+    ?>
     <script src="<?= Helpers::baseUrl("/assets/js/link_center/scripts.js"); ?>"></script>
 <?php $this->endSection("footer"); ?>

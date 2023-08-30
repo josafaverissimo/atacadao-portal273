@@ -6,6 +6,7 @@ String.prototype.removeAccents = function() {
         .replace(/í/g, "i")
         .replace(/[óôõ]/g, "o")
         .replace(/ú/g, "u")
+        .replace(/ç/g, "c")
 }
 
 function getCookie(name) {

@@ -14,8 +14,6 @@ class LinkCenter extends Controller
             "linksByCategory" => Dataset::getData("links_by_category")
         ];
 
-        setcookie("linksByCategory", json_encode($data["linksByCategory"]), time() + 3600);
-
         $this->renderView("/pages/link_center/index", $data);
     }
 }

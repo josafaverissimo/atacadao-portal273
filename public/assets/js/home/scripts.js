@@ -1,6 +1,7 @@
 function PhoneTable() {
     const inputSearch = document.querySelector("#phones-search-form input")
     const table = document.getElementById("phones-table")
+    const phonesUnit = JSON.parse(localStorage.getItem("phonesUnit"))
 
     function cleanTable() {
         table.querySelector("tbody").innerHTML = "";
@@ -26,16 +27,16 @@ function PhoneTable() {
     }
 
     function filter() {
-        const inputSearchValue = inputSearch.value.toLowerCase()
+        const inputSearchValue = inputSearch.value.toLowerCase().removeAccents()
 
         if(inputSearchValue === "") {
-            loadPhonesTableByData(PhoneTable.phones)
+            loadPhonesTableByData(phonesUnit)
             return
         }
 
-        const phonesMatched = PhoneTable.phones.reduce((rows, row) => {
-            let phone = row.telefone.toLowerCase()
-            let sector = row.depto.toLowerCase()
+        const phonesMatched = phonesUnit.reduce((rows, row) => {
+            let phone = row.telefone.toLowerCase().removeAccents()
+            let sector = row.depto.toLowerCase().removeAccents()
 
             if(phone.indexOf(inputSearchValue) !== -1 || sector.indexOf(inputSearchValue) !== -1) {
                 rows.push(row)
@@ -49,7 +50,7 @@ function PhoneTable() {
 
     function cleanInputAndRestorePhones() {
         inputSearch.value = ""
-        loadPhonesTableByData(PhoneTable.phones)
+        loadPhonesTableByData(phonesUnit)
     }
 
     return {

@@ -72,6 +72,10 @@
 </main>
 
 <?php $this->setSection("footer"); ?>
+    <?php
+        Helpers::setLocalStorage([
+            ["phonesUnit", json_encode($phonesUnit)]
+        ]);
+    ?>
     <script src="<?= Helpers::baseUrl("/assets/js/home/scripts.js"); ?>"></script>
-    <script> PhoneTable.phones = <?= json_encode($phones);?></script>
 <?php $this->endSection("footer"); ?>

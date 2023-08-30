@@ -1,7 +1,7 @@
 function LinksFilterForm() {
-    const clearButton = document.querySelector("#links-filter-form button")
+    const cleanButton = document.querySelector("#links-filter-form button")
     const input = document.querySelector("#links-filter-form input")
-    const linksByCategory = JSON.parse(getCookie("linksByCategory"))
+    const linksByCategory = JSON.parse(localStorage.getItem("linksByCategory"))
     const linksTabContent = document.querySelector("#links-tab-content")
     const emptyMessageDiv = document.querySelector("#links-empty-message")
     const navTabButtons = document.querySelectorAll("#links-tab button")
@@ -14,12 +14,12 @@ function LinksFilterForm() {
 
                 if(clickedButton.id.indexOf(currentTabId) !== -1) {
                     console.log(clickedButton.id, currentTabId)
-                    clearFilter()
+                    cleanFilter()
                     hiddenEmptyMessage()
                 }
             })
         })
-        clearButton.addEventListener("click", clearFilter)
+        cleanButton.addEventListener("click", cleanFilter)
         input.addEventListener("input", filterLinks)
     }
 
@@ -37,7 +37,7 @@ function LinksFilterForm() {
         }, [])
 
         if(linksFiltered.length === 0) {
-            clearTab()
+            cleanTab()
             showEmptyMessage()
             return
         }
@@ -57,14 +57,14 @@ function LinksFilterForm() {
         return linksTabContent.querySelector("div.active")
     }
 
-    function clearTab() {
+    function cleanTab() {
         const currentTab = getCurrentTab()
 
         hiddenEmptyMessage()
         currentTab.innerHTML = ""
     }
 
-    function clearFilter() {
+    function cleanFilter() {
         const currentTabId = getCurrentTab().id
         input.value = ""
 
@@ -72,7 +72,7 @@ function LinksFilterForm() {
     }
 
     function showLinks(filteredLinks) {
-        clearTab()
+        cleanTab()
 
         const currentTab = getCurrentTab()
         const cardRows = linkCardsRows(filteredLinks)
