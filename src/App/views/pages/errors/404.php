@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/errors/404/styles.css"); ?>">
 <?php $this->endSection("head"); ?>
 
-<main class="container bg-white rounded-3 border shadow-lg">
+<main class="container-fluid container-lg bg-white rounded-3 border shadow-lg">
     <div class="row pt-3">
         <div class="d-flex justify-content-center">
             <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/gokukid.gif"); ?>">
@@ -14,7 +14,7 @@
             <img alt="mk" class="flip-image" src="<?= Helpers::baseUrl("/assets/imgs/gokukid.gif"); ?>">
         </div>
         <div class="d-flex justify-content-center">
-            <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/shaokhanfinishhim.gif"); ?>">
+            <img alt="mk" class="shake rounded-5" src="<?= Helpers::baseUrl("/assets/imgs/shaokhanfinishhim.gif"); ?>">
         </div>
     </div>
     <div class="row">
@@ -41,3 +41,12 @@
         </div>
     </div>
 </main>
+
+<?php $this->setSection("footer"); ?>
+    <script src="<?= Helpers::baseUrl("/assets/js/wait-images.js"); ?>"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            waitImages()
+        })
+    </script>
+<?php $this->endSection("footer"); ?>
