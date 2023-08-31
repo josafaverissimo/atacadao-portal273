@@ -17,7 +17,7 @@ class Dataset
         $filepath = Helpers::baseDatasetPath("/json/{$jsonFile}") . ".json";
         $jsonFileStream = fopen($filepath, "rb");
         $jsonData = "";
-        
+
         while(!feof($jsonFileStream)) {
             $jsonData .= fread($jsonFileStream, 4096);
         }

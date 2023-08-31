@@ -13,7 +13,6 @@ function LinksFilterForm() {
                 const currentTabId = getCurrentTab().id
 
                 if(clickedButton.id.indexOf(currentTabId) !== -1) {
-                    console.log(clickedButton.id, currentTabId)
                     cleanFilter()
                     hiddenEmptyMessage()
                 }
