@@ -13,17 +13,19 @@
             <img class="strong-tilt-move-shake" alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/error404.png"); ?>">
             <img alt="mk" class="flip-image" src="<?= Helpers::baseUrl("/assets/imgs/gokukid.gif"); ?>">
         </div>
-        <div class="d-flex justify-content-center">
-            <img alt="mk" class="shake rounded-5" src="<?= Helpers::baseUrl("/assets/imgs/shaokhanfinishhim.gif"); ?>">
+        <div class="d-flex justify-content-evenly">
+            <div class="align-self-center">
+                <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/kunglao-girando.gif"); ?>">
+                <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/scorpion-fatality.gif"); ?>">
+            </div>
+            <img alt="mk" class="shake rounded-5 " src="<?= Helpers::baseUrl("/assets/imgs/shaokhanfinishhim.gif"); ?>">
+            <div class="align-self-center">
+                <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/liukang-dancando.gif"); ?>">
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="p-3 p-lg-5 pt-lg-3 d-flex justify-content-evenly">
-            <div>
-                <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/kunglao-girando.gif"); ?>">
-                <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/scorpion-fatality.gif"); ?>">
-            </div>
-
             <div>
                 <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/liukang-correndo.gif"); ?>">
             </div>
@@ -33,10 +35,6 @@
             </div>
             <div>
                 <img alt="mk" class="flip-image" src="<?= Helpers::baseUrl("/assets/imgs/shaokahn-parado.gif"); ?>">
-            </div>
-
-            <div>
-                <img alt="mk" src="<?= Helpers::baseUrl("/assets/imgs/liukang-dancando.gif"); ?>">
             </div>
         </div>
     </div>
