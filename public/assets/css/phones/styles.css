@@ -6,3 +6,7 @@
     height: 250px;
     overflow-y: scroll;
 }
+
+.my-select button {
+    width: 11rem;
+}
