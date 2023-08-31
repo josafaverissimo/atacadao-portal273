@@ -89,14 +89,14 @@ function LinksFilterForm() {
 function linkCardsRows(links) {
     function createRow() {
         const divRow = document.createElement("div")
-        divRow.classList.add("row", "mb-2", "justify-content-center")
+        divRow.classList.add("row", "justify-content-center")
 
         return divRow
     }
 
     function createCardLink(name, url, notTargetBlank) {
         const divCard = document.createElement("div")
-        divCard.classList.add("col-4")
+        divCard.classList.add("col-md-6", "col-lg-4", "col-xl-3", "mb-md-2")
 
         const anchorCard = document.createElement("a")
         anchorCard.classList.add("card", "text-decoration-none")
@@ -127,10 +127,9 @@ function linkCardsRows(links) {
 
     function generateLinksCardsRows() {
         const rows = []
+        let divCardRow = createRow()
 
         for(let row = 0; row < links.length; row += 3) {
-            let divCardRow = createRow()
-
             for(let column = 0; column < 3; column++) {
                 let index = row + column;
 

@@ -57,7 +57,7 @@
                                             if(!isset($category["links"][$index])) break;
                                             $link = $category["links"][$index];
                                     ?>
-                                        <div class="col-md-6 col-lg-4 mb-md-2">
+                                        <div class="col-md-6 col-lg-4 col-xl-3 mb-md-2">
                                             <?php $targetBlank = empty($link["notTargetBlank"]) ? "target=\"_blank\"" : ""; ?>
                                             <a class="card text-decoration-none" href="<?= $link["url"]; ?>" <?= $targetBlank; ?>>
                                                 <div class="card-body d-flex justify-content-center">
