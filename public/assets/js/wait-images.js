@@ -5,7 +5,7 @@ function waitImages() {
         if(!img.complete) {
             let currentDisplay = window.getComputedStyle(img).getPropertyValue("display")
             img.style.display = "none"
-            img.onload = function() {
+            img.onload = () => {
                 img.style.display = currentDisplay
             }
         }
