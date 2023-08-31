@@ -2,7 +2,7 @@
 
 <?php $this->template("/base", [ "title" => $title]); ?>
 
-<main class="container">
+<main class="container-fluid container-lg">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
         <div class="p-3 p-lg-5 pt-lg-3">
             <h1 class="display-5 fst-italic mb-3">Central de links</h1>
@@ -49,30 +49,27 @@
                     <?php $active = !empty($category["active"]) ? " active show" : ""; ?>
     
                     <div class="tab-pane fade<?= $active; ?>" id="<?= $categoryId; ?>" role="tabpanel" aria-labelledby="<?= $categoryId; ?>-tab">
-                        <?php for($row = 0; $row < count($category["links"]); $row += 3): ?>
                             <div class="row mb-2 justify-content-center">
-                                <?php
-                                    for($column = 0; $column < 3; $column++):
-                                        
-                                    $index = $row + $column;
-                                        
-                                    if(!isset($category["links"][$index])) break;
-                                        
-                                    $link = $category["links"][$index];
-                                ?>
-                                    <div class="col-4">
-                                        <?php $targetBlank = empty($link["notTargetBlank"]) ? "target=\"_blank\"" : ""; ?>
-                                        <a class="card text-decoration-none" href="<?= $link["url"]; ?>" <?= $targetBlank; ?>>
-                                            <div class="card-body d-flex justify-content-center">
-                                                <div>
-                                                    <span class="card-title"><?= mb_convert_case($link["name"], MB_CASE_TITLE); ?></span>
+                                <?php for($row = 0; $row < count($category["links"]); $row += 3): ?>
+                                    <?php
+                                        for($column = 0; $column < 3; $column++):
+                                            $index = $row + $column;
+                                            if(!isset($category["links"][$index])) break;
+                                            $link = $category["links"][$index];
+                                    ?>
+                                        <div class="col-md-6 col-lg-4 mb-md-2">
+                                            <?php $targetBlank = empty($link["notTargetBlank"]) ? "target=\"_blank\"" : ""; ?>
+                                            <a class="card text-decoration-none" href="<?= $link["url"]; ?>" <?= $targetBlank; ?>>
+                                                <div class="card-body d-flex justify-content-center">
+                                                    <div>
+                                                        <span class="card-title"><?= mb_convert_case($link["name"], MB_CASE_TITLE); ?></span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                            </a>
+                                        </div>
+                                    <?php endfor; ?>
                                 <?php endfor; ?>
                             </div>
-                        <?php endfor; ?>
                     </div>
                 <?php endforeach; ?>
             </div>

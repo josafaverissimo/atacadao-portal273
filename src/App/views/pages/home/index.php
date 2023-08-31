@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/home/styles.css"); ?>">
 <?php $this->endSection("head"); ?>
 
-<main class="container">
-    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
+<main class="container-fluid container-lg">
+    <div class="row p-4 pb-0 p-lg-0 pt-lg-5 p-md-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-            <h1 class="display-3 fst-italic">Portal Interno<br>Maceió Petrópolis</h1>
+            <h1 class="display-4 fst-italic">Portal Interno<br>Maceió Petrópolis</h1>
             <p class="lead my-3">
                 Aqui se encontra o que você precisa para navegar entre os sistemas e documentos da empresa.
             </p>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row align-items-md-stretch wrapper">
-        <div class="col-md-6">
+        <div class="col-md-12 col-lg-6 p-lg-3 mb-md-3">
             <div class="h-100 p-5 shadow-sm target">
                 <h2 class="text-center">Aniversariantes do mês</h2>
 
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 align-self-start">
+        <div class="col-md-12 col-lg-6 align-self-start">
             <div class="h-100 p-5 shadow-sm target">
                 <h2 class="text-center">Lista de ramais</h2>
 
