@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/clock/styles.css"); ?>">
 <?php $this->endSection("head"); ?>
 
-<main class="container">
+<main class="container-fluid container-lg">
     <div class="clock rounded-3 border shadow-lg bg-white py-5">
         <?= $this->getViewHtml("/components/clock"); ?>
     </div>
