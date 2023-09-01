@@ -4,3 +4,4 @@ up_server.sh
 replit.nix
 .replit
 .cache
+src/App/dataset/json/*
