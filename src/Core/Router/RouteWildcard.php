@@ -7,7 +7,7 @@ class RouteWildcard
     private const WILDCARDS = [
         "(:numeric)" => "[0-9]+",
         "(:alpha)" => "[a-zA-Z]+",
-        "(:any)" => "[a-zA-Z0-9\-]+"
+        "(:any)" => "[a-zA-Z0-9%\-]+"
     ];
 
     private array $params;
