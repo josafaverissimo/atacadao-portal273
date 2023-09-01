@@ -1,6 +1,6 @@
 .scrollable-table-wrapper {
     max-height: 640px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #phones-table td{
