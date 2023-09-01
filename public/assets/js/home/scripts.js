@@ -1,7 +1,7 @@
 function PhoneTable() {
     const inputSearch = document.querySelector("#phones-search-form input")
     const table = document.getElementById("phones-table")
-    const phonesUnit = JSON.parse(localStorage.getItem("phonesUnit"))
+    const unitPhones = JSON.parse(localStorage.getItem("phonesUnit"))
 
     function cleanTable() {
         table.querySelector("tbody").innerHTML = "";
@@ -16,8 +16,10 @@ function PhoneTable() {
             const tdPhone = document.createElement("td")
             const tdSector = document.createElement("td")
 
-            tdPhone.textContent = phone.telefone
-            tdSector.textContent = phone.depto
+            tdSector.classList.add("text-capitalize")
+
+            tdPhone.textContent = phone.phone
+            tdSector.textContent = phone.owner.toLowerCase()
 
             tr.appendChild(tdPhone)
             tr.appendChild(tdSector)
@@ -30,13 +32,13 @@ function PhoneTable() {
         const inputSearchValue = inputSearch.value.toLowerCase().removeAccents()
 
         if(inputSearchValue === "") {
-            loadPhonesTableByData(phonesUnit)
+            loadPhonesTableByData(unitPhones)
             return
         }
 
-        const phonesMatched = phonesUnit.reduce((rows, row) => {
-            let phone = row.telefone.toLowerCase().removeAccents()
-            let sector = row.depto.toLowerCase().removeAccents()
+        const phonesMatched = unitPhones.reduce((rows, row) => {
+            let phone = row.phone.toLowerCase().removeAccents()
+            let sector = row.owner.toLowerCase().removeAccents()
 
             if(phone.indexOf(inputSearchValue) !== -1 || sector.indexOf(inputSearchValue) !== -1) {
                 rows.push(row)
@@ -50,7 +52,7 @@ function PhoneTable() {
 
     function cleanInputAndRestorePhones() {
         inputSearch.value = ""
-        loadPhonesTableByData(phonesUnit)
+        loadPhonesTableByData(unitPhones)
     }
 
     return {
