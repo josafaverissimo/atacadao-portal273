@@ -4,9 +4,9 @@
 
 .my-select ul ul {
     height: 250px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .my-select button {
-    width: 11rem;
+    min-width: 11rem;
 }
