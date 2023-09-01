@@ -1,0 +1,9 @@
+.my-table {
+    font-size: 0.9rem;
+    height: 540px;
+    overflow-y: auto;
+}
+
+.my-table td {
+    width: 600px;
+}
