@@ -42,8 +42,10 @@
             </div>
         </div>
         <div class="col-md-12 col-lg-6 align-self-start">
-            <div class="h-100 p-5 shadow-sm target">
-                <h2 class="text-center">Lista de ramais</h2>
+            <div class="h-100 p-5 shadow-sm target d-flex flex-column">
+                <a href="<?= Helpers::baseUrl("/phones"); ?>" class="h2 align-self-center">
+                    Lista de ramais
+                </a>
 
                 <form id="phones-search-form" class="d-flex mb-3" role="search">
                     <input class="form-control me-2" type="search" placeholder="Digite o número ou setor" aria-label="Pesquisar">
@@ -53,14 +55,10 @@
                 <div class="scrollable-table-wrapper">
                     <table id="phones-table" class="table table-striped table-bordered">
                         <tbody>
-                            <?php foreach($phonesUnit as $phone): ?>
+                            <?php foreach($unitPhones as $phone): ?>
                                 <tr>
-                                    <?php
-                                        $phone->telefone = preg_replace("/(\(..\))(.+)/", "$1 $2", $phone->telefone);
-                                        $phone->depto = mb_convert_case($phone->depto, MB_CASE_TITLE)
-                                    ?>
-                                    <td><?= $phone->telefone ?></td>
-                                    <td><?= $phone->depto; ?></td>
+                                    <td><?= preg_replace("/(\(\d\d\))/", "$1 ", $phone->phone) ?></td>
+                                    <td><?= mb_convert_case($phone->owner, MB_CASE_TITLE) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -74,7 +72,7 @@
 <?php $this->setSection("footer"); ?>
     <?php
         Helpers::setLocalStorage([
-            ["phonesUnit", json_encode($phonesUnit)]
+            ["$unitPhones", json_encode($unitPhones)]
         ]);
     ?>
     <script src="<?= Helpers::baseUrl("/assets/js/home/scripts.js"); ?>"></script>
