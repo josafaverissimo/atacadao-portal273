@@ -131,6 +131,10 @@ return [
                 "url" => "https://grupotecnoset.custhelp.com/"
             ],
             [
+                "name" => "Monitoramento de links",
+                "url" => "https://sw.portal.cloud.br-atacadao.corp/Orion/Login.aspx?sessionTimeout=yes"
+            ],
+            [
                 "name" => "Wsus",
                 "url" => "http://srvappsup.cloud.br-atacadao.corp/portal/pg-win/index.php"
             ],
