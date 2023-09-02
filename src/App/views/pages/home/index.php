@@ -72,7 +72,7 @@
 <?php $this->setSection("footer"); ?>
     <?php
         Helpers::setLocalStorage([
-            ["$unitPhones", json_encode($unitPhones)]
+            ["unitPhones", json_encode($unitPhones)]
         ]);
     ?>
     <script src="<?= Helpers::baseUrl("/assets/js/home/scripts.js"); ?>"></script>
