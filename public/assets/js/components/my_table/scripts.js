@@ -1,5 +1,6 @@
 function MyTable(id, filterFormId = null) {
     const table = document.getElementById(id)
+    const tableSpinner = table.querySelector(".spinner");
     const filterForm = filterFormId ? document.getElementById(filterFormId) : null
     const thead = getThead()
     let tbody = getTbody()
@@ -67,6 +68,12 @@ function MyTable(id, filterFormId = null) {
 
     function loadRows(rows) {
         cleanRows()
+
+        if(rows.length === 0) {
+            loadNotFoundRows()
+            return
+        }
+
         const tbody = table.querySelector("tbody")
 
         rows.forEach(row => {
@@ -107,13 +114,26 @@ function MyTable(id, filterFormId = null) {
 
     function loadNewRows(rows) {
         tbody = rows
+
+        cleanFilter()
         loadRows(rows)
+    }
+
+    function startLoading() {
+        tableSpinner.removeAttribute("hidden")
+        table.classList.add("loading")
+    }
+
+    function endLoading() {
+        tableSpinner.setAttribute("hidden", "")
+        table.classList.remove("loading")
     }
 
     listeningFilterInput()
 
     return {
         loadNewRows,
-        cleanFilter
+        startLoading,
+        endLoading
     }
 }

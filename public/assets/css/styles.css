@@ -15,6 +15,10 @@ main {
   margin-left: 1rem;
 }
 
+.text-sm {
+    font-size: 0.88rem;
+}
+
 .border-radius-none {
     border-radius: 0 !important;
 }
@@ -30,3 +34,5 @@ main {
     border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
     border-radius: var(--bs-border-radius-lg)!important;
 }
+
+

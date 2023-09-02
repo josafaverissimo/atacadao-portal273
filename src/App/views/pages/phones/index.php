@@ -2,6 +2,10 @@
 
 <?php $this->template("base", ["title" => $title]); ?>
 
+<?php $this->setSection("head"); ?>
+    <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/phones/styles.css"); ?>">
+<?php $this->endSection("head"); ?>
+
 <main class="container-fluid container-lg">
     <div class="p-4 pb-0 p-lg-0 pt-lg-5 p-md-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
         <div class="p-3 p-lg-5 pt-lg-3">
@@ -14,13 +18,13 @@
                         "buttonPlaceholder" => "Selecione a filial",
                         "inputPlaceholder" => "Pesquise a filial",
                         "id" => "select-unit",
-                        "name" => "unit",
+                        "name" => "unit"
                     ]);
                 ?>
                 <div>
                     <form id="phones-search-form" class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Digite algo para pesquisar" aria-label="Pesquisar">
-                        <button class="btn btn-outline-secondary" type="button">Limpar</button>
+                        <input class="form-control me-2 text-sm" type="search" placeholder="Digite algo para pesquisar" aria-label="Pesquisar">
+                        <button class="btn btn-outline-secondary text-sm" type="button">Limpar</button>
                     </form>
                 </div>
             </div>

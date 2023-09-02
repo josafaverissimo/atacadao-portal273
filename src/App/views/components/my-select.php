@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/components/my_select/styles.css"); ?>">
 <?php $this->endSection("head"); ?>
 
-<div id="<?= $id ?>" class="dropdown my-select <?= $classes ?? "" ?> ">
+<div id="<?= $id ?>" class="dropdown my-select <?= $classes ?? "" ?>">
     <select name="<?= $name; ?>">
         <?php foreach($options as $option): ?>
             <?php $buttonPlaceholder = $option->selected ? $option->textContent : $buttonPlaceholder ?>

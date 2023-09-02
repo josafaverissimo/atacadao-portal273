@@ -5,6 +5,9 @@
 <?php $this->endSection("head"); ?>
 
 <div id="<?= $id ?>" class="my-table <?= $classes ?> shadow">
+    <div class="spinner spinner-border text-secondary" role="status" hidden>
+        <span class="visually-hidden">Carregando...</span>
+    </div>
     <table class="table table-striped table-bordered w-100">
         <?php if(!empty($thead)): ?>
             <thead>
