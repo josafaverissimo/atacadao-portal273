@@ -1,7 +1,7 @@
 function PhoneTable() {
     const inputSearch = document.querySelector("#phones-search-form input")
     const table = document.getElementById("phones-table")
-    const unitPhones = JSON.parse(localStorage.getItem("phonesUnit"))
+    const unitPhones = JSON.parse(localStorage.getItem("unitPhones"))
 
     function cleanTable() {
         table.querySelector("tbody").innerHTML = "";
