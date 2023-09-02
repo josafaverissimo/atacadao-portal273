@@ -10,7 +10,7 @@ class Phones extends Controller
 {
     public function index(): void
     {
-        $unitId = "273";
+        $unitId = 273;
         $unitsOptions = array_reduce(
             Helpers::getJsonFileData("units"),
             function (array $options, object $unit) use ($unitId) {

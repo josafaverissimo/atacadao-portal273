@@ -22,8 +22,8 @@ class UnitsPhones extends Dataset
                 continue;
             }
 
-            $name = $unitPhones[0]->filial;
-            $unitsPhonesByUnitName[$name] = [];
+            $id = $unitPhones[0]->id_filial;
+            $unitsPhonesByUnitName[$id] = [];
 
             foreach($unitPhones as $unitPhone) {
                 $unitPhoneFiltered = new \StdClass();
@@ -31,9 +31,11 @@ class UnitsPhones extends Dataset
                 $unitPhoneFiltered->owner = trim($unitPhone->depto);
                 $unitPhoneFiltered->sector = trim($unitPhone->setor);
 
-                $unitsPhonesByUnitName[$name][] = $unitPhoneFiltered;
+                $unitsPhonesByUnitName[$id][] = $unitPhoneFiltered;
             }
         }
+
+        xdebug_var_dump($unitsPhonesByUnitName);die();
 
         $this->setData($unitsPhonesByUnitName);
     }
@@ -43,19 +45,8 @@ class UnitsPhones extends Dataset
         return $this->getData();
     }
 
-    public function getUnitPhonesByUnitId(string $idToFind): ?array
+    public function getUnitPhonesByUnitId(int $idToFind): ?array
     {
-        $unitsPhones = $this->getData();
-        $unitsIndexes = array_keys($unitsPhones);
-        $unitIndexFound = null;
-
-        foreach($unitsIndexes as $unitsIndex) {
-            if(str_contains($unitsIndex, $idToFind)) {
-                $unitIndexFound = $unitsIndex;
-                break;
-            }
-        }
-
-        return $unitIndexFound ? $unitsPhones[$unitIndexFound]: [];
+        return $this->getData()[$idToFind] ??  [];
     }
 }
