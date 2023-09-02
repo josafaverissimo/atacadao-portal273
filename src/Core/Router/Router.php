@@ -9,31 +9,30 @@ class Router
 {
     private Route $currentRoute;
     private array $routes;
-    private array $options;
+    private RouteOptions $options;
 
     public function __construct()
     {
-        $this->options = [];
+        $this->options = new RouteOptions();
     }
 
     private function route(string $httpMethod, string $resource, string $controllerAndMethod): void
     {
         $this->currentRoute = new Route($httpMethod, $resource, $controllerAndMethod, $this->options);
-
         $this->routes[] = $this->currentRoute;
     }
 
     public function middleware(array $middlewares): void
     {
-        $options = array_merge($this->options, ["middlewares" => $middlewares]);
-        $this->currentRoute->setOptions($options);
+        $this->options->push(["middlewares" => $middlewares]);
+        $this->currentRoute->setOptions($this->options);
     }
 
     public function group(array $options, Closure $callback): void
     {
-        $this->options = $options;
+        $this->options->push($options);
         $callback->call($this);
-        $this->options = [];
+        $this->options->reset();
     }
 
     public function get(string $resource, string $controllerAndMethod): Router

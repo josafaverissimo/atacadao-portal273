@@ -6,13 +6,19 @@ class Route
 {
     private const CONTROLLER_NAMESPACE = "Src\\App\\Controllers\\";
     private RouteWildcard $wildcard;
-    private ?RouteOptions $options;
+    private RouteOptions $options;
     private string $httpMethod;
     private Uri $uri;
     private array $target;
 
-    public function __construct(string $httpMethod, string $uri, string $controllerAndMethod, array $options = [])
+    public function __construct(string $httpMethod, string $uri, string $controllerAndMethod, ?RouteOptions $options = null)
     {
+        if(empty($options)) {
+            $options = new RouteOptions();
+        } else {
+            $options = clone $options;
+        }
+
         $this->wildcard = new RouteWildcard();
         $this->httpMethod = $httpMethod;
 
@@ -27,7 +33,7 @@ class Route
 
         if ($this->options->has("prefix")) {
             $prefix = $this->options->get("prefix");
-            $uri = "/{$prefix}" . rtrim($uri, "/");
+            $uri = "{$prefix}" . rtrim($uri, "/");
         }
 
         $this->uri = new Uri($uri);
@@ -42,10 +48,9 @@ class Route
         ];
     }
 
-    public function setOptions(array $options): void
+    public function setOptions(RouteOptions $options): void
     {
-
-        $this->options = new RouteOptions($options);
+        $this->options = $options;
     }
 
     public function match(): bool
