@@ -13,7 +13,6 @@ $routes->group(["prefix" => "phones"], function() {
     $this->get("/", "Phones:index");
     $this->get("/unitPhones/unitId/(:any)", "Phones:getUnitPhonesByUnitId");
 });
-$routes->get("/phones", "Phones:index");
 $routes->get("/reports", CONF_CONTROLLER_BUILDING_PAGE);
 $routes->get("/best-practices", CONF_CONTROLLER_BUILDING_PAGE);
 
