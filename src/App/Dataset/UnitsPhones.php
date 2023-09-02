@@ -35,8 +35,6 @@ class UnitsPhones extends Dataset
             }
         }
 
-        xdebug_var_dump($unitsPhonesByUnitName);die();
-
         $this->setData($unitsPhonesByUnitName);
     }
 
