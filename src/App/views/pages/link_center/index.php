@@ -5,8 +5,7 @@
 <main class="container-fluid container-lg">
     <div class="p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
         <div class="p-3 p-lg-5 pt-lg-3">
-            <h1 class="display-5 fst-italic mb-3">Central de links</h1>
-            <div class="cards-wrapper">
+            <h1 class="display-5 mb-3">Central de links</h1>
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div>
                     <ul class="nav nav-tabs" id="links-tab" role="tablist">
@@ -47,7 +46,7 @@
                 </div>
                 <?php foreach($linksByCategory as $categoryId => $category): ?>
                     <?php $active = !empty($category["active"]) ? " active show" : ""; ?>
-    
+
                     <div class="tab-pane fade<?= $active; ?>" id="<?= $categoryId; ?>" role="tabpanel" aria-labelledby="<?= $categoryId; ?>-tab">
                             <div class="row mb-2 justify-content-center">
                                 <?php for($row = 0; $row < count($category["links"]); $row += 3): ?>
@@ -73,7 +72,6 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-        </div>
         </div>
     </div>
 </main>
