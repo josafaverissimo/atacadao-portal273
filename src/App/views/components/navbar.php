@@ -3,14 +3,14 @@
 ?>
 
 <?php $this->setSection("head"); ?>
-    <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/components/navbar_clock/styles.css"); ?>">
+    <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/components/navbar/styles.css"); ?>">
 <?php $this->endSection("head"); ?>
 
-<div class="d-flex justify-content-center my-1 mb-5">
-  <nav class="navbar navbar-expand-lg shadow-lg width-90vw rounded d-flex justify-content-center px-3 bg-white">
+<div class="d-flex justify-content-center mt-2 position-relative">
+  <nav class="navbar navbar-expand-lg shadow-lg width-90vw rounded d-flex justify-content-center px-3 position-fixed">
     <div class="d-flex w-100 justify-content-between">
         <div>
-          <a class="navbar-brand" href="<?= Helpers::baseUrl(); ?>">
+          <a class="btn btn-link navbar-brand p-0" href="<?= Helpers::baseUrl(); ?>">
             <img src="<?= Helpers::baseUrl("/assets/imgs/atacadao-logo.png"); ?>" alt="Logo do atacadão">
           </a>
         </div>

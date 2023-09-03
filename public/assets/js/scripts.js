@@ -23,3 +23,12 @@ function getCookie(name) {
 
     return null
 }
+
+function storeScroll() {
+    document.documentElement.dataset.scroll = window.scrollY
+
+}
+
+document.addEventListener("scroll", storeScroll)
+
+storeScroll();
