@@ -1,0 +1,10 @@
+.reports {
+    max-height: 560px;
+    overflow-y: auto;
+}
+
+@media (min-width: 992px){
+    .reports-lg-border-end {
+        border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+    }
+}

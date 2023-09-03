@@ -1,9 +1,5 @@
 .sticky-footer {
-  position: fixed;
-  bottom: 0;
-}
-
-.sticky-footer {
+    bottom: 0;
     background-color: #efefef;
     font-size: 0.8rem;
 }

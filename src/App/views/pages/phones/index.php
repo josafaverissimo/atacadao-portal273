@@ -9,7 +9,7 @@
 <main class="container-fluid container-lg">
     <div class="p-4 pb-0 p-lg-0 pt-lg-5 p-md-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
         <div class="p-3 p-lg-5 pt-lg-3">
-            <h1 class="display-5 fst-italic mb-3">Lista de Ramais</h1>
+            <h1 class="display-5 mb-3">Lista de Ramais</h1>
 
             <div class="d-flex justify-content-between mb-2">
                 <?=
