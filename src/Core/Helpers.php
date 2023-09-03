@@ -76,7 +76,7 @@ final class Helpers
         return require Helpers::baseDatasetPath($file) . ".php";
     }
 
-    public static function getJsonFileData(string $jsonFile): array
+    public static function getJsonFileData(string $jsonFile): array|object
     {
         $filepath = Helpers::baseDatasetPath("/json/{$jsonFile}") . ".json";
         $jsonFileStream = fopen($filepath, "rb");
