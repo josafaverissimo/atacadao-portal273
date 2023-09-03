@@ -11,9 +11,35 @@ class RouteOptions
         $this->options = $options;
     }
 
-    public function reset(): void
+    public function remove(array $options): void
     {
-        $this->options = [];
+        foreach($options as $key => $value) {
+            if(isset($this->options[$key])) {
+                switch ($key) {
+                    case "prefix":
+                        if (str_contains($this->options["prefix"], $value)) {
+                            $this->options["prefix"] = str_replace(
+                                "/{$value}",
+                                "",
+                                $this->options["prefix"]
+                            );
+                        }
+                        break;
+
+                    case "controllersDir":
+                        unset($this->options["controllersDir"]);
+                        break;
+
+                    case "middlewares":
+                        foreach($this->options["middlewares"] as $index => $middleware) {
+                            if(in_array($middleware, $value)) {
+                                unset($this->options["middlewares"][$index]);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     public function push(array $options): void
@@ -27,15 +53,18 @@ class RouteOptions
 
                     $this->options["prefix"] .= preg_replace("/^\/\//","","/{$value}");
                     break;
+
                 case "controllersDir":
                     $this->options["controllersDir"] = $value;
                     break;
-                default:
-                    if(!isset($this->options[$option])) {
-                        $this->options[$option] = [];
+
+                case "middlewares":
+                    if(!isset($this->options["middlewares"])) {
+                        $this->options["middlewares"] = [];
                     }
 
-                    $this->options[$option] = [...$this->options[$option], ...$value];
+                    $this->options["middlewares"] = [...$this->options["middlewares"], ...$value];
+                    break;
             }
         }
     }

@@ -18,7 +18,7 @@ class Router
 
     private function route(string $httpMethod, string $resource, string $controllerAndMethod): void
     {
-        $this->currentRoute = new Route($httpMethod, $resource, $controllerAndMethod, $this->options);
+        $this->currentRoute = new Route($httpMethod, $resource, $controllerAndMethod, clone $this->options);
         $this->routes[] = $this->currentRoute;
     }
 
@@ -32,7 +32,7 @@ class Router
     {
         $this->options->push($options);
         $callback->call($this);
-        $this->options->reset();
+        $this->options->remove($options);
     }
 
     public function get(string $resource, string $controllerAndMethod): Router

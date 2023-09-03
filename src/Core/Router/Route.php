@@ -13,12 +13,7 @@ class Route
 
     public function __construct(string $httpMethod, string $uri, string $controllerAndMethod, ?RouteOptions $options = null)
     {
-        if(empty($options)) {
-            $options = new RouteOptions();
-        } else {
-            $options = clone $options;
-        }
-
+        $options = $options ?? new RouteOptions();
         $this->wildcard = new RouteWildcard();
         $this->httpMethod = $httpMethod;
 
