@@ -5,7 +5,7 @@ function getUnitPhones(unitId) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const mainTable = MyTable("unit-phones", "phones-search-form")
+    const mainTable = MyTable("unit-phones", "phones-search-filter")
 
     mySelect(function(value) {
         mainTable.startLoading()

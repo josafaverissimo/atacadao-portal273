@@ -1,6 +1,6 @@
 function LinksFilterForm() {
-    const cleanButton = document.querySelector("#links-filter-form button")
-    const input = document.querySelector("#links-filter-form input")
+    const cleanButton = document.querySelector("#links-search-filter button")
+    const input = document.querySelector("#links-search-filter input")
     const linksByCategory = JSON.parse(localStorage.getItem("linksByCategory"))
     const linksTabContent = document.querySelector("#links-tab-content")
     const emptyMessageDiv = document.querySelector("#links-empty-message")

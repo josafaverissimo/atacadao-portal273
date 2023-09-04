@@ -47,10 +47,10 @@
                     Lista de ramais
                 </a>
 
-                <form id="phones-search-form" class="d-flex mb-3" role="search">
+                <div id="phones-search-filter" class="d-flex mb-3" role="search">
                     <input class="form-control me-2" type="search" placeholder="Digite o número ou setor" aria-label="Pesquisar">
                     <button class="btn btn-outline-secondary" type="button">Limpar</button>
-                </form>
+                </div>
 
                 <div class="scrollable-table-wrapper">
                     <table id="phones-table" class="table table-striped table-bordered">

@@ -22,10 +22,10 @@
                     ]);
                 ?>
                 <div>
-                    <form id="phones-search-form" class="d-flex" role="search">
+                    <div id="phones-search-filter" class="d-flex" role="search">
                         <input class="form-control me-2 text-sm" type="search" placeholder="Digite algo para pesquisar" aria-label="Pesquisar">
                         <button class="btn btn-outline-secondary text-sm" type="button">Limpar</button>
-                    </form>
+                    </div>
                 </div>
             </div>
 

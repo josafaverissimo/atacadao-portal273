@@ -29,7 +29,7 @@
                     </ul>
                 </div>
                 <div>
-                    <form id="links-filter-form" class="d-flex" role="search">
+                    <div id="links-search-filter" class="d-flex" role="search">
                         <input
                             class="form-control me-2"
                             type="search"
@@ -37,7 +37,7 @@
                             aria-label="Pesquisar"
                         >
                         <button class="btn btn-outline-secondary" type="button">Limpar</button>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div id="links-tab-content" class="tab-content">

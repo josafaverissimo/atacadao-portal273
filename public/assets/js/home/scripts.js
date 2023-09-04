@@ -1,5 +1,5 @@
-function PhoneTable() {
-    const inputSearch = document.querySelector("#phones-search-form input")
+function PhonesTable() {
+    const inputSearch = document.querySelector("#phones-search-filter input")
     const table = document.getElementById("phones-table")
     const unitPhones = JSON.parse(localStorage.getItem("unitPhones"))
 
@@ -62,15 +62,11 @@ function PhoneTable() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const phonesSearchForm = document.getElementById("phones-search-form")
-    const restorePhonesButton = phonesSearchForm.querySelector("button")
-    const phoneTable = PhoneTable()
+    const phonesSearchFilter = document.getElementById("phones-search-filter")
+    const restorePhonesButton = phonesSearchFilter.querySelector("button")
+    const filterInput = phonesSearchFilter.querySelector("input")
+    const phonesTable = PhonesTable()
 
-    phonesSearchForm.addEventListener("submit", event => {
-        event.preventDefault()
-    })
-
-    restorePhonesButton.addEventListener("click", phoneTable.cleanInputAndRestorePhones)
-
-    phonesSearchForm.querySelector("input").addEventListener("input", phoneTable.filter)
+    restorePhonesButton.addEventListener("click", phonesTable.cleanInputAndRestorePhones)
+    filterInput.addEventListener("input", phonesTable.filter)
 })
