@@ -47,7 +47,10 @@
                         <p class="mb-1 text-center py-3">Relatório não encontrado</p>
                     </div>
                     <?php foreach($saveReports as $report): ?>
-                        <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <a
+                            href="<?= !empty($report->file) ? Helpers::baseUrl("/reports-files/{$report->file}") : "#"?>"
+                            <?= !empty($report->file) ? "target=\"_blank\"" : "" ?>
+                                class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h1 class="h5 mb-1"><?= $report->name ?></h1>
                                 <small>Há 3 dias</small>
