@@ -14,6 +14,7 @@ $router->get("/best-practices", CONF_CONTROLLER_BUILDING_PAGE);
 $router->group(["prefix" => "reports"], function() {
     $this->get("/", "Reports:index");
     $this->get("/printers", "Reports:printers");
+    $this->get("/printers/getPrinterData/(:any)", "Reports:getPrinterData");
 });
 
 $router->group(["prefix" => "phones"], function() {

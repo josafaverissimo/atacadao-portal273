@@ -2,6 +2,7 @@
 
 namespace Src\App\Controllers;
 
+use Src\Utils\HttpSocket;
 use Src\Core\Helpers;
 use Src\Core\Html;
 use Src\Core\Controller;
@@ -19,56 +20,54 @@ class Reports extends Controller
         $this->renderView("/pages/reports/index", $data);
     }
 
+    private function requestPrinterStatsPage($ip): ?string
+    {
+        $httpSocket = new HttpSocket($ip, 8080);
+        if($httpSocket->getError() !== "success") {
+            $httpSocket->close();
+            return null;
+        }
+        $html = $httpSocket->doRequest("get", "/statics.html");
+        $httpSocket->close();
+
+        return $html;
+    }
+
+    public function getPrinterData($printerIp): void
+    {
+        header("Content-type: application/json");
+
+        $html = $this->requestPrinterStatsPage($printerIp);
+
+        if(empty($html)) {
+            echo json_encode([
+               "success" => false
+            ]);
+            return;
+        }
+
+        $printerStatsHtml = new Html($html);
+
+        $bodyPath = "/html/body";
+        preg_match("/[tT]oner\s+(\d+)%/", $printerStatsHtml->query($bodyPath)[0]->textContent, $matches);
+        $tonerLevel = str_replace("%", "", $matches[1]);
+
+        preg_match("/[tT]otal\s+(\d+)/", $printerStatsHtml->query($bodyPath)[0]->textContent, $matches);
+        $totalPrints = $matches[1];
+
+        echo json_encode([
+            "success" => true,
+            "tonerLevel" => $tonerLevel,
+            "todayPrints" => "N/A",
+            "totalPrints" => $totalPrints
+        ]);
+    }
+
     public function printers(): void
     {
-        $printerStatsHtml = new Html(file_get_contents(Helpers::baseDatasetPath("/html/statics.html")));
-
-        $tonerLevelPath = "/html/body/table[8]/tr[4]";
-        $tonerLevel = preg_replace(
-            "/\D/",
-            "",
-            $printerStatsHtml->query($tonerLevelPath)[0]->textContent
-        );
-
-        $totalPrintsPath = "/html/body/table[3]/tr[8]";
-        $totalPrints = (int) preg_replace(
-          "/\D/",
-          "",
-            $printerStatsHtml->query($totalPrintsPath)[0]->textContent
-        );
-
-        $printersData = [
-            "gerência" => [
-                "toner" => str_replace(["~"], "", $tonerLevel),
-                "totalPrintsToday" => ($totalPrints + rand(10, 30)) - $totalPrints,
-                "totalPrints" => $totalPrints + rand(500, 900)
-            ],
-            "caixa empresa" => [
-                "toner" => str_replace(["~"], "", $tonerLevel),
-                "totalPrintsToday" => ($totalPrints + rand(10, 30)) - $totalPrints,
-                "totalPrints" => $totalPrints + rand(500, 900)
-            ],
-            "rm" => [
-                "toner" => str_replace(["~"], "", $tonerLevel),
-                "totalPrintsToday" => ($totalPrints + rand(10, 30)) - $totalPrints,
-                "totalPrints" => $totalPrints + rand(500, 900)
-            ],
-            "rh" => [
-                "toner" => str_replace(["~"], "", $tonerLevel),
-                "totalPrintsToday" => ($totalPrints + rand(10, 30)) - $totalPrints,
-                "totalPrints" => $totalPrints + rand(500, 900)
-            ],
-            "cartazista" => [
-                "toner" => str_replace(["~"], "", $tonerLevel),
-                "totalPrintsToday" => ($totalPrints + rand(10, 30)) - $totalPrints,
-                "totalPrints" => $totalPrints + rand(500, 900)
-            ]
-        ];
-
         $data = [
             "title" => "Estatísticas das impressoras",
-            "printers" => Helpers::getJsonFileData("printers"),
-            "printersData" => $printersData
+            "printers" => Helpers::getJsonFileData("printers")
         ];
 
         $this->renderView("/pages/reports/printers/index", $data);
