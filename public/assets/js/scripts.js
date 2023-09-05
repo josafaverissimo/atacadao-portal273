@@ -1,3 +1,5 @@
+const baseUrl = "https://atacadao-portal273"
+
 String.prototype.removeAccents = function() {
     return this.toString()
         .replace(/[àáâã]/g, "a")
