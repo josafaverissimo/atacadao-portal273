@@ -2,4 +2,5 @@
     bottom: 0;
     background-color: #efefef;
     font-size: 0.8rem;
+    z-index: 1
 }
