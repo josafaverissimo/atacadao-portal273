@@ -1,7 +1,8 @@
 function ReportsListItem() {
-    function create(url, name, description, time, footer) {
+    function create(url, target, name, description, time, footer) {
         const itemAnchor = document.createElement("a")
         itemAnchor.href = url
+        itemAnchor.target = target
         itemAnchor.classList.add("list-group-item", "list-group-item-action", "flex-column", "align-items-start")
 
         const itemWrapperDiv = document.createElement("div")
@@ -50,8 +51,8 @@ function ReportsList(reportsDataSelector) {
         listGroup.appendChild(notFound)
     }
 
-    function push({url, name, description, time, footer}) {
-        const item = reportListItem.create(url, name, description, time, footer ?? defaultFooter)
+    function push({url, target, name, description, time, footer}) {
+        const item = reportListItem.create(url, target, name, description, time, footer ?? defaultFooter)
         listGroup.appendChild(item)
     }
 
@@ -68,6 +69,7 @@ function ReportsList(reportsDataSelector) {
         return [].reduce.call(items, (reports, report) => {
             return [...reports, {
                 url: report.href,
+                target: report.target,
                 time: report.querySelector("div > small").textContent,
                 name: report.querySelector("h1").textContent,
                 description: report.querySelector("p").textContent
