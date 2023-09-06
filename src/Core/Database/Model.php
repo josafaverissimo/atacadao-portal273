@@ -1,25 +1,26 @@
 <?php
 
 namespace Src\Core\Database;
+use Src\Interfaces\Database\Orm;
 
 abstract class Model
 {
     protected string $table;
     protected Orm $orm;
 
-    public function __construct($table)
+    public function __construct(string $table, Orm $orm = null)
     {
         $this->table = $table;
-        $this->orm = new Orm($table);
+        $this->orm = $orm;
     }
 
-    public function getBy($column, $value)
+    public function get($columns, $column, $value): array
     {
-        return Sql::select("*", $this->table, $column, $value);
+        return Sql::select($columns, $this->table, $column, $value, $this->orm::class);
     }
 
-    public function push(array $values): void
+    public function push(array $values): int
     {
-        Sql::insert($this->table, $values);
+        return Sql::insert($this->table, $values);
     }
 }

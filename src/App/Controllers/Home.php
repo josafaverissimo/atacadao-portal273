@@ -12,11 +12,7 @@ class Home extends Controller
     public function index(): void
     {
         $birthdayPeopleModel = new BirthdayPeople();
-        xdebug_var_dump($birthdayPeopleModel->push([
-           "name" => "Josafá",
-           "birthday" => "2023-09-10"
-        ]));
-        xdebug_var_dump($birthdayPeopleModel->getBy("id", 1));
+        xdebug_var_dump($birthdayPeopleModel->get("*", "id", 1));
         die();
 
         $unitsPhonesDataset = new UnitsPhones();
