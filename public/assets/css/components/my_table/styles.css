@@ -1,5 +1,6 @@
 .my-table {
-    height: 540px;
+    max-height: 540px;
+    height: auto;
     overflow-y: auto;
     font-size: 0.88rem;
     position: relative;

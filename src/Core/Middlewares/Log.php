@@ -2,9 +2,9 @@
 
 namespace Src\Core\Middlewares;
 
-use Src\Core\Interfaces\Middleware as MiddlewareInterface;
+use Src\Interfaces\Core\IMiddleware;
 
-class Log implements MiddlewareInterface
+class Log implements IMiddleware
 {
     public function call(): void
     {

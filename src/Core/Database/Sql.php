@@ -4,38 +4,101 @@ namespace Src\Core\Database;
 
 final class Sql
 {
-    public static function select(
-        string $columns,
-        string $table,
-        string $column,
-        string $value,
-        string $class = "StdClass"
-    ): array {
-        $dbInstance = Connect::getInstance();
+    private string $query;
+    private array $error;
+    private \PDO $dbInstance;
+    private \PDOStatement $statement;
+    private array $valuesToBind;
 
-        $query = "SELECT {$columns} FROM {$table} WHERE {$column} = :value";
-        $statement = $dbInstance->prepare($query);
-        $statement->execute([
-            "value" => $value
-        ]);
-
-        return $statement->fetchAll(\PDO::FETCH_CLASS, $class);
+    public function __construct()
+    {
+        $this->query = "";
+        $this->dbInstance = Connect::getInstance();
+        $this->valuesToBind = [];
     }
 
-    public static function insert($table, array $data): int
+    public function getQuery(): string
     {
-        $dbInstance = Connect::getInstance();
+        return trim($this->query);
+    }
 
-        $columns = array_keys($data);
-        $valuesToBind = implode(",", array_map(function($column) {
-            return ":{$column}";
-        }, $columns));
-        $columnsImploded = implode(",", $columns);
+    public function getError(): array
+    {
+        return $this->error ?? $this->dbInstance->errorInfo();
+    }
 
-        $query = "INSERT INTO {$table} ({$columnsImploded}) VALUES ({$valuesToBind});";
-        $statement = $dbInstance->prepare($query);
-        $statement->execute($data);
+    public function select(string $table, string $columns = "*"): Sql
+    {
+        $this->query .= "SELECT {$columns} FROM {$table}";
 
-        return $statement->rowCount();
+        return $this;
+    }
+
+    public function where(string $columnAndComparison, string $value, $operator = ""): Sql
+    {
+        if(!str_contains($this->query, " WHERE ")) {
+            $this->query .= " WHERE ";
+        }
+
+        $operator = strtoupper($operator);
+        $columnAndComparison = trim($columnAndComparison);
+        $columnAndComparison .= !str_contains($columnAndComparison, " ") ? " =" : "";
+
+        $column = explode(" ", $columnAndComparison)[0];
+        $boundValue = ":{$column}";
+
+        $this->valuesToBind[$boundValue] = $value;
+
+        $this->query .= "{$columnAndComparison} {$boundValue} {$operator}";
+
+        return $this;
+    }
+
+    public function insert($table, array $valuesByColumns): Sql
+    {
+        $columns = array_keys($valuesByColumns);
+        $implodedColumns = implode(",", $columns);
+
+        $boundColumns = array_map(fn($column) => ":{$column}", $columns);
+        $implodedBoundColumns = implode(",", $boundColumns);
+
+        $this->valuesToBind = array_combine($boundColumns, array_values($valuesByColumns));
+        $this->query = "INSERT INTO {$table} ({$implodedColumns}) VALUES ({$implodedBoundColumns})";
+
+        return $this;
+    }
+
+    public function execute(): bool
+    {
+        try {
+            $this->statement = $this->dbInstance->prepare($this->getQuery());
+
+            $success = $this->statement->execute($this->valuesToBind);
+            $this->query = str_replace(
+                array_keys($this->valuesToBind),
+                array_values($this->valuesToBind),
+                $this->query
+            );
+        } catch(\PDOException $exception) {
+            $this->error = $exception->errorInfo;
+        }
+
+        return $success ?? false;
+    }
+
+    public function fetch($class = "StdClass"): mixed
+    {
+        $this->statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+        return $this->statement->fetch();
+    }
+
+    public function fetchAll($class = "StdClass"): array
+    {
+        return $this->statement->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+    }
+
+    public function affectedRows(): int
+    {
+        return $this->statement->rowCount();
     }
 }

@@ -1,26 +1,47 @@
 <?php
 
 namespace Src\Core\Database;
-use Src\Interfaces\Database\Orm;
+use Src\Interfaces\Database\IOrm;
+use Src\Interfaces\Database\IModel;
 
-abstract class Model
+abstract class Model implements IModel
 {
+    protected Sql $sql;
     protected string $table;
-    protected Orm $orm;
+    protected IOrm $orm;
 
-    public function __construct(string $table, Orm $orm = null)
+    public function __construct(string $table, IOrm $orm = null)
     {
+        $this->sql = new Sql();
         $this->table = $table;
         $this->orm = $orm;
     }
 
-    public function get($columns, $column, $value): array
+    public function getAll(string $columns = "*"): array
     {
-        return Sql::select($columns, $this->table, $column, $value, $this->orm::class);
+        $this->sql->select($this->table, $columns);
+        $this->sql->execute();
+
+        return $this->sql->fetchAll($this->orm::class);
     }
 
-    public function push(array $values): int
+    public function getBy(string $columnAndComparison, string $value): ?IOrm
     {
-        return Sql::insert($this->table, $values);
+        $success = $this->sql->select($this->table)
+            ->where($columnAndComparison, $value)
+            ->execute();
+
+        if($success) {
+            return null;
+        }
+
+        return $this->sql->fetch($this->orm::class);
+    }
+
+    public function push(array $valuesByColumns): bool
+    {
+        $this->sql->insert($this->table, $valuesByColumns)->execute();
+
+        return $this->sql->affectedRows() > 0;
     }
 }

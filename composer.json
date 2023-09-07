@@ -21,6 +21,7 @@
     "require": {
         "ext-sockets": "*",
         "ext-dom": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-mbstring": "*"
     }
 }

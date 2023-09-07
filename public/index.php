@@ -22,5 +22,10 @@ $router->group(["prefix" => "phones"], function() {
     $this->get("/unitPhones/unitId/(:any)", "Phones:getUnitPhonesByUnitId");
 });
 
+$router->group(["prefix" => "update"], function() {
+    $this->get("/", "Update:index");
+    $this->get("/birthday-people", "Update:loadBirthdayPeople");
+});
+
 
 $router->dispatch();

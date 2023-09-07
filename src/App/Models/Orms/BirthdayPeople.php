@@ -2,21 +2,41 @@
 
 namespace Src\App\Models\Orms;
 
-use Src\Interfaces\Database\Orm as OrmInterface;
+use Src\Interfaces\Database\IOrm;
 
-class BirthdayPeople implements OrmInterface
+class BirthdayPeople implements IOrm
 {
-    private ?int $id;
-    private ?string $name;
-    private ?string $birthday;
+    private array $columns;
+    private const SET_FUNCTIONS = [
+      "name" => ""
+    ];
+
+    public function __construct(?string $name = null, ?string $birthday = null)
+    {
+        $this->columns = [
+            "id" => null,
+            "name" => $name,
+            "birthday" => $birthday
+        ];
+    }
 
     public function __get(string $column): mixed
     {
-        return $this->$column ?? null;
+        return $this->columns[$column] ?? null;
     }
 
-    public function __set(string $column, mixed $value)
+    public function __set(string $column, mixed $value): void
     {
-        $this->$column = $value;
+        $this->set($column, $value);
+    }
+
+    public function set(string $column, mixed $value): void
+    {
+        $this->columns[$column] = $value;
+    }
+
+    public function getColumns(): array
+    {
+        return $this->columns;
     }
 }

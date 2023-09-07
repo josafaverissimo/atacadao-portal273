@@ -32,8 +32,8 @@
                         <tbody>
                         <?php foreach ($birthdayPeople as $birthdayPerson): ?>
                             <tr>
-                                <td><?= $birthdayPerson->nome; ?></td>
-                                <td><?= $birthdayPerson->aniversario; ?></td>
+                                <td><?= mb_convert_case($birthdayPerson->name, MB_CASE_TITLE); ?></td>
+                                <td><?= Helpers::dateBr($birthdayPerson->birthday); ?></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

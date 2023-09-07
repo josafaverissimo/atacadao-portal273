@@ -88,4 +88,10 @@ final class Helpers
 
         return json_decode($jsonData);
     }
+
+    public static function dateBr(string $date): string
+    {
+        $date = new \DateTime($date);
+        return $date->format("d/m/Y");
+    }
 }

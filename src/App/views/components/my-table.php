@@ -8,7 +8,7 @@
     <div class="spinner spinner-border text-secondary" role="status" hidden>
         <span class="visually-hidden">Carregando...</span>
     </div>
-    <table class="table table-striped table-bordered w-100">
+    <table class="table table-striped table-bordered w-100 m-0">
         <?php if(!empty($thead)): ?>
             <thead>
                 <tr>

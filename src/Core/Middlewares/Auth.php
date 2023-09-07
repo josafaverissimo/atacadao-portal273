@@ -2,9 +2,10 @@
 
 namespace Src\Core\Middlewares;
 
-use Src\Core\Interfaces\Middleware as MiddlewareInterface;
+use Src\Interfaces\Core\Middleware;
+use Src\Interfaces\Core\IMiddleware;
 
-class Auth implements MiddlewareInterface
+class Auth implements IMiddleware
 {
     public function call(): void
     {
