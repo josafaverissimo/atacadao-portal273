@@ -50,7 +50,7 @@ class Reports extends Controller
 
         $bodyPath = "/html/body";
         preg_match("/[tT]oner\s+(\d+)%/", $printerStatsHtml->query($bodyPath)[0]->textContent, $matches);
-        $tonerLevel = str_replace("%", "", $matches[1]);
+        $tonerLevel = str_replace(["%", "OK"], ["", "100"], $matches[1]);
 
         preg_match("/[tT]otal\s+(\d+)/", $printerStatsHtml->query($bodyPath)[0]->textContent, $matches);
         $totalPrints = $matches[1];
