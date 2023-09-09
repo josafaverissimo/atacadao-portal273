@@ -17,6 +17,13 @@ final class Sql
         $this->valuesToBind = [];
     }
 
+    public function query(string $query): Sql
+    {
+        $this->query = $query;
+
+        return $this;
+    }
+
     public function getQuery(): string
     {
         return trim($this->query);
@@ -54,6 +61,20 @@ final class Sql
         return $this;
     }
 
+    public function orderBy(string $column, string $order): Sql
+    {
+        $this->query .= " ORDER BY {$column} {$order}";
+
+        return $this;
+    }
+
+    public function delete(string $table): Sql
+    {
+        $this->query = "DELETE FROM {$table}";
+
+        return $this;
+    }
+
     public function insert($table, array $valuesByColumns): Sql
     {
         $columns = array_keys($valuesByColumns);
@@ -86,7 +107,7 @@ final class Sql
         return $success ?? false;
     }
 
-    public function fetch($class = "StdClass"): mixed
+    public function fetch(string $class = "StdClass"): mixed
     {
         $this->statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
         return $this->statement->fetch();
