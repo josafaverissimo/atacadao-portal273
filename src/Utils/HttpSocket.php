@@ -10,8 +10,12 @@ class HttpSocket extends TcpSocket
         $this->connect();
     }
 
-    public function doRequest(string $method, string $path, string|array $data = ""): string
-    {
+    public function doRequest(
+        string $method,
+        string $path,
+        string|array $data = "",
+        string $contentType = "application/x-www-form-urlencoded"
+    ): string {
         $method = strtoupper($method);
 
         if(gettype($data) === "array") {
@@ -21,19 +25,19 @@ class HttpSocket extends TcpSocket
         $request = "{$method} {$path} HTTP/1.1\r\n";
         $request .= "HOST {$this->host}:{$this->port}\r\n";
         if(!empty($data)) {
-            $request .= "Content-type: application/x-www-form-urlencoded\r\n";
+            $request .= "Content-type: {$contentType}\r\n";
             $request .= "Content-Length: " . strlen($data) . "\r\n";
         }
         $request .= "\r\n";
         $request .= $data;
 
-        socket_write($this->socket, $request, strlen($request));
+        $this->write($request);
 
         $response = "";
-        while($chunk = socket_read($this->socket, 4096)) {
+        while($chunk = $this->read()) {
             $response .= $chunk;
         }
 
-        return $response;
+        return preg_replace("/http(.*\n){6}/i", "", $response);
     }
 }

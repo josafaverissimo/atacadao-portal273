@@ -10,19 +10,24 @@ class TcpSocket
 
     public function __construct($host, $port)
     {
-        $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+        $this->socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         $this->host = $host;
         $this->port = $port;
     }
 
-    protected function getHost(): string
+    public function getHost(): string
     {
         return $this->host;
     }
 
-    protected function getPort(): int
+    public function getPort(): int
     {
         return $this->port;
+    }
+
+    public function isConnected(): bool
+    {
+        return socket_last_error($this->socket) === 0;
     }
 
     public function getError(): string
@@ -33,7 +38,17 @@ class TcpSocket
     public function connect(): void
     {
         socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 8, 'usec' => 0));
-        socket_connect($this->socket, $this->host, $this->port);
+        @socket_connect($this->socket, $this->host, $this->port);
+    }
+
+    public function write(string $data): void
+    {
+        socket_write($this->socket, $data, strlen($data));
+    }
+
+    public function read(): string
+    {
+        return socket_read($this->socket, 4096);
     }
 
     public function close(): void
