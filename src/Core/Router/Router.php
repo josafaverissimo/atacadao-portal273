@@ -2,8 +2,8 @@
 
 namespace Src\Core\Router;
 
-use Src\Core\Helpers;
 use Closure;
+use Src\Utils\Helpers;
 
 class Router
 {

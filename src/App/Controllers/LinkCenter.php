@@ -3,7 +3,7 @@
 namespace Src\App\Controllers;
 
 use Src\Core\Controller;
-use Src\Core\Helpers;
+use Src\Utils\Helpers;
 
 class LinkCenter extends Controller
 {
@@ -11,7 +11,7 @@ class LinkCenter extends Controller
     {
         $data = [
             "title" => "Central de links",
-            "linksByCategory" => Helpers::getData("links-by-category")
+            "linksByCategory" => Helpers::getDatasetFile("links-by-category")
         ];
 
         $this->renderView("/pages/link_center/index", $data);

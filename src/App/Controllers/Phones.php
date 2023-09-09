@@ -4,7 +4,7 @@ namespace Src\App\Controllers;
 
 use Src\App\Dataset\UnitsPhones;
 use Src\Core\Controller;
-use Src\Core\Helpers;
+use Src\Utils\Helpers;
 
 class Phones extends Controller
 {
@@ -12,7 +12,7 @@ class Phones extends Controller
     {
         $unitId = 273;
         $unitsOptions = array_reduce(
-            Helpers::getJsonFileData("units"),
+            json_decode(Helpers::getDatasetFile("/json/units.json")),
             function (array $options, object $unit) use ($unitId) {
                 $unitFiltered = new \StdClass();
                 $unitFiltered->id = $unit->id_filial;
@@ -25,7 +25,8 @@ class Phones extends Controller
                 return [...$options, $unitFiltered];
             }, []
         );
-        $unitPhonesRows = $this->getUnitPhonesDataByUnitId($unitId);
+        //$unitPhonesRows = $this->getUnitPhonesDataByUnitId($unitId);
+        $unitPhonesRows = [];
 
         $data = [
             "title" => "Lista de Ramais",

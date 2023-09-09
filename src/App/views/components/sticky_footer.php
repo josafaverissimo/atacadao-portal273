@@ -1,4 +1,5 @@
-<?php use Src\Core\Helpers; ?>
+<?php
+use Src\Utils\Helpers; ?>
 
 <?php $this->setSection("head"); ?>
   <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/components/sticky_footer/styles.css"); ?>">

@@ -1,4 +1,5 @@
-<?php use Src\Core\Helpers; ?>
+<?php
+use Src\Utils\Helpers; ?>
 
 <?php $this->template("/base", ["title" => $title]); ?>
 

@@ -1,4 +1,5 @@
-<?php use Src\Core\Helpers; ?>
+<?php
+use Src\Utils\Helpers; ?>
 
 <?php $navbar =  $this->getViewHtml("/components/navbar"); ?>
 <?php $stickyFooter = $this->getViewHtml("/components/sticky_footer"); ?>

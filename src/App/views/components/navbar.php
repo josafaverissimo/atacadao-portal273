@@ -1,5 +1,7 @@
 <?php
-  use Src\Core\Helpers;
+
+use Src\Utils\Helpers;
+
 ?>
 
 <?php $this->setSection("head"); ?>

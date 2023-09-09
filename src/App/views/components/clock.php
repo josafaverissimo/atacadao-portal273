@@ -1,4 +1,5 @@
-<?php use Src\Core\Helpers; ?>
+<?php
+use Src\Utils\Helpers; ?>
 
 <span class="time">
     <?php

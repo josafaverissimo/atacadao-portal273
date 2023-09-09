@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Core;
+namespace Src\Utils;
 
 final class Helpers
 {
@@ -71,27 +71,21 @@ final class Helpers
         echo "</script>";
     }
 
-    public static function getData(string $file): array|object
+    public static function getDatasetFile(string $subpath): string
     {
-        return require Helpers::baseDatasetPath($file) . ".php";
-    }
+        $filePath = Helpers::baseDatasetPath("/{$subpath}");
+        $fileStream = fopen($filePath, "rb");
+        $fileData = "";
 
-    public static function getJsonFileData(string $jsonFile): array|object
-    {
-        $filepath = Helpers::baseDatasetPath("/json/{$jsonFile}") . ".json";
-        $jsonFileStream = fopen($filepath, "rb");
-        $jsonData = "";
-
-        while(!feof($jsonFileStream)) {
-            $jsonData .= fread($jsonFileStream, 4096);
+        while(!feof($fileStream)) {
+            $fileData .= fread($fileStream, 4096);
         }
 
-        return json_decode($jsonData);
+        return $fileData;
     }
 
     public static function dateBr(string $date): string
     {
-        $date = new \DateTime($date);
-        return $date->format("d/m/Y");
+        return date("d/m/Y", strtotime($date));
     }
 }

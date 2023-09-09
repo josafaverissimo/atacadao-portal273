@@ -1,6 +1,6 @@
 <?php
 
-use Src\Core\Helpers;
+use Src\Utils\Helpers;
 
 return [
     "general-links" => [

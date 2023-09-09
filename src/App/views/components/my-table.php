@@ -1,10 +1,26 @@
-<?php use Src\Core\Helpers; ?>
+<?php
+use Src\Utils\Helpers; ?>
 
 <?php $this->setSection("head"); ?>
     <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/components/my_table/styles.css") ?>">
 <?php $this->endSection("head"); ?>
 
-<div id="<?= $id ?>" class="my-table <?= $classes ?> shadow">
+<?php
+
+    if(!empty($attributes)) {
+        $attributesString = array_reduce(
+            array_keys($attributes),
+            fn($attributesString, $name) => $attributesString . " {$name}=\"{$attributes[$name]}\"",
+            ""
+        );
+    }
+?>
+
+<div
+    <?= !empty($id) ? "id=\"{$id}\"" : "" ?>
+    class="my-table <?= $classes ?> shadow"
+    <?= $attributesString ?? "" ?>
+>
     <div class="spinner spinner-border text-secondary" role="status" hidden>
         <span class="visually-hidden">Carregando...</span>
     </div>

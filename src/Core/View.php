@@ -2,6 +2,8 @@
 
 namespace Src\Core;
 
+use Src\Utils\Helpers;
+
 class View
 {
     private array $template;
@@ -24,8 +26,6 @@ class View
             "path" => "templates/{$templatePath}",
             "data" => $data
         ];
-
-
     }
 
     public function getViewHtml(string $viewPath, array $data = []): string

@@ -8,7 +8,7 @@
         },
         "files": [
             "src/Core/config.php",
-            "src/Core/Helpers.php"
+            "src/Utils/Helpers.php"
         ]
     },
     "authors": [
