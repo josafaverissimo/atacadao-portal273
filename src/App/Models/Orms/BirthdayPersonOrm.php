@@ -3,17 +3,18 @@
 namespace Src\App\Models\Orms;
 
 use Src\Interfaces\Database\IOrm;
+use Src\Utils\Helpers;
 
-class BirthdayPeople implements IOrm
+class BirthdayPersonOrm implements IOrm
 {
-    private array $columns;
+    private array $row;
     private const SET_FUNCTIONS = [
       "name" => ""
     ];
 
     public function __construct(?string $name = null, ?string $birthday = null)
     {
-        $this->columns = [
+        $this->row = [
             "id" => null,
             "name" => $name,
             "birthday" => $birthday
@@ -22,7 +23,7 @@ class BirthdayPeople implements IOrm
 
     public function __get(string $column): mixed
     {
-        return $this->columns[$column] ?? null;
+        return $this->row[$column] ?? null;
     }
 
     public function __set(string $column, mixed $value): void
@@ -32,11 +33,18 @@ class BirthdayPeople implements IOrm
 
     public function set(string $column, mixed $value): void
     {
-        $this->columns[$column] = $value;
+        $this->row[$column] = $value;
     }
 
-    public function getColumns(): array
+    public function getRow(): array
     {
-        return $this->columns;
+        return $this->row;
+    }
+
+    public function formatBirthday(): BirthdayPersonOrm
+    {
+        $this->row["birthday"] = Helpers::dateBr($this->row["birthday"]);
+
+        return $this;
     }
 }
