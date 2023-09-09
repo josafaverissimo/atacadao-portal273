@@ -22,9 +22,9 @@ $router->group(["prefix" => "phones"], function() {
     $this->get("/unitPhones/unitId/(:any)", "Phones:getUnitPhonesByUnitId");
 });
 
-$router->group(["prefix" => "update"], function() {
-    $this->get("/", "Update:index");
-    $this->get("/birthday-people", "Update:loadBirthdayPeople");
+$router->group(["prefix" => "crudx"], function() {
+    $this->get("/", "Crudx:index");
+    $this->get("/table/(:alpha)", "Crudx:updateTable");
 });
 
 
