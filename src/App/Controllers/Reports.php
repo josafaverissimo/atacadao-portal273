@@ -2,10 +2,10 @@
 
 namespace Src\App\Controllers;
 
-use Src\Utils\HttpSocket;
-use Src\Core\Helpers;
-use Src\Core\Html;
 use Src\Core\Controller;
+use Src\Utils\Helpers;
+use Src\Utils\Html;
+use Src\Utils\HttpSocket;
 
 class Reports extends Controller
 {

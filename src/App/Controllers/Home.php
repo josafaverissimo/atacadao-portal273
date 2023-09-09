@@ -2,15 +2,18 @@
 
 namespace Src\App\Controllers;
 
-use Src\App\Dataset\UnitsPhones;
 use Src\Core\Controller;
-use Src\App\Models\BirthdayPeople;
+use Src\App\Dataset\UnitsPhones;
+use Src\App\Models\BirthdayPeopleModel;
+use Src\App\Models\UnitsPhonesModel;
+use Src\App\Models\Orms\UnitPhoneOrm;
 
 class Home extends Controller
 {
     public function index(): void
     {
-        $birthdayPeopleModel = new BirthdayPeople();
+        $birthdayPeopleModel = new BirthdayPeopleModel();
+        $unitsPhonesModel = UnitsPhonesModel();
 
         $unitsPhonesDataset = new UnitsPhones();
         $data = [
