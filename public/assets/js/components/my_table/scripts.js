@@ -1,7 +1,6 @@
-function MyTable(id, filterFormId = null) {
-    const table = document.getElementById(id)
+function MyTable(table) {
     const tableSpinner = table.querySelector(".spinner");
-    const filterForm = filterFormId ? document.getElementById(filterFormId) : null
+    const searchFilter = table.dataset.searchFilter ? document.querySelector(table.dataset.searchFilter) : null
     const thead = getThead()
     let tbody = getTbody()
 
@@ -29,7 +28,7 @@ function MyTable(id, filterFormId = null) {
     function filterTable(search) {
         const filteredRows = tbody.reduce((rows, row) => {
             const isSearchInCell = row.some(cell => {
-                return cell.removeAccents().indexOf(search) !== -1
+                return String(cell).toLowerCase().removeAccents().indexOf(search) !== -1
             })
 
             if(isSearchInCell) {
@@ -92,17 +91,17 @@ function MyTable(id, filterFormId = null) {
     }
 
     function cleanFilter() {
-        filterForm.querySelector("input").value = ""
+        searchFilter.querySelector("input").value = ""
         loadRows(tbody)
     }
 
     function listeningFilterInput() {
-        const filterInput = filterForm.querySelector("input")
-        const cleanButton = filterForm.querySelector("button")
+        const filterInput = searchFilter.querySelector("input")
+        const cleanButton = searchFilter.querySelector("button")
 
         if(filterInput) {
             filterInput.addEventListener("input", () => {
-                const inputValue = filterInput.value.removeAccents()
+                const inputValue = filterInput.value.toLowerCase().removeAccents()
                 filterTable(inputValue)
             })
         }
@@ -130,6 +129,10 @@ function MyTable(id, filterFormId = null) {
     }
 
     listeningFilterInput()
+
+    if(tbody.length === 0) {
+        loadNotFoundRows()
+    }
 
     return {
         loadNewRows,
