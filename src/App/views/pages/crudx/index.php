@@ -32,7 +32,7 @@ use Src\Utils\Helpers; ?>
                                 <button
                                     class="btn btn-outline-dark text-sm update-button"
                                     type="button"
-                                    data-target="<?= Helpers::baseUrl("/update/table/{$table["tableToUpdate"]}") ?>"
+                                    data-target="<?= Helpers::baseUrl("/crudx/table/{$table["tableToUpdate"]}") ?>"
                                 >
                                     Atualizar
                                 </button>
