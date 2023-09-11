@@ -68,7 +68,7 @@ create table is_units
 create table is_units_phones
 (
     id          int(11) unsigned auto_increment primary key,
-    phoneNumber varchar(20) not null,
+    `number` varchar(20) not null,
     sector      varchar(30) not null,
     owner       varchar(30) not null,
     unitId      int(11) unsigned,
