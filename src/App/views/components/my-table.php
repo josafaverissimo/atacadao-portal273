@@ -27,6 +27,13 @@ use Src\Utils\Helpers; ?>
     <table class="table table-striped table-bordered w-100 m-0">
         <?php if(!empty($thead)): ?>
             <thead>
+                <?php
+                    if(!empty($push)) {
+                        if(!empty($push['thead'])) {
+                            echo $push['thead'];
+                        }
+                    }
+                ?>
                 <tr>
                     <?php foreach($thead as $th): ?>
                         <th><?= $th ?></th>

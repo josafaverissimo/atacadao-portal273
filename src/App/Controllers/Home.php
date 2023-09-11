@@ -16,8 +16,10 @@ class Home extends Controller
         $data = [
             "title" => "Portal Interno Filial 273",
             "birthdayPeople" => $birthdayPeopleModel->getAll(),
-            "unitPhones" => $unitsPhonesModel->getBy("id", 257)
+            "unitPhones" => $unitsPhonesModel->getBy("unitId =", 257)
         ];
+
+
 
         $this->renderView("/pages/home/index", $data);
     }

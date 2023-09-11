@@ -1,6 +1,5 @@
-.scrollable-table-wrapper {
-    max-height: 640px;
-    overflow-y: auto;
+#unit-phones td {
+    text-transform: lowercase;
 }
 
 #phones-table td{
