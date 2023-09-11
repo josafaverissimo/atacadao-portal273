@@ -5,6 +5,7 @@ namespace Src\Core\Database;
 final class Sql
 {
     private string $query;
+    private string $lastQuery;
     private array $error;
     private \PDO $dbInstance;
     private \PDOStatement $statement;
@@ -27,6 +28,11 @@ final class Sql
     public function getQuery(): string
     {
         return trim($this->query);
+    }
+
+    public function getLastQuery(): string
+    {
+        return trim($this->lastQuery);
     }
 
     public function getError(): array
@@ -61,9 +67,16 @@ final class Sql
         return $this;
     }
 
-    public function orderBy(string $column, string $order): Sql
+    public function orderBy(string $orderBy): Sql
     {
-        $this->query .= " ORDER BY {$column} {$order}";
+        $this->query .= " ORDER BY {$orderBy}";
+
+        return $this;
+    }
+
+    public function limit(string $limit): Sql
+    {
+        $this->query .= " LIMIT {$limit}";
 
         return $this;
     }
@@ -95,11 +108,12 @@ final class Sql
             $this->statement = $this->dbInstance->prepare($this->getQuery());
 
             $success = $this->statement->execute($this->valuesToBind);
-            $this->query = str_replace(
+            $this->lastQuery = str_replace(
                 array_keys($this->valuesToBind),
                 array_values($this->valuesToBind),
                 $this->query
             );
+            $this->query = "";
         } catch(\PDOException $exception) {
             $this->error = $exception->errorInfo;
         }
