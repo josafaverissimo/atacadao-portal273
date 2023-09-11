@@ -37,9 +37,17 @@ class UnitOrm implements IOrm
         $this->row->$column = $value;
     }
 
-    public function getRow(): \StdClass
+    public function getRow(...$columns): \StdClass
     {
-        return $this->row;
+        if(empty($columns)) {
+            return $this->row;
+        }
+
+        return (object) array_reduce($columns,
+            fn($columnsFiltered, $columnFiltered) =>
+                [...$columnsFiltered, $columnFiltered => $this->row->$columnFiltered],
+            []
+        );
     }
 
     public function loadBy(string $column, int|float|string $value): ?UnitOrm
