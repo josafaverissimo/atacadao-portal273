@@ -36,4 +36,13 @@ class UnitPhoneOrm implements IOrm
     {
         return $this->row;
     }
+
+    public function getUnitOrm(): ?UnitOrm
+    {
+        if(!empty($unitId)) {
+            return (new UnitOrm())->loadBy("id", $this->row->unitId);
+        }
+
+        return null;
+    }
 }
