@@ -7,7 +7,7 @@ drop table if exists is_reports;
 drop table if exists is_reports_categories;
 drop table if exists is_links;
 drop table if exists is_links_categories;
-DROP TABLE if exists is_birthday_people;
+drop table if exists is_birthday_people;
 
 create table is_birthday_people
 (
