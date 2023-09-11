@@ -43,7 +43,7 @@ class BirthdayPersonOrm implements IOrm
 
     public function formatBirthday(): BirthdayPersonOrm
     {
-        $this->row["birthday"] = Helpers::dateBr($this->row["birthday"]);
+        $this->row->birthday = Helpers::dateBr($this->row->birthday);
 
         return $this;
     }
