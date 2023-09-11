@@ -6,11 +6,11 @@ use Src\Interfaces\Database\IOrm;
 
 class UnitOrm implements IOrm
 {
-    private array $row;
+    private \StdClass $row;
 
     public function __construct()
     {
-        $this->row = [
+        $this->row = (object) [
             "id" => null,
             "name" => null,
             "number" => null
@@ -19,7 +19,7 @@ class UnitOrm implements IOrm
 
     public function __get(string $column): mixed
     {
-        return $this->row[$column];
+        return $this->row->$column;
     }
 
     public function __set(string $column, mixed $value): void
@@ -29,10 +29,10 @@ class UnitOrm implements IOrm
 
     public function set(string $column, mixed $value): void
     {
-        $this->row[$column] = $value;
+        $this->row->$column = $value;
     }
 
-    public function getRow(): array
+    public function getRow(): \StdClass
     {
         return $this->row;
     }

@@ -7,14 +7,14 @@ use Src\Utils\Helpers;
 
 class BirthdayPersonOrm implements IOrm
 {
-    private array $row;
+    private \StdClass $row;
     private const SET_FUNCTIONS = [
       "name" => ""
     ];
 
     public function __construct(?string $name = null, ?string $birthday = null)
     {
-        $this->row = [
+        $this->row = (object) [
             "id" => null,
             "name" => $name,
             "birthday" => $birthday
@@ -23,7 +23,7 @@ class BirthdayPersonOrm implements IOrm
 
     public function __get(string $column): mixed
     {
-        return $this->row[$column] ?? null;
+        return $this->row->$column;
     }
 
     public function __set(string $column, mixed $value): void
@@ -33,10 +33,10 @@ class BirthdayPersonOrm implements IOrm
 
     public function set(string $column, mixed $value): void
     {
-        $this->row[$column] = $value;
+        $this->row->$column = $value;
     }
 
-    public function getRow(): array
+    public function getRow(): \StdClass
     {
         return $this->row;
     }
