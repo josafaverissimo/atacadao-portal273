@@ -23,13 +23,17 @@ class HttpSocket extends TcpSocket
         }
 
         $request = "{$method} {$path} HTTP/1.1\r\n";
-        $request .= "HOST {$this->host}:{$this->port}\r\n";
+        $request .= "HOST: {$this->host}:{$this->port}\r\n";
         if(!empty($data)) {
             $request .= "Content-type: {$contentType}\r\n";
             $request .= "Content-Length: " . strlen($data) . "\r\n";
         }
         $request .= "\r\n";
-        $request .= $data;
+
+        if(!empty($data)) {
+            $request .= $data;
+            $request .= "\r\n";
+        }
 
         $this->write($request);
 
