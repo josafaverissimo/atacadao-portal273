@@ -37,13 +37,17 @@ abstract class Model implements IModel
         return $this->sql->getError();
     }
 
-    public function getAll(array $orderBy = []): array
+    public function getAll(array $options = []): array
     {
         $this->sql->select($this->table);
-        if(!empty($orderBy)) {
-            $column = array_keys($orderBy)[0];
-            $value = array_values($orderBy)[0];
-            $this->sql->orderBy($column, $value);
+        if(!empty($options)) {
+            if(!empty($options["orderBy"])) {
+                $this->sql->orderBy($options["orderBy"]);
+            }
+
+            if(!empty($options["limit"])) {
+                $this->sql->limit($options["limit"]);
+            }
         }
         $this->sql->execute();
 
@@ -51,17 +55,23 @@ abstract class Model implements IModel
         return $this->sql->fetchAll($class);
     }
 
-    public function getBy(string $columnAndComparison, string $value): ?IOrm
+    public function getBy(string $columnAndComparison, string $value): null|IOrm|array
     {
         $success = $this->sql->select($this->table)
             ->where($columnAndComparison, $value)
             ->execute();
 
-        if($success) {
+        if(!$success) {
             return null;
         }
 
-        return $this->sql->fetch($this->orm::class);
+        $rows = $this->sql->fetchAll($this->orm::class);
+
+        if(count($rows) > 1) {
+            return $rows;
+        }
+
+        return count($rows) === 0 ? [] : $rows[0];
     }
 
     public function push(array $valuesByColumns): int
