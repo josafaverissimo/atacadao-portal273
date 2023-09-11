@@ -71,10 +71,15 @@ final class Helpers
         echo "</script>";
     }
 
-    public static function getDatasetFile(string $subpath): string
+    public static function getDatasetFile(string $subpath): ?string
     {
         $filePath = Helpers::baseDatasetPath("/{$subpath}");
         $fileStream = fopen($filePath, "rb");
+
+        if($fileStream === false) {
+            return null;
+        }
+
         $fileData = "";
 
         while(!feof($fileStream)) {
