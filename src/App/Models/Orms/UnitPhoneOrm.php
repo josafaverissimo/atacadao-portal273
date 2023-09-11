@@ -10,7 +10,7 @@ class UnitPhoneOrm implements IOrm
     {
         $this->row = (object) [
             "id" => null,
-            "phoneNumber" => null,
+            "number" => null,
             "sector" => null,
             "owner" => null,
             "unitId" => null

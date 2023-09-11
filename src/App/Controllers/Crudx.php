@@ -141,7 +141,7 @@ class Crudx extends Controller
 
             foreach($unitsPhones as $row) {
                 $affectedRows += $unitsPhonesModel->push([
-                    "phoneNumber" => $row->telefone,
+                    "number" => $row->telefone,
                     "sector" => $row->setor,
                     "owner" => $row->depto,
                     "unitId" => (int) $unitOrm->loadBy("number", $unitNumber)->id
