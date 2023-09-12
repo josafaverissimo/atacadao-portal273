@@ -22,10 +22,13 @@ class Router
         $this->routes[] = $this->currentRoute;
     }
 
-    public function middleware(array $middlewares): void
+    public function middlewares(...$middlewares): void
     {
-        $this->options->push(["middlewares" => $middlewares]);
-        $this->currentRoute->setOptions($this->options);
+        $middlewares = ["middlewares" => $middlewares];
+
+        $this->options->push($middlewares);
+        $this->currentRoute->setOptions(clone $this->options);
+        $this->options->remove($middlewares);
     }
 
     public function group(array $options, Closure $callback): void
