@@ -25,10 +25,9 @@ function authenticate() {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("input").forEach(input => {
-        input.addEventListener(
-            "input",
-            () => document.querySelector("img").classList.add("expand")
-        )
+        const img = document.querySelector("img")
+        input.addEventListener("focus",() => img.classList.add("expand"))
+        input.addEventListener("blur", () => img.classList.remove("expand"))
     })
 
     authenticate()
