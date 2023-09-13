@@ -1,6 +1,7 @@
 <?php
 use Src\Utils\Helpers;
 use Src\Interfaces\Database\IOrm;
+use Src\App\Models\Orms\BirthdayPersonOrm;
 ?>
 
 <?php $this->template("base", ["title" => $title]); ?>
@@ -30,18 +31,26 @@ use Src\Interfaces\Database\IOrm;
             <div class="h-100 p-5 shadow-sm target">
                 <h2 class="text-center">Aniversariantes do mês</h2>
 
-                <div class="scrollable-table-wrapper">
-                    <table class="table table-striped table-bordered">
-                        <tbody>
-                        <?php foreach ($birthdayPeople as $birthdayPerson): ?>
-                            <tr>
-                                <td><?= mb_convert_case($birthdayPerson->name, MB_CASE_TITLE); ?></td>
-                                <td><?= Helpers::dateBr($birthdayPerson->birthday); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                <div id="birthday-people-search-filter" class="d-flex mb-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Digite o nome ou a data" aria-label="Pesquisar">
+                    <button class="btn btn-outline-secondary" type="button">Limpar</button>
                 </div>
+
+                <?=
+                    $this->getViewHtml("/components/my-table", [
+                        "id" => "birthday-people",
+                        "thead" => ["Nome", "Data"],
+                        "classes" => "",
+                        "rows" => array_map(
+                                fn(BirthdayPersonOrm $orm) =>
+                                    $orm->formatBirthday()->getRowExcept("id"),
+                                $birthdayPeople
+                        ),
+                        "attributes" => [
+                            "data-search-filter" => "#birthday-people-search-filter"
+                        ]
+                    ])
+                ?>
             </div>
         </div>
         <div class="col-md-12 col-lg-6 align-self-start">
