@@ -19,8 +19,6 @@ class Home extends Controller
             "unitPhones" => $unitsPhonesModel->getBy("unitId =", 257)
         ];
 
-
-
         $this->renderView("/pages/home/index", $data);
     }
 }

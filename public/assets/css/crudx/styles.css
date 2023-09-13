@@ -1,3 +1,4 @@
 table td {
     text-transform: capitalize;
+    white-space: nowrap;
 }
