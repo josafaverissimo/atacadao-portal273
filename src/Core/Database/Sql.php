@@ -62,7 +62,7 @@ final class Sql
 
         $this->valuesToBind[$boundValue] = $value;
 
-        $this->query .= "{$columnAndComparison} {$boundValue} {$operator}";
+        $this->query .= "{$columnAndComparison} {$boundValue} {$operator} ";
 
         return $this;
     }
