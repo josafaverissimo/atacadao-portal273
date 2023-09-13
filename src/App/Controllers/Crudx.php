@@ -65,7 +65,6 @@ class Crudx extends Controller
     private function getBirthdayPeopleRows(): array
     {
         $birthdayPeopleModel = new BirthdayPeopleModel();
-
         return array_map(
             fn(IOrm $orm) => (array) ($orm->getRowExcept("id")),
             array_map(
@@ -99,7 +98,10 @@ class Crudx extends Controller
                     "Filial" => $unitOrm->name
                 ];
             },
-            $unitsPhonesModel->getAll(["limit" => "90"])
+            $unitsPhonesModel->getAll(["where" => [
+                "comparison" => "unitId =",
+                "value" => CONF_DEFAULT_UNIT_ID
+            ]])
         );
     }
 
@@ -178,6 +180,7 @@ class Crudx extends Controller
     private function updateUnitsPhones(): int
     {
         $unitsPhonesJson = json_decode(Helpers::getDatasetFile("/json/units-phones.json"));
+
         $unitsPhonesModel = new UnitsPhonesModel();
 
         $unitOrm = new UnitOrm();
@@ -187,13 +190,15 @@ class Crudx extends Controller
 
         $affectedRows = 0;
         foreach($unitsPhonesJson as $unitsPhones) {
-            if(empty($unitsPhones)) {
-                continue;
-            }
+            if(empty($unitsPhones)) continue;
 
             $unitNumber = (int) $unitsPhones[0]->id_filial;
 
             foreach($unitsPhones as $row) {
+                $unitId = $unitOrm->loadBy("number", $unitNumber)->id;
+
+                if(empty($unitId)) continue;
+
                 $affectedRows += $unitsPhonesModel->push([
                     "number" => $row->telefone,
                     "sector" => $row->setor,
