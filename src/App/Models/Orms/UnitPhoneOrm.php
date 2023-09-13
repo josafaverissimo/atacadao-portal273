@@ -45,9 +45,16 @@ class UnitPhoneOrm implements IOrm
         );
     }
 
+    public function getRowExcept(...$columns): \StdClass
+    {
+        $filteredColumns = array_diff(array_keys((array) $this->row), (array) $columns);
+
+        return $this->getRow(...$filteredColumns);
+    }
+
     public function getUnitOrm(): ?UnitOrm
     {
-        if(!empty($unitId)) {
+        if(!empty($this->row->unitId)) {
             return (new UnitOrm())->loadBy("id", $this->row->unitId);
         }
 

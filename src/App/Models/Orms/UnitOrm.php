@@ -50,6 +50,13 @@ class UnitOrm implements IOrm
         );
     }
 
+    public function getRowExcept(...$columns): \StdClass
+    {
+        $filteredColumns = array_diff(array_keys((array) $this->row), (array) $columns);
+
+        return $this->getRow(...$filteredColumns);
+    }
+
     public function loadBy(string $column, int|float|string $value): ?UnitOrm
     {
         $success = $this->sql->select($this->table)

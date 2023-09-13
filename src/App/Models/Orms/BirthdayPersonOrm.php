@@ -8,9 +8,6 @@ use Src\Utils\Helpers;
 class BirthdayPersonOrm implements IOrm
 {
     private \StdClass $row;
-    private const SET_FUNCTIONS = [
-      "name" => ""
-    ];
 
     public function __construct(?string $name = null, ?string $birthday = null)
     {
@@ -47,6 +44,13 @@ class BirthdayPersonOrm implements IOrm
                 [...$columnsFiltered, $columnFiltered => $this->row->$columnFiltered],
             []
         );
+    }
+
+    public function getRowExcept(...$columns): \StdClass
+    {
+        $filteredColumns = array_diff(array_keys((array) $this->row), (array) $columns);
+
+        return $this->getRow(...$filteredColumns);
     }
 
     public function formatBirthday(): BirthdayPersonOrm
