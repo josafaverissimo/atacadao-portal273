@@ -20,9 +20,10 @@
     position:absolute;
     left: 0;
     right: 0;
+    top: -4.5rem;
     margin: 5rem auto;
-    width: 100px;
-    height: 100px;
+    width: 4rem;
+    height: 4rem;
 }
 
 .my-table td {
