@@ -64,7 +64,11 @@ class UnitOrm implements IOrm
             ->execute();
 
         if($success) {
-            $this->row = $this->sql->fetch();
+            $row = $this->sql->fetch();
+
+            if($row !== false) {
+                $this->row = $row;
+            }
         }
 
         return $this;
