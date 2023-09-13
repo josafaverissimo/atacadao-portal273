@@ -1,4 +1,3 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const phonesTable = document.querySelector("#unit-phones")
-    MyTable(phonesTable)
+    document.querySelectorAll(".my-table").forEach(table => MyTable(table))
 })
