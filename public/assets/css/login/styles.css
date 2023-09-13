@@ -1,0 +1,39 @@
+main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+main > div {
+    width: 40vw;
+}
+
+img {
+    position: absolute;
+    max-height: 15rem;
+    left: 0;
+    right: 0;
+    margin: 2px auto;
+    filter: blur(4px);
+    transition: filter 1s, max-height .5s, border-radius .7s;
+}
+
+img:hover {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 2px auto;
+    max-height: 30rem;
+    filter: blur(0px);
+    border-radius: 9px;
+}
+
+img.expand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 2px auto;
+    max-height: 30rem;
+    filter: blur(0px);
+    border-radius: 9px;
+}

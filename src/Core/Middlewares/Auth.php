@@ -2,13 +2,17 @@
 
 namespace Src\Core\Middlewares;
 
-use Src\Interfaces\Core\Middleware;
 use Src\Interfaces\Core\IMiddleware;
+use Src\Utils\Authenticate;
+use Src\Utils\Helpers;
 
 class Auth implements IMiddleware
 {
     public function call(): void
     {
-        xdebug_var_dump("Execute auth ");
+        if (!$_SESSION["logged"]) {
+            http_response_code(403);
+            header("Location: " . Helpers::baseUrl("/login"));
+        }
     }
 }
