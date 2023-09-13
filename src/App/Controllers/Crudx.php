@@ -5,7 +5,9 @@ namespace Src\App\Controllers;
 use Src\App\Models\BirthdayPeopleModel;
 use Src\App\Models\UnitsModel;
 use Src\App\Models\UnitsPhonesModel;
+use Src\App\Models\UsersModel;
 use Src\App\Models\Orms\BirthdayPersonOrm;
+use Src\App\Models\Orms\UnitPhoneOrm;
 use Src\App\Models\Orms\UnitOrm;
 use Src\Core\Controller;
 use Src\Interfaces\Database\IOrm;
@@ -13,50 +15,102 @@ use Src\Utils\Helpers;
 use Src\Utils\HttpSocket;
 
 class Crudx extends Controller
-{
-    public function index(): void
+{    public function index(): void
     {
-        $birthdayPeopleModel = new BirthdayPeopleModel();
-        $unitsModel = new UnitsModel();
-        $unitsPhonesModel = new UnitsPhonesModel();
-
         $data = [
             "title" => "Atualizar dados",
             "tables" => [
                 [
                     "tableToUpdate" => "birthdayPeople",
                     "name" => "Aniversariantes do mês",
-                    "columns" => ["Id", "Nome", "Aniversário"],
-                    "rows" => array_map(
-                        fn(IOrm $orm) => get_object_vars($orm->getRow()),
-                        array_map(
-                            fn(BirthdayPersonOrm $orm) => $orm->formatBirthday(),
-                            $birthdayPeopleModel->getAll(["orderBy" => "birthday asc"])
-                        )
-                    )
+                    "columns" => ["Nome", "Aniversário"],
+                    "rows" => $this->getBirthdayPeopleRows()
                 ],
                 [
                     "tableToUpdate" => "units",
                     "name" => "Filiais",
-                    "columns" => ["Id", "Nome", "Número"],
-                    "rows" => array_map(
-                        fn(IOrm $orm) => get_object_vars($orm->getRow()),
-                        $unitsModel->getAll()
-                    )
+                    "columns" => ["Nome", "Número"],
+                    "rows" => $this->getUnitsRows()
                 ],
                 [
                     "tableToUpdate" => "unitsPhones",
                     "name" => "Ramais",
-                    "columns" => ["Id", "Número", "Setor", "Responsável", "Filial"],
-                    "rows" => array_map(
-                        fn(IOrm $orm) => get_object_vars($orm->getRow()),
-                        $unitsPhonesModel->getAll(["limit" => "90"])
-                    )
-                ]
+                    "columns" => ["Número", "Setor", "Responsável", "Filial"],
+                    "rows" => $this->getUnitsPhonesRows()
+                ],
+                [
+                    "tableToUpdate" => "users",
+                    "name" => "Usuários",
+                    "columns" => ["Nome de usuário"],
+                    "rows" => $this->getUsersRows()
+                ],
+                [
+                    "tableToUpdate" => "is_links",
+                    "name" => "Links",
+                    "columns" => ["Descrição", "Link", "Categoria"],
+                    "rows" => []
+                ],
+                [
+                    "tableToUpdate" => "is_links_categories",
+                    "name" => "Categorias dos links",
+                    "columns" => ["Nome"],
+                    "rows" => []
+                ],
             ]
         ];
 
         $this->renderView("/pages/crudx/index", $data);
+    }
+
+    private function getBirthdayPeopleRows(): array
+    {
+        $birthdayPeopleModel = new BirthdayPeopleModel();
+
+        return array_map(
+            fn(IOrm $orm) => (array) ($orm->getRowExcept("id")),
+            array_map(
+                fn(BirthdayPersonOrm $orm) => $orm->formatBirthday(),
+                $birthdayPeopleModel->getAll(["orderBy" => "birthday asc"])
+            )
+        );
+    }
+
+    private function getUnitsRows(): array
+    {
+        $unitsModel = new UnitsModel();
+
+        return array_map(
+            fn(IOrm $orm) => (array) ($orm->getRowExcept("id")),
+            $unitsModel->getAll()
+        );
+    }
+
+    private function getUnitsPhonesRows(): array
+    {
+        $unitsPhonesModel = new UnitsPhonesModel();
+
+        return array_map(
+            function(UnitPhoneOrm $unitPhoneOrm) {
+                $unitOrm = $unitPhoneOrm->getUnitOrm();
+                $row = (array) $unitPhoneOrm->getRowExcept("id", "unitId");
+
+                return [
+                    ...$row,
+                    "Filial" => $unitOrm->name
+                ];
+            },
+            $unitsPhonesModel->getAll(["limit" => "90"])
+        );
+    }
+
+    private function getUsersRows(): array
+    {
+        $usersModel = new UsersModel();
+
+        return array_map(
+            fn(IOrm $orm) => (array) ($orm->getRow("username")),
+            $usersModel->getAll()
+        );
     }
 
     private function updateBirthdayPeople(): int
@@ -154,36 +208,23 @@ class Crudx extends Controller
 
     public function updateTable(string $table): void
     {
-        $tableFunctionsByTableName = [
+        $tableFunctions = [
             "birthdayPeople" => [
-                "getAll" => function() {
-                    $birthdayPeopleModel = new BirthdayPeopleModel();
-                    return array_map(fn(IOrm $orm) => $orm->getRow(),
-                        array_map(fn(BirthdayPersonOrm $orm) => $orm->formatBirthday(),
-                            $birthdayPeopleModel->getAll(["orderBy" => "birthday asc"])
-                        )
-                    );
-                },
+                "getAll" => fn() => $this->getBirthdayPeopleRows(),
                 "update" => fn() => $this->updateBirthdayPeople()
             ],
             "units" => [
-                "getAll" => function () {
-                    $unitsModel = new UnitsModel();
-                    return array_map(fn(IOrm $orm) => $orm->getRow(),  $unitsModel->getAll());
-                },
+                "getAll" => fn() => $this->getUnitsRows(),
                 "update" => fn() => $this->updateUnits()
             ],
             "unitsPhones" => [
-                "getAll" => function() {
-                    $unitsPhonesModel = new UnitsPhonesModel();
-                    return array_map(fn(IOrm $orm) => $orm->getRow(), $unitsPhonesModel->getAll(["limit" => "90"]));
-                },
+                "getAll" => fn() => $this->getUnitsPhonesRows(),
                 "update" => fn() => $this->updateUnitsPhones()
             ]
         ];
 
-        $affectedRows = $tableFunctionsByTableName[$table]["update"]();
-        $rows = $tableFunctionsByTableName[$table]["getAll"]();
+        $affectedRows = $tableFunctions[$table]["update"]();
+        $rows = $tableFunctions[$table]["getAll"]();
 
         echo Helpers::jsonOutput([
             "rows" => $rows,
