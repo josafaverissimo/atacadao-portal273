@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const tableActions = tableWrapper.querySelector(".table-actions")
 
         tableActions.querySelector(".update-button").addEventListener("click", event => {
-            const button = event.target
+            const button = event.target.closest("button")
             const requester = Requester(button.dataset.target)
 
             myTable.startLoading()
