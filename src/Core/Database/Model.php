@@ -48,6 +48,13 @@ abstract class Model implements IModel
             if(!empty($options["limit"])) {
                 $this->sql->limit($options["limit"]);
             }
+
+            if(!empty($options["where"])) {
+                $comparison = $options["where"]["comparison"];
+                $value = $options["where"]["value"];
+                $operator = $options["where"]["operator"] ?? "";
+                $this->sql->where($comparison, $value, $operator);
+            }
         }
         $this->sql->execute();
 
