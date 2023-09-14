@@ -39,3 +39,39 @@ function storeScroll() {
 document.addEventListener("scroll", storeScroll)
 
 storeScroll();
+
+function notRefresh() {
+    const anchors = document.querySelectorAll("a")
+
+    function requestPage(anchors) {
+        anchors.forEach(anchor => anchor.addEventListener("click", event => {
+            event.preventDefault()
+            const url = anchor.href;
+
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    const parser = new DOMParser()
+                    const html = parser.parseFromString(text, "text/html")
+
+                    document.head.innerHTML = html.head.innerHTML
+                    document.body.querySelector("div#app").innerHTML = html.body.querySelector("div#app").innerHTML
+                });
+        }))
+    }
+}
+
+notRefresh()
+
+const observer = new MutationObserver(function(list, observer) {
+    console.log("teste")
+    for(const mutation of list) {
+        if(mutation.type === "childList") {
+            console.log("a node was append")
+        }
+    }
+})
+
+observer.observe(document.body, {
+    childList: true
+})

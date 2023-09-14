@@ -16,13 +16,15 @@ use Src\Utils\Helpers; ?>
       <?= $this->getSection("head"); ?>
   </head>
   <body>
-    <?= $navbar; ?>
-    
-    <?= $viewHtml; ?>
+    <div id="app">
+        <?= $navbar; ?>
+
+        <?= $viewHtml; ?>
+
+        <?= $stickyFooter; ?>
+    </div>
     
     <footer>
-        <?= $stickyFooter; ?>
-
         <script src="<?= Helpers::baseUrl("/assets/bootstrap/js/bootstrap.bundle.js"); ?>"></script>
         <script src="<?= Helpers::baseUrl("/assets/js/scripts.js"); ?>"></script>
         <?= $this->getSection("footer"); ?>
