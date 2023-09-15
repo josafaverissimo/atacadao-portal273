@@ -20,6 +20,13 @@ class View
         return Helpers::baseViewPath($viewPath) . ".php";
     }
 
+    private function checkIfScriptOrCssIsInPage(string $scriptOrCss): bool
+    {
+        $checkIfIsScriptOrCssRegex = '#^<link.*rel=[\'"]stylesheet[\'"]|^<script.*</script>$#i';
+
+        return preg_match($checkIfIsScriptOrCssRegex, $scriptOrCss);
+    }
+
     public function template(string $templatePath, ?array $data = []): void
     {
         $this->template = [
@@ -67,7 +74,13 @@ class View
 
     public function endSection(string $name): void
     {
-        $this->sections[$name][] = ob_get_clean();
+        $output = trim(ob_get_clean());
+
+        if($this->checkIfScriptOrCssIsInPage($output) && in_array($output, $this->sections[$name])) {
+            return;
+        }
+
+        $this->sections[$name][] = $output;
     }
 
     public function getSection(string $name): string
