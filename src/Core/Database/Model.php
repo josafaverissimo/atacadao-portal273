@@ -37,6 +37,11 @@ abstract class Model implements IModel
         return $this->sql->getError();
     }
 
+    public function isError(): bool
+    {
+        return !empty($this->getError()[2]);
+    }
+
     public function getAll(array $options = []): array
     {
         $this->sql->select($this->table);
@@ -62,21 +67,13 @@ abstract class Model implements IModel
         return $this->sql->fetchAll($class);
     }
 
-    public function getBy(string $columnAndComparison, string $value): null|IOrm|array
+    public function getBy(string $columnAndComparison, string $value): IOrm|array
     {
-        $success = $this->sql->select($this->table)
-            ->where($columnAndComparison, $value)
-            ->execute();
-
-        if(!$success) {
-            return null;
-        }
-
-        $rows = $this->sql->fetchAll($this->orm::class);
-
-        if(count($rows) > 1) {
-            return $rows;
-        }
+        $where = [
+            "comparison" => $columnAndComparison,
+            "value" => $value
+        ];
+        $rows = $this->getAll($where);
 
         return count($rows) === 0 ? [] : $rows[0];
     }
@@ -93,5 +90,14 @@ abstract class Model implements IModel
         $this->sql->delete($this->table)->execute();
 
         return $this->sql->affectedRows();
+    }
+
+    public function reset(): void
+    {
+        $this->delete();
+
+        if(!$this->isError()) {
+            $this->getSql()->query("ALTER TABLE " . $this->getTable() . " AUTO_INCREMENT = 1")->execute();
+        }
     }
 }
