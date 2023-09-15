@@ -3,7 +3,6 @@
 namespace Src\Core\Middlewares;
 
 use Src\Interfaces\Core\IMiddleware;
-use Src\Utils\Authenticate;
 use Src\Utils\Helpers;
 
 class Auth implements IMiddleware
