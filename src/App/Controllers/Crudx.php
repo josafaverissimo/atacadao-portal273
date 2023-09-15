@@ -3,12 +3,16 @@
 namespace Src\App\Controllers;
 
 use Src\App\Models\BirthdayPeopleModel;
+use Src\App\Models\LinksCategoriesModel;
+use Src\App\Models\LinksModel;
+use Src\App\Models\Orms\LinkCategoryOrm;
 use Src\App\Models\UnitsModel;
 use Src\App\Models\UnitsPhonesModel;
 use Src\App\Models\UsersModel;
 use Src\App\Models\Orms\BirthdayPersonOrm;
 use Src\App\Models\Orms\UnitPhoneOrm;
 use Src\App\Models\Orms\UnitOrm;
+use Src\App\Models\Orms\LinkOrm;
 use Src\Core\Controller;
 use Src\Interfaces\Database\IOrm;
 use Src\Utils\Helpers;
@@ -45,16 +49,16 @@ class Crudx extends Controller
                     "rows" => $this->getUsersRows()
                 ],
                 [
-                    "tableToUpdate" => "is_links",
+                    "tableToUpdate" => "links",
                     "name" => "Links",
-                    "columns" => ["Descrição", "Link", "Categoria"],
-                    "rows" => []
+                    "columns" => ["Nome", "Link", "Categoria"],
+                    "rows" => $this->getLinksRows()
                 ],
                 [
-                    "tableToUpdate" => "is_links_categories",
+                    "tableToUpdate" => "linksCategories",
                     "name" => "Categorias dos links",
                     "columns" => ["Nome"],
-                    "rows" => []
+                    "rows" => $this->getLinksCategoriesRows()
                 ],
             ]
         ];
@@ -112,6 +116,31 @@ class Crudx extends Controller
         return array_map(
             fn(IOrm $orm) => (array) ($orm->getRow("username")),
             $usersModel->getAll()
+        );
+    }
+
+    private function getLinksRows(): array
+    {
+        $linksModel = new LinksModel();
+
+        return array_map(
+            function(LinkOrm $orm) {
+                $row = (array) ($orm->getRow("name", "url", "linkCategoryId"));
+                $row["linkCategoryId"] = $orm->getLinkCategoryOrm()->name;
+
+                return $row;
+            },
+            $linksModel->getAll()
+        );
+    }
+
+    private function getLinksCategoriesRows(): array
+    {
+        $linkCategoryModel = new LinksCategoriesModel();
+
+        return array_map(
+            fn(IOrm $orm) => (array) ($orm->getRow("name")),
+            $linkCategoryModel->getAll()
         );
     }
 
@@ -184,6 +213,7 @@ class Crudx extends Controller
         $unitsPhonesModel = new UnitsPhonesModel();
 
         $unitOrm = new UnitOrm();
+        $unitsPhonesModel->delete();
         $unitsPhonesModel->getSql()
             ->query("ALTER TABLE " . $unitsPhonesModel->getTable() . " AUTO_INCREMENT = 1")
             ->execute();
@@ -211,6 +241,54 @@ class Crudx extends Controller
         return $affectedRows;
     }
 
+    private function updateLinks(): int
+    {
+        $links = (array) json_decode(Helpers::getDatasetFile("/json/links-by-category.json"));
+        $linksModel = new LinksModel();
+
+        $linksModel->reset();
+
+        $linkCategoryOrm = new LinkCategoryOrm();
+
+        $affectedRows = 0;
+        foreach($links as $categoryName => $categoryData) {
+            $categoryId = $linkCategoryOrm->loadBy("name", $categoryName)->id;
+
+            foreach($categoryData->links as $link) {
+                $affectedRows += $linksModel->push([
+                    "name" => $link->name,
+                    "url" => $link->url,
+                    "linkCategoryId" => $categoryId
+                ]);
+            }
+        }
+
+        return $affectedRows;
+    }
+
+    private function updateLinksCategories(): int
+    {
+        $linksCategoriesNames = array_keys(
+            (array) json_decode(Helpers::getDatasetFile("/json/links-by-category.json"))
+        );
+        $linksCategoriesModel = new LinksCategoriesModel();
+        $affectedRows = 0;
+
+        $linksCategoriesModel->reset();
+
+        if($linksCategoriesModel->isError()) {
+            return $affectedRows;
+        }
+
+        foreach($linksCategoriesNames as $categoryName) {
+            $affectedRows += $linksCategoriesModel->push([
+                "name" => $categoryName
+            ]);
+        }
+
+        return $affectedRows;
+    }
+
     public function updateTable(string $table): void
     {
         $tableFunctions = [
@@ -225,6 +303,14 @@ class Crudx extends Controller
             "unitsPhones" => [
                 "getAll" => fn() => $this->getUnitsPhonesRows(),
                 "update" => fn() => $this->updateUnitsPhones()
+            ],
+            "links" => [
+                "getAll" => fn() => $this->getLinksRows(),
+                "update" => fn() => $this->updateLinks()
+            ],
+            "linksCategories" => [
+                "getAll" => fn() => $this->getLinksCategoriesRows(),
+                "update" => fn() => $this->updateLinksCategories()
             ]
         ];
 
