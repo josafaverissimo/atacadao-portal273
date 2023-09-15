@@ -27,7 +27,7 @@ create table is_birthday_people
 create table is_links_categories
 (
     id   int(11) unsigned auto_increment primary key,
-    name varchar(30)
+    name varchar(30) not null
 );
 
 create table is_links
@@ -35,7 +35,6 @@ create table is_links
     id             int(11) unsigned auto_increment primary key,
     name           varchar(100)     not null,
     url            varchar(300)     not null,
-    targetBlank    boolean          not null default 1,
     linkCategoryId int(11) unsigned not null,
     foreign key (linkCategoryId) references is_links_categories (id)
 );
