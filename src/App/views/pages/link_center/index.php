@@ -10,20 +10,20 @@ use Src\Utils\Helpers; ?>
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div>
                     <ul class="nav nav-tabs" id="links-tab" role="tablist">
-                        <?php foreach($linksByCategory as $categoryId => $category): ?>
-                            <?php $active = !empty($category["active"]) ? " active" : ""; ?>
+                        <?php foreach($linksByCategory as $categoryName => $categoryData): ?>
+                            <?php $active = !empty($categoryData["active"]) ? " active" : ""; ?>
                             <li class="nav-item" role="presentation">
                                 <button
-                                    class="nav-link<?=$active; ?>"
-                                    id="<?= $categoryId; ?>-tab"
+                                    class="nav-link<?= $active ?>"
+                                    id="<?= $categoryName ?>-tab"
                                     data-bs-toggle="tab"
-                                    data-bs-target="#<?= $categoryId; ?>"
+                                    data-bs-target="#<?= $categoryName ?>"
                                     type="button"
                                     role="tab"
                                     aria-controls="home"
                                     aria-selected="true"
                                 >
-                                    <?= $category["description"]; ?>
+                                    <?= $categoryName ?>
                                 </button>
                             </li>
                         <?php endforeach; ?>
@@ -45,21 +45,21 @@ use Src\Utils\Helpers; ?>
                 <div id="links-empty-message" class="py-5" hidden>
                     <h1 class="fs-3 text-center">Link não encontrado</h1>
                 </div>
-                <?php foreach($linksByCategory as $categoryId => $category): ?>
-                    <?php $active = !empty($category["active"]) ? " active show" : ""; ?>
+                <?php foreach($linksByCategory as $categoryName => $categoryData): ?>
+                    <?php $active = !empty($categoryData["active"]) ? " active show" : ""; ?>
 
-                    <div class="tab-pane fade<?= $active; ?>" id="<?= $categoryId; ?>" role="tabpanel" aria-labelledby="<?= $categoryId; ?>-tab">
+                    <div class="tab-pane fade<?= $active; ?>" id="<?= $categoryName; ?>" role="tabpanel" aria-labelledby="<?= $categoryName; ?>-tab">
                             <div class="row mb-2 justify-content-center">
-                                <?php for($row = 0; $row < count($category["links"]); $row += 3): ?>
+                                <?php for($row = 0; $row < count($categoryData["links"]); $row += 3): ?>
                                     <?php
                                         for($column = 0; $column < 3; $column++):
                                             $index = $row + $column;
-                                            if(!isset($category["links"][$index])) break;
-                                            $link = $category["links"][$index];
+                                            if(!isset($categoryData["links"][$index])) break;
+                                            $link = $categoryData["links"][$index];
                                     ?>
                                         <div class="col-md-6 col-lg-4 col-xl-3 mb-md-2">
                                             <?php $targetBlank = empty($link["notTargetBlank"]) ? "target=\"_blank\"" : ""; ?>
-                                            <a class="card text-decoration-none" href="<?= $link["url"]; ?>" <?= $targetBlank; ?>>
+                                            <a class="card text-decoration-none" href="<?= $link["url"]; ?>" <?= $targetBlank ?>>
                                                 <div class="card-body d-flex justify-content-center">
                                                     <div>
                                                         <span class="card-title"><?= mb_convert_case($link["name"], MB_CASE_TITLE); ?></span>
