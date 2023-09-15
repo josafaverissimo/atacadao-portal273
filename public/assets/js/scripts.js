@@ -16,6 +16,10 @@ String.prototype.removeAccents = function() {
         .replace(/Ç/g, "C")
 }
 
+document.addEventListener("scroll", () => {
+    document.documentElement.dataset.scroll = window.scrollY
+})
+
 function getCookie(name) {
     const cookies = document.cookie.split(";")
     const cookie = cookies.filter(cookie => {
@@ -31,47 +35,34 @@ function getCookie(name) {
     return null
 }
 
-function storeScroll() {
-    document.documentElement.dataset.scroll = window.scrollY
-
-}
-
-document.addEventListener("scroll", storeScroll)
-
-storeScroll();
-
 function notRefresh() {
     const anchors = document.querySelectorAll("a")
 
-    function requestPage(anchors) {
-        anchors.forEach(anchor => anchor.addEventListener("click", event => {
-            event.preventDefault()
-            const url = anchor.href;
-
-            fetch(url)
-                .then(response => response.text())
-                .then(text => {
-                    const parser = new DOMParser()
-                    const html = parser.parseFromString(text, "text/html")
-
-                    document.head.innerHTML = html.head.innerHTML
-                    document.body.querySelector("div#app").innerHTML = html.body.querySelector("div#app").innerHTML
-                });
-        }))
+    function getPageFromUrl(url) {
+        return fetch(url)
+            .then(response => response.text())
+            .then(text => {
+                const parser = new DOMParser()
+                return parser.parseFromString(text, "text/html")
+            })
     }
+
+    anchors.forEach(anchor => {
+        anchor.addEventListener("click", async event => {
+            event.preventDefault()
+
+            const url = anchor.closest("a").href
+            const page = await getPageFromUrl(url)
+
+            const pageDownloadedTitle = page.head.querySelector("title")
+            document.head.querySelector("title").textContent = pageDownloadedTitle ? pageDownloadedTitle.textContent : ""
+            document.head.append(...page.head.querySelectorAll("link"))
+            document.body.querySelector("footer").append(page.body.querySelector("footer"))
+            document.getElementById("app").innerHTML = page.getElementById("app").innerHTML
+
+            notRefresh()
+        })
+    })
 }
 
 notRefresh()
-
-const observer = new MutationObserver(function(list, observer) {
-    console.log("teste")
-    for(const mutation of list) {
-        if(mutation.type === "childList") {
-            console.log("a node was append")
-        }
-    }
-})
-
-observer.observe(document.body, {
-    childList: true
-})
