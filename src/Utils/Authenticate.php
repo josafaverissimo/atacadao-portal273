@@ -13,13 +13,13 @@ class Authenticate
         $this->setCredentials();
     }
 
-    private function setCredentials(): bool
+    private function setCredentials(): void
     {
         $headers = getallheaders();
         $authorization = $headers["Authorization"] ?? null;
 
         if (empty($authorization)) {
-            return false;
+            return;
         }
 
         $this->credentials = explode(
@@ -32,8 +32,6 @@ class Authenticate
                 )
             )
         );
-
-        return true;
     }
 
     public function getCredentials(): ?array
