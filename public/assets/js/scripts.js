@@ -47,17 +47,57 @@ function notRefresh() {
             })
     }
 
+    function appendLinksIfNotExists(links) {
+        links.forEach(link => {
+            let linkExist = false
+
+            document.head.querySelectorAll("link").forEach(linkExisting => {
+                if(linkExisting.href === link.href) {
+                    linkExist = true
+                    return
+                }
+            })
+
+            if(!linkExist) {
+                document.head.appendChild(link)
+            }
+        })
+    }
+
+    function appendScriptsIfNotExists(scripts) {
+        scripts.forEach(script => {
+            let scriptExist = false
+
+            document.body.querySelectorAll("footer script").forEach(scriptExisting => {
+                if(scriptExisting.src === script.src) {
+                    scriptExist = true
+                    return
+                }
+            })
+
+            if(!scriptExist) {
+                document.body.querySelector("footer").appendChild(script)
+            }
+        })
+    }
+
     anchors.forEach(anchor => {
         anchor.addEventListener("click", async event => {
+            if(anchor.target === "_blank") return
             event.preventDefault()
 
             const url = anchor.closest("a").href
             const page = await getPageFromUrl(url)
 
             const pageDownloadedTitle = page.head.querySelector("title")
-            document.head.querySelector("title").textContent = pageDownloadedTitle ? pageDownloadedTitle.textContent : ""
-            document.head.append(...page.head.querySelectorAll("link"))
-            document.body.querySelector("footer").append(page.body.querySelector("footer"))
+            const pageDownloadedLinks = page.head.querySelectorAll("link")
+            const pageDownloadedScripts = page.body.querySelectorAll("footer script")
+
+            document.head.querySelector("title").textContent = pageDownloadedTitle.textContent
+
+            appendLinksIfNotExists(pageDownloadedLinks)
+            appendScriptsIfNotExists(pageDownloadedScripts)
+
             document.getElementById("app").innerHTML = page.getElementById("app").innerHTML
 
             notRefresh()
