@@ -3,8 +3,7 @@
 namespace Src\App\Controllers;
 
 use Src\Core\Controller;
-use Src\App\Models\BirthdayPeopleModel;
-use Src\App\Models\UnitsPhonesModel;
+use Src\App\Models\{BirthdayPeopleModel, UnitsPhonesModel};
 
 class Home extends Controller
 {

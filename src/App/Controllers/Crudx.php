@@ -2,28 +2,18 @@
 
 namespace Src\App\Controllers;
 
-use Src\App\Models\BirthdayPeopleModel;
-use Src\App\Models\LinksCategoriesModel;
-use Src\App\Models\LinksModel;
-use Src\App\Models\UnitsModel;
-use Src\App\Models\UnitsPhonesModel;
-use Src\App\Models\UsersModel;
-use Src\App\Models\PrintersModel;
-use Src\App\Models\ReportsModel;
-use Src\App\Models\ReportsCategoriesModel;
+use Src\App\Models\{
+    BirthdayPeopleModel, LinksCategoriesModel, LinksModel, UnitsModel, UnitsPhonesModel, UsersModel, PrintersModel,
+    ReportsModel, ReportsCategoriesModel
+};
 
-use Src\App\Models\Orms\LinkCategoryOrm;
-use Src\App\Models\Orms\BirthdayPersonOrm;
-use Src\App\Models\Orms\UnitPhoneOrm;
-use Src\App\Models\Orms\UnitOrm;
-use Src\App\Models\Orms\LinkOrm;
-use Src\App\Models\Orms\ReportOrm;
-use Src\App\Models\Orms\ReportCategoryOrm;
+use Src\App\Models\Orms\{
+    LinkCategoryOrm, BirthdayPersonOrm, UnitPhoneOrm, UnitOrm, LinkOrm, ReportOrm, ReportCategoryOrm
+};
 
 use Src\Core\Controller;
 use Src\Interfaces\Database\IOrm;
-use Src\Utils\Helpers;
-use Src\Utils\HttpSocket;
+use Src\Utils\{Helpers, HttpSocket};
 
 class Crudx extends Controller
 {    public function index(): void

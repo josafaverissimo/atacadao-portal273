@@ -2,11 +2,9 @@
 
 namespace Src\App\Controllers;
 
-use Src\App\Models\PrintersModel;
-use Src\App\Models\ReportsModel;
 use Src\Core\Controller;
-use Src\Utils\Html;
-use Src\Utils\HttpSocket;
+use Src\App\Models\{PrintersModel, ReportsModel};
+use Src\Utils\{Html, HttpSocket};
 
 class Reports extends Controller
 {
