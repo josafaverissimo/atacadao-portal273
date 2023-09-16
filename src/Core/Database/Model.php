@@ -67,7 +67,7 @@ abstract class Model implements IModel
         return $this->sql->fetchAll($class);
     }
 
-    public function getBy(string $columnAndComparison, string $value): IOrm|array
+    public function getBy(string $columnAndComparison, string $value): ?IOrm
     {
         $where = [
             "comparison" => $columnAndComparison,
@@ -75,7 +75,7 @@ abstract class Model implements IModel
         ];
         $rows = $this->getAll($where);
 
-        return count($rows) === 0 ? [] : $rows[0];
+        return count($rows) === 0 ? null : $rows[0];
     }
 
     public function push(array $valuesByColumns): int
