@@ -12,7 +12,7 @@ drop table if exists is_birthday_people;
 
 create table is_users
 (
-    id int(11) unsigned auto_increment primary key,
+    id       int(11) unsigned auto_increment primary key,
     username varchar(255) not null,
     password varchar(255) not null
 );
@@ -27,14 +27,14 @@ create table is_birthday_people
 create table is_links_categories
 (
     id   int(11) unsigned auto_increment primary key,
-    name varchar(30) not null
+    name varchar(30) unique not null
 );
 
 create table is_links
 (
     id             int(11) unsigned auto_increment primary key,
     name           varchar(100)     not null,
-    url            varchar(300)     not null,
+    resource       varchar(300)     not null,
     linkCategoryId int(11) unsigned not null,
     foreign key (linkCategoryId) references is_links_categories (id)
 );
@@ -42,7 +42,7 @@ create table is_links
 create table is_reports_categories
 (
     id   int(11) unsigned auto_increment primary key,
-    name varchar(100) not null
+    name varchar(100) unique not null
 );
 
 create table is_reports
@@ -50,7 +50,7 @@ create table is_reports
     id               int(11) unsigned auto_increment primary key,
     name             varchar(100)     not null,
     description      varchar(200)     not null,
-    url              varchar(300)     not null,
+    resource         varchar(300)     not null,
     reportCategoryId int(11) unsigned not null,
     foreign key (reportCategoryId) references is_reports_categories (id)
 );
@@ -68,16 +68,16 @@ create table is_printers
 create table is_units
 (
     id       int(11) unsigned auto_increment primary key,
-    name     varchar(100) not null,
+    name     varchar(100) unique not null,
     `number` smallint     not null
 );
 
 create table is_units_phones
 (
-    id          int(11) unsigned auto_increment primary key,
+    id       int(11) unsigned auto_increment primary key,
     `number` varchar(20) not null,
-    sector      varchar(30) not null,
-    owner       varchar(30) not null,
-    unitId      int(11) unsigned,
+    sector   varchar(30) not null,
+    owner    varchar(30) not null,
+    unitId   int(11) unsigned,
     foreign key (unitId) references is_units (id)
 );
