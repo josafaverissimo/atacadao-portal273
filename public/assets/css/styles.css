@@ -36,4 +36,8 @@ main {
     border-radius: var(--bs-border-radius-lg)!important;
 }
 
+.text-indent {
+    text-indent: 1rem;
+}
+
 
