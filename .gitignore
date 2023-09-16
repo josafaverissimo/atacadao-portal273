@@ -2,6 +2,7 @@
 .replit
 .cache
 .idea
+launch.json
 composer
 up_server.sh
 replit.nix
