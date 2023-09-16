@@ -68,7 +68,15 @@ use Src\App\Models\Orms\BirthdayPersonOrm;
                     $this->getViewHtml("/components/my-table", [
                         "id" => "unit-phones",
                         "push" => [
-                            "thead" => "<tr><th colspan='2' class='text-center'>Filial 273</th></tr>"
+                            "thead" => <<<HTML
+                                <tr>
+                                    <th colspan='2' class='text-center'
+                                        style='background-color: #e0e0e0'"
+                                    >
+                                        Filial 273
+                                    </th>
+                                </tr>
+                             HTML
                         ],
                         "thead" => ["Número", "Setor"],
                         "classes" => "",
