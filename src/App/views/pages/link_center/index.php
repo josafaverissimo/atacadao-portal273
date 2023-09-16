@@ -59,7 +59,7 @@ use Src\Utils\Helpers; ?>
                                     ?>
                                         <div class="col-md-6 col-lg-4 col-xl-3 mb-md-2">
                                             <?php $targetBlank = empty($link["notTargetBlank"]) ? "target=\"_blank\"" : ""; ?>
-                                            <a class="card text-decoration-none" href="<?= $link["url"]; ?>" <?= $targetBlank ?>>
+                                            <a class="card text-decoration-none" href="<?= $link["resource"]; ?>" <?= $targetBlank ?>>
                                                 <div class="card-body d-flex justify-content-center">
                                                     <div>
                                                         <span class="card-title"><?= mb_convert_case($link["name"], MB_CASE_TITLE); ?></span>

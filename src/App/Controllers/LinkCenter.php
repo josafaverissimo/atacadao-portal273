@@ -18,9 +18,9 @@ class LinkCenter extends Controller
             "linksByCategory" => array_reduce(
                 $linksModel->getAll(),
                 function(array $rows, LinkOrm $orm) {
-                    $row = (array) $orm->getRow("name", "url", "linkCategoryId");
+                    $row = (array) $orm->getRow("name", "resource", "linkCategoryId");
                     $category = $orm->getLinkCategoryOrm()->name;
-                    $row["notTargetBlank"] = !str_contains($row["url"], Helpers::baseUrl());
+                    $row["notTargetBlank"] = !str_contains($row["resource"], Helpers::baseUrl());
 
                     unset($row["linkCategoryId"]);
 

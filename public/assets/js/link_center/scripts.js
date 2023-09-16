@@ -28,7 +28,7 @@ function LinksFilterForm() {
 
         const linksFiltered = linksByCategory[currentTabId].links.reduce((links, link) => {
             const linkName = link.name.toLowerCase().removeAccents()
-            if(linkName.indexOf(currentValue) !== -1 || link.url.indexOf(currentValue) !== -1) {
+            if(linkName.indexOf(currentValue) !== -1 || link.resource.indexOf(currentValue) !== -1) {
                 links.push(link)
             }
 
@@ -139,7 +139,7 @@ function linkCardsRows(links) {
 
                 let link = links[index]
 
-                let cardLink = createCardLink(link.name, link.url, link.notTargetBlank)
+                let cardLink = createCardLink(link.name, link.resource, link.notTargetBlank)
                 divCardRow.appendChild(cardLink)
             }
 
