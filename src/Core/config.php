@@ -2,7 +2,8 @@
 
 const CONF_BASE_URL = "https://atacadao-portal273";
 const CONF_BASE_VIEW_PATH = __DIR__ . "/../App/views";
-const CONF_DATASET_PATH = __DIR__ . "/../../dataset";
+const CONF_BASE_DATASET_PATH = __DIR__ . "/../../dataset";
+const CONF_BASE_SAVE_REPORTS_URL = "https://atacadao-portal273/reports";
 const CONF_DEFAULT_CONTROLLER = "Home:index";
 const CONF_DEFAULT_UNIT_ID = 257;
 const CONF_DEFAULT_LINKS_CATEGORY = "geral";

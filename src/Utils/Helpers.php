@@ -15,13 +15,17 @@ final class Helpers
 
     public static function baseUrl(string $subpath = ""): string
     {
-        $subpath = "{$subpath}";
         return CONF_BASE_URL . self::replaceMultiples($subpath, "\\/", "/");
     }
 
     public static function baseDatasetPath(string $subpath): string
     {
-        return CONF_DATASET_PATH . self::replaceMultiples("/{$subpath}", "\\/", "/");
+        return CONF_BASE_DATASET_PATH . self::replaceMultiples("/{$subpath}", "\\/", "/");
+    }
+
+    public static function baseSaveReportsUrl(string $subpath): string
+    {
+        return CONF_BASE_SAVE_REPORTS_URL . self::replaceMultiples($subpath, "\\/", "/");
     }
 
     public static function baseViewPath(string $subpath = ""): string
