@@ -1,7 +1,4 @@
 function Clock(timeElementSelector, dateElementSelector) {
-    const timeElement = document.querySelector(timeElementSelector);
-    const dateElement = document.querySelector(dateElementSelector);
-
     function getTimeNow() {
         const date = new Date()
         const hours = String(date.getHours()).padStart(2, "00")
@@ -29,9 +26,11 @@ function Clock(timeElementSelector, dateElementSelector) {
     }
 
     function startClock() {
-        setInterval(() => {
-            let time = getTimeNow()
-            let date = getDateNow()
+        myIntervals.push(setInterval(() => {
+            const time = getTimeNow()
+            const date = getDateNow()
+            const timeElement = document.querySelector(timeElementSelector);
+            const dateElement = document.querySelector(dateElementSelector);
 
             timeElement.textContent = time
             timeElement.setAttribute("datetime", time);
@@ -39,7 +38,7 @@ function Clock(timeElementSelector, dateElementSelector) {
             dateElement.textContent = date.message
             dateElement.setAttribute("datetime", date.formatted)
 
-        }, 1000)
+        }, 1000))
     }
 
     return {
