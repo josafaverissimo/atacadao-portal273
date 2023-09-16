@@ -152,8 +152,14 @@ function linkCardsRows(links) {
     return generateLinksCardsRows()
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function listeningLinkCenterFilter() {
     const linkFilterForm = LinksFilterForm()
 
     linkFilterForm.listening()
-})
+}
+
+if(document.readyState === "complete") {
+    listeningLinkCenterFilter()
+} else {
+    document.addEventListener("DOMContentLoaded", listeningLinkCenterFilter)
+}
