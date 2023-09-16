@@ -5,14 +5,21 @@ namespace Src\App\Controllers;
 use Src\App\Models\BirthdayPeopleModel;
 use Src\App\Models\LinksCategoriesModel;
 use Src\App\Models\LinksModel;
-use Src\App\Models\Orms\LinkCategoryOrm;
 use Src\App\Models\UnitsModel;
 use Src\App\Models\UnitsPhonesModel;
 use Src\App\Models\UsersModel;
+use Src\App\Models\PrintersModel;
+use Src\App\Models\ReportsModel;
+use Src\App\Models\ReportsCategoriesModel;
+
+use Src\App\Models\Orms\LinkCategoryOrm;
 use Src\App\Models\Orms\BirthdayPersonOrm;
 use Src\App\Models\Orms\UnitPhoneOrm;
 use Src\App\Models\Orms\UnitOrm;
 use Src\App\Models\Orms\LinkOrm;
+use Src\App\Models\Orms\ReportOrm;
+use Src\App\Models\Orms\ReportCategoryOrm;
+
 use Src\Core\Controller;
 use Src\Interfaces\Database\IOrm;
 use Src\Utils\Helpers;
@@ -59,6 +66,24 @@ class Crudx extends Controller
                     "name" => "Categorias dos links",
                     "columns" => ["Nome"],
                     "rows" => $this->getLinksCategoriesRows()
+                ],
+                [
+                    "tableToUpdate" => "printers",
+                    "name" => "Impressoras",
+                    "columns" => ["Nome", "Ip", "Impressões", "Impressões de ontem"],
+                    "rows" => $this->getPrintersRows()
+                ],
+                [
+                    "tableToUpdate" => "reports",
+                    "name" => "Relatórios",
+                    "columns" => ["Nome", "Descrição", "Recurso", "Categoria"],
+                    "rows" => $this->getReportsRows()
+                ],
+                [
+                    "tableToUpdate" => "reportsCategories",
+                    "name" => "Categoria dos relatórios",
+                    "columns" => ["Nome"],
+                    "rows" => $this->getReportsCategoriesRows()
                 ],
             ]
         ];
@@ -125,12 +150,12 @@ class Crudx extends Controller
 
         return array_map(
             function(LinkOrm $orm) {
-                $row = (array) ($orm->getRow("name", "url", "linkCategoryId"));
+                $row = (array) ($orm->getRow("name", "resource", "linkCategoryId"));
                 $row["linkCategoryId"] = $orm->getLinkCategoryOrm()->name;
 
                 return $row;
             },
-            $linksModel->getAll()
+            $linksModel->getAll(["orderBy" => "resource asc"])
         );
     }
 
@@ -141,6 +166,40 @@ class Crudx extends Controller
         return array_map(
             fn(IOrm $orm) => (array) ($orm->getRow("name")),
             $linkCategoryModel->getAll()
+        );
+    }
+
+    private function getPrintersRows(): array
+    {
+        $printersModel = new PrintersModel();
+
+        return array_map(
+            fn(IOrm $orm) => (array) $orm->getRow("name", "ip", "currentPrints", "lastDayPrints"),
+            $printersModel->getAll()
+        );
+    }
+
+    private function getReportsRows(): array
+    {
+        $reportsModel = new ReportsModel();
+
+        return array_map(function(ReportOrm $orm) {
+            $row = (array) $orm->getRowExcept("id");
+            $row["category"] = $orm->getReportCategory()->name;
+            unset($row["reportCategoryId"]);
+
+            return $row;
+          }, $reportsModel->getAll()
+        );
+    }
+
+    private function getReportsCategoriesRows(): array
+    {
+        $reportsCategoriesModel = new ReportsCategoriesModel();
+
+        return array_map(
+            fn(IOrm $orm) => (array) $orm->getRow("name"),
+            $reportsCategoriesModel->getAll()
         );
     }
 
@@ -230,9 +289,9 @@ class Crudx extends Controller
                 if(empty($unitId)) continue;
 
                 $affectedRows += $unitsPhonesModel->push([
-                    "number" => $row->telefone,
-                    "sector" => $row->setor,
-                    "owner" => $row->depto,
+                    "number" => trim($row->telefone),
+                    "sector" => trim($row->setor),
+                    "owner" => trim($row->depto),
                     "unitId" => (int) $unitOrm->loadBy("number", $unitNumber)->id
                 ]);
             }
@@ -257,7 +316,7 @@ class Crudx extends Controller
             foreach($categoryData->links as $link) {
                 $affectedRows += $linksModel->push([
                     "name" => $link->name,
-                    "url" => $link->url,
+                    "resource" => $link->url,
                     "linkCategoryId" => $categoryId
                 ]);
             }
@@ -289,6 +348,69 @@ class Crudx extends Controller
         return $affectedRows;
     }
 
+    private function updatePrinters(): int
+    {
+        $printers = (array) json_decode(Helpers::getDatasetFile("/json/printers.json"));
+        $printersModel = new PrintersModel();
+
+        $printersModel->reset();
+
+        $affectedRows = 0;
+        foreach($printers as $printer) {
+            $affectedRows += $printersModel->push([
+                "name" => $printer->name,
+                "image" => $printer->image,
+                "ip" => $printer->ip,
+                "currentPrints" => 0,
+                "lastDayPrints" => 0
+            ]);
+        }
+
+        return $affectedRows;
+    }
+
+    private function updateReports(): int
+    {
+        $reportsByCategories = (array) json_decode(Helpers::getDatasetFile("/json/reports.json"));
+        $reportsModel = new ReportsModel();
+
+        $reportsModel->reset();
+        $reportCategoryOrm = new ReportCategoryOrm();
+
+        $affectedRows = 0;
+        foreach($reportsByCategories as $reportCategory => $reports) {
+            $reportCategoryId = $reportCategoryOrm->loadBy("name", $reportCategory)->id;
+
+            foreach($reports as $report) {
+                $affectedRows += $reportsModel->push([
+                    "name" => $report->name,
+                    "description" => $report->description,
+                    "resource" => $report->resource,
+                    "reportCategoryId" => $reportCategoryId
+                ]);
+            }
+        }
+
+        return $affectedRows;
+    }
+
+    private function updateReportsCategories(): int
+    {
+        $reportsCategories = array_keys((array) json_decode(Helpers::getDatasetFile("/json/reports.json")));
+        $reportsCategoriesModel = new ReportsCategoriesModel();
+
+        $reportsCategoriesModel->reset();
+
+        $affectedRows = 0;
+        foreach($reportsCategories as $reportCategory) {
+            $reportsCategoriesModel->push([
+                "name" => $reportCategory
+            ]);
+        }
+
+        return $affectedRows;
+    }
+
     public function updateTable(string $table): void
     {
         $tableFunctions = [
@@ -304,6 +426,10 @@ class Crudx extends Controller
                 "getAll" => fn() => $this->getUnitsPhonesRows(),
                 "update" => fn() => $this->updateUnitsPhones()
             ],
+            "users" => [
+                "getAll" => fn() => $this->getUsersRows(),
+                "update" => fn() => 0
+            ],
             "links" => [
                 "getAll" => fn() => $this->getLinksRows(),
                 "update" => fn() => $this->updateLinks()
@@ -311,6 +437,18 @@ class Crudx extends Controller
             "linksCategories" => [
                 "getAll" => fn() => $this->getLinksCategoriesRows(),
                 "update" => fn() => $this->updateLinksCategories()
+            ],
+            "printers" => [
+                "getAll" => fn() => $this->getPrintersRows(),
+                "update" => fn() => $this->updatePrinters()
+            ],
+            "reports" => [
+                "getAll" => fn() => $this->getReportsRows(),
+                "update" => fn() => $this->updateReports()
+            ],
+            "reportsCategories" => [
+                "getAll" => fn() => $this->getReportsCategoriesRows(),
+                "update" => fn() => $this->updateReportsCategories()
             ]
         ];
 
