@@ -10,8 +10,8 @@ class Auth implements IMiddleware
     public function call(): void
     {
         if (!$_SESSION["logged"]) {
-            http_response_code(403);
             header("Location: " . Helpers::baseUrl("/login"));
+            exit;
         }
     }
 }
