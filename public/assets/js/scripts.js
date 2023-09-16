@@ -1,5 +1,7 @@
 const baseUrl = "https://atacadao-portal273"
 
+const myIntervals = []
+
 String.prototype.removeAccents = function() {
     return this.toString()
         .replace(/[àáâã]/g, "a")
@@ -76,9 +78,15 @@ function notRefresh() {
             })
 
             if(!scriptExist) {
-                document.body.querySelector("footer").appendChild(script)
+                const scriptToLoad = document.createElement("script")
+                scriptToLoad.src = script.src
+                document.body.querySelector("footer").appendChild(scriptToLoad)
             }
         })
+    }
+
+    function clearIntervals() {
+        myIntervals.forEach(clearInterval)
     }
 
     anchors.forEach(anchor => {
@@ -86,23 +94,32 @@ function notRefresh() {
             if(anchor.target === "_blank") return
             event.preventDefault()
 
+            const app = document.getElementById("app")
+
             const url = anchor.closest("a").href
             const page = await getPageFromUrl(url)
 
             const pageDownloadedTitle = page.head.querySelector("title")
             const pageDownloadedLinks = page.head.querySelectorAll("link")
             const pageDownloadedScripts = page.body.querySelectorAll("footer script")
+            const pageDownloadedApp = page.getElementById("app")
+
+            clearIntervals()
 
             document.head.querySelector("title").textContent = pageDownloadedTitle.textContent
 
             appendLinksIfNotExists(pageDownloadedLinks)
             appendScriptsIfNotExists(pageDownloadedScripts)
 
-            document.getElementById("app").innerHTML = page.getElementById("app").innerHTML
+            while(app.firstChild) {
+                app.removeChild(app.firstChild)
+            }
+
+            app.append(...pageDownloadedApp.childNodes)
 
             notRefresh()
         })
     })
 }
 
-notRefresh()
+// notRefresh()
