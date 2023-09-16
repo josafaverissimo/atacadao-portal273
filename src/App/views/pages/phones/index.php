@@ -36,7 +36,10 @@
                     "id" => "unit-phones",
                     "classes" => "",
                     "thead" => ["Número", "Setor", "Responsável"],
-                    "rows" => $unitPhonesRows
+                    "rows" => $unitPhonesRows,
+                    "attributes" => [
+                        "data-search-filter" => "#phones-search-filter"
+                    ]
                 ]);
             ?>
 

@@ -2,58 +2,62 @@
 
 namespace Src\App\Controllers;
 
-use Src\App\Dataset\UnitsPhones;
 use Src\Core\Controller;
-use Src\Utils\Helpers;
+
+use Src\Interfaces\Database\IOrm;
+use Src\App\Models\UnitsPhonesModel;
+use Src\App\Models\UnitsModel;
 
 class Phones extends Controller
 {
     public function index(): void
     {
-        $unitId = 273;
-        $unitsOptions = array_reduce(
-            json_decode(Helpers::getDatasetFile("/json/units.json")),
-            function (array $options, object $unit) use ($unitId) {
-                $unitFiltered = new \StdClass();
-                $unitFiltered->id = $unit->id_filial;
-                $unitFiltered->value = $unit->id_filial;
-                $unitFiltered->selected = str_contains($unit->id_filial, $unitId);
-                $unitFiltered->textContent = mb_convert_case(
-                    str_replace("-", " ", $unit->descricao), MB_CASE_TITLE
-                );
-
-                return [...$options, $unitFiltered];
-            }, []
-        );
-        //$unitPhonesRows = $this->getUnitPhonesDataByUnitId($unitId);
-        $unitPhonesRows = [];
+        $unitsPhonesModel = new UnitsPhonesModel();
+        $unitsModel = new UnitsModel();
 
         $data = [
             "title" => "Lista de Ramais",
-            "unitPhonesRows" => $unitPhonesRows,
-            "unitsOptions" => $unitsOptions
+            "unitPhonesRows" => array_map(
+                fn(IOrm $orm) => (array) $orm->getRow("number", "sector", "owner"),
+                $unitsPhonesModel->getAll([
+                    "where" => [
+                        "comparison" => "unitId",
+                        "value" => CONF_DEFAULT_UNIT_ID
+                    ]
+                ])
+            ),
+            "unitsOptions" => array_map(function(IOrm $orm) {
+                $unitNumber = str_pad($orm->number, 3, "0", STR_PAD_LEFT);
+
+                return (object) [
+                    "id" => $orm->id,
+                    "value" => $orm->id,
+                    "selected" => $orm->id === CONF_DEFAULT_UNIT_ID,
+                    "textContent" => "{$unitNumber} - {$orm->name}"
+                ];
+            }, $unitsModel->getAll())
         ];
 
         $this->renderView("/pages/phones/index", $data);
     }
 
-    private function getUnitPhonesDataByUnitId($unitId) {
-        $unitPhonesDataset = new UnitsPhones();
-        return array_reduce(
-            $unitPhonesDataset->getUnitPhonesByUnitId($unitId),
-            function(array $rows, object $unitPhones) {
-                $row = [
-                    $unitPhones->phone,
-                    mb_convert_case($unitPhones->owner, MB_CASE_TITLE),
-                    mb_convert_case($unitPhones->sector, MB_CASE_TITLE)
-                ];
+    private function getUnitPhonesDataByUnitId($unitId): array
+    {
+        $unitsPhones = (new UnitsPhonesModel())->getAll([
+            "where" => [
+                "comparison" => "unitId = ",
+                "value" => $unitId
+            ]
+        ]);
 
-                return [...$rows, $row];
-            }, []
-        );
+        return array_map(fn(IOrm $orm) => [
+            $orm->number,
+            mb_convert_case($orm->owner, MB_CASE_TITLE),
+            mb_convert_case($orm->sector, MB_CASE_TITLE)
+        ], $unitsPhones);
     }
 
-    public function getUnitPhonesByUnitId($unitId): void
+    public function getUnitPhonesByUnitId(int $unitId): void
     {
         header("Content-type: application/json");
         $unitPhonesRows = $this->getUnitPhonesDataByUnitId($unitId);
