@@ -3,7 +3,6 @@
 namespace Src\App\Models\Orms;
 
 use Src\Interfaces\Database\IOrm;
-use Src\Core\Database\Sql;
 
 class ReportOrm implements IOrm
 {

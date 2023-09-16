@@ -1,7 +1,7 @@
 <?php
-use Src\Utils\Helpers;
-use Src\Interfaces\Database\IOrm;
-use Src\App\Models\Orms\BirthdayPersonOrm;
+    use Src\Utils\Helpers;
+    use Src\Interfaces\Database\IOrm;
+    use Src\App\Models\Orms\BirthdayPersonOrm;
 ?>
 
 <?php $this->template("base", ["title" => $title]); ?>
@@ -70,9 +70,7 @@ use Src\App\Models\Orms\BirthdayPersonOrm;
                         "push" => [
                             "thead" => <<<HTML
                                 <tr>
-                                    <th colspan='2' class='text-center'
-                                        style='background-color: #e0e0e0'"
-                                    >
+                                    <th colspan='2' class='text-center' style='background-color: #e0e0e0'">
                                         Filial 273
                                     </th>
                                 </tr>

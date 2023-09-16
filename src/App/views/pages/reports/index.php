@@ -22,13 +22,13 @@ use Src\Utils\Helpers; ?>
                     <div class="list-group-item list-group-item-action flex-column align-items-start not-found" hidden>
                         <p class="mb-1 text-center py-3">Relatório não encontrado</p>
                     </div>
-                    <?php foreach($internalReports as $report): ?>
-                        <a href="<?= $report["url"] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <?php foreach($reports["interno"] as $report): ?>
+                        <a href="<?= $report->resource ?>" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h1 class="h5 mb-1"><?= ucfirst($report["name"]); ?></h1>
-                                <small><?= $report["time"] ?? "" ?></small>
+                                <h1 class="h5 mb-1"><?= ucfirst($report->name); ?></h1>
+                                <small>Há 1 dia</small>
                             </div>
-                            <p class="mb-1"><?= ucfirst(mb_strtolower($report["description"])); ?></p>
+                            <p class="mb-1"><?= ucfirst(mb_strtolower($report->description)); ?></p>
                             <small class="fst-italic"><em>Relatório gerado pela equipe do cpd</em></small>
                         </a>
                     <?php endforeach; ?>
@@ -47,16 +47,16 @@ use Src\Utils\Helpers; ?>
                     <div class="list-group-item list-group-item-action flex-column align-items-start not-found" hidden>
                         <p class="mb-1 text-center py-3">Relatório não encontrado</p>
                     </div>
-                    <?php foreach($saveReports as $report): ?>
+                    <?php foreach($reports["save"] as $report): ?>
                         <a
-                            href="<?= !empty($report->file) ? Helpers::baseUrl("/reports-files/{$report->file}") : "#"?>"
-                            <?= !empty($report->file) ? "target=\"_blank\"" : "" ?>
+                            href="<?= Helpers::baseUrl("/reports-files/{$report->resource}") ?>"
+                            <?= !empty($report->resource) ? "target=\"_blank\"" : "" ?>
                                 class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h1 class="h5 mb-1"><?= $report->name ?></h1>
                                 <small>Há 3 dias</small>
                             </div>
-                            <p class="mb-1"><?= ucfirst(mb_strtolower($report->description)); ?></p>
+                            <p class="mb-1"><?= ucfirst(mb_strtolower($report->description)) ?></p>
                             <small class="fst-italic"><em>Relatório gerado durante a rotina batch</em></small>
                         </a>
                     <?php endforeach; ?>

@@ -2,6 +2,7 @@
 
 namespace Src\App\Controllers;
 
+use Src\App\Models\ReportsModel;
 use Src\Core\Controller;
 use Src\Utils\Helpers;
 use Src\Utils\Html;
@@ -11,10 +12,11 @@ class Reports extends Controller
 {
     public function index(): void
     {
+        $reportsModel = new ReportsModel();
+
         $data = [
             "title" => "Relatórios",
-            "saveReports" => Helpers::getJsonFileData("save-reports"),
-            "internalReports" => Helpers::getData("internal-reports")
+            "reports" => $reportsModel->getAllByCategories()
         ];
 
         $this->renderView("/pages/reports/index", $data);

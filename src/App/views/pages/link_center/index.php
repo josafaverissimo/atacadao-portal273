@@ -1,5 +1,6 @@
 <?php
-use Src\Utils\Helpers; ?>
+    use Src\Utils\Helpers;
+?>
 
 <?php $this->template("/base", [ "title" => $title]); ?>
 
