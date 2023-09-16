@@ -5,16 +5,17 @@ function getUnitPhones(unitId) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const mainTable = MyTable("unit-phones", "phones-search-filter")
+    const mainTable = document.querySelector("#unit-phones")
+    const myTable = MyTable(mainTable)
 
     mySelect(function(value) {
-        mainTable.startLoading()
+        myTable.startLoading()
 
         getUnitPhones(value)
             .then(response => response.json())
             .then(json => {
-                mainTable.loadNewRows(json.rows)
-                mainTable.endLoading()
+                myTable.loadNewRows(json.rows)
+                myTable.endLoading()
             })
     })
 })
