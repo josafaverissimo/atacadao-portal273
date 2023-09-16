@@ -16,7 +16,12 @@ class Home extends Controller
         $data = [
             "title" => "Portal Interno Filial 273",
             "birthdayPeople" => $birthdayPeopleModel->getAll(),
-            "unitPhones" => $unitsPhonesModel->getBy("unitId =", 257)
+            "unitPhones" => $unitsPhonesModel->getAll([
+                "where" => [
+                    "comparison" => "unitId =",
+                    "value" => CONF_DEFAULT_UNIT_ID
+                ]
+            ])
         ];
 
         $this->renderView("/pages/home/index", $data);
