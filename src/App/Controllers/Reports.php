@@ -2,9 +2,9 @@
 
 namespace Src\App\Controllers;
 
+use Src\App\Models\PrintersModel;
 use Src\App\Models\ReportsModel;
 use Src\Core\Controller;
-use Src\Utils\Helpers;
 use Src\Utils\Html;
 use Src\Utils\HttpSocket;
 
@@ -29,7 +29,7 @@ class Reports extends Controller
             $httpSocket->close();
             return null;
         }
-        $html = $httpSocket->doRequest("get", "/statics.html");
+        $html = $httpSocket->doRequest("get", "/html/statics.html");
         $httpSocket->close();
 
         return $html;
@@ -57,19 +57,25 @@ class Reports extends Controller
         preg_match("/[tT]otal\s+(\d+)/", $printerStatsHtml->query($bodyPath)[0]->textContent, $matches);
         $totalPrints = $matches[1];
 
+        $printersModel = new PrintersModel();
+
+        $printerLastDayPrints = $printersModel->getBy("ip = ", $printerIp)->lastDayPrints;
+
         echo json_encode([
             "success" => true,
             "tonerLevel" => $tonerLevel,
-            "todayPrints" => "N/A",
+            "todayPrints" => $totalPrints - $printerLastDayPrints,
             "totalPrints" => $totalPrints
         ]);
     }
 
     public function printers(): void
     {
+        $printersModel = new PrintersModel();
+
         $data = [
             "title" => "Estatísticas das impressoras",
-            "printers" => Helpers::getJsonFileData("printers")
+            "printers" => $printersModel->getAll()
         ];
 
         $this->renderView("/pages/reports/printers/index", $data);
