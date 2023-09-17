@@ -58,18 +58,18 @@ create table is_reports
 create table is_printers
 (
     id            int(11) unsigned auto_increment primary key,
-    name          varchar(20) not null,
-    image         varchar(50) not null,
-    ip            varchar(15) not null,
-    currentPrints int(11)     not null default 0,
-    lastDayPrints int(11)     not null default 0
+    name          varchar(20)        not null,
+    image         varchar(50)        not null,
+    ip            varchar(15) unique not null,
+    currentPrints int(11)            not null default 0,
+    lastDayPrints int(11)            not null default 0
 );
 
 create table is_units
 (
     id       int(11) unsigned auto_increment primary key,
     name     varchar(100) unique not null,
-    `number` smallint     not null
+    `number` smallint            not null
 );
 
 create table is_units_phones
