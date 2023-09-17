@@ -74,6 +74,11 @@
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <?php if(empty($linksByCategory)): ?>
+                <hr>
+                <p>Não há links no banco de dados</p>
+            <?php endif; ?>
         </div>
     </div>
 </main>
