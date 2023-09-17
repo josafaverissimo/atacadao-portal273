@@ -42,7 +42,17 @@
                     </form>
                 </div>
 
-                <img src="<?= Helpers::baseUrl("/assets/imgs/system.png") ?>" class="img-fluid shadow mb-4" alt="Example image" loading="lazy">
+                <?php
+                    $image = "default";
+
+                    if($this->session->has("requestedResource")) {
+                        $lastUrlExploded = explode("/", $this->session->flashdata("requestedResource"));
+                        $lastUri = $lastUrlExploded[count($lastUrlExploded) - 1];
+                        $pages = ["crudx", "reports"];
+                        $image = in_array($lastUri, $pages) ? $lastUri : "default";
+                    }
+                ?>
+                <img src="<?= Helpers::baseUrl("/assets/imgs/{$image}-page.png") ?>" class="img-fluid shadow mb-4" alt="page requested" loading="lazy">
             </div>
         </main>
 

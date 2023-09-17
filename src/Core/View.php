@@ -3,16 +3,18 @@
 namespace Src\Core;
 
 use Src\Utils\Helpers;
+use Src\Utils\Session;
 
 class View
 {
     private array $template;
     private array $sections;
-    private string $viewHtml;
+    private Session $session;
 
     public function __construct()
     {
         $this->sections = [];
+        $this->session = Session::getInstance();
     }
 
     private function getViewPath(string $viewPath): string

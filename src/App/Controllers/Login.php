@@ -4,6 +4,7 @@ namespace Src\App\Controllers;
 
 use Src\Core\Controller;
 use Src\Utils\Authenticate;
+use Src\Utils\Helpers;
 
 class Login extends Controller
 {
@@ -12,6 +13,11 @@ class Login extends Controller
         $data = [
             "title" => "Login"
         ];
+
+        if($this->session->has("logged")) {
+            header("Location: " . Helpers::baseUrl("/"));
+            exit;
+        }
 
         $this->renderView("/pages/login/index", $data);
     }
@@ -23,12 +29,14 @@ class Login extends Controller
         $success = $authenticate->isCredentialsValid();
 
         if ($success) {
-            $_SESSION["logged"] = true;
+            $this->session->set("logged", true);
         }
+
+        $redirect = $this->session->flashdata("requestedResource") ?? Helpers::baseUrl("/");
 
         echo json_encode([
             "success" => $success,
-            "redirect" => $_SESSION["requestedResource"]
+            "redirect" => $redirect
         ]);
     }
 }
