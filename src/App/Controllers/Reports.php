@@ -55,9 +55,7 @@ class Reports extends Controller
         preg_match("/[tT]otal\s+(\d+)/", $printerStatsHtml->query($bodyPath)[0]->textContent, $matches);
         $totalPrints = $matches[1];
 
-        $printersModel = new PrintersModel();
-
-        $printerLastDayPrints = $printersModel->getBy("ip = ", $printerIp)->lastDayPrints;
+        $printerLastDayPrints = (new PrintersModel())->getBy("ip = ", $printerIp)->lastDayPrints;
 
         echo json_encode([
             "success" => true,
