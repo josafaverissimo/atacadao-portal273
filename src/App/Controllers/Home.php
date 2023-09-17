@@ -25,4 +25,11 @@ class Home extends Controller
 
         $this->renderView("/pages/home/index", $data);
     }
+
+    public function devLetter()
+    {
+        $this->renderView("/pages/home/dev-letter", [
+            "title" => "Carta do desenvolvedor"
+        ]);
+    }
 }
