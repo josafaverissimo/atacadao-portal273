@@ -26,7 +26,7 @@
                                 <h1 class="h5 m-0 text-center"><?= ucfirst($printer->name) ?></h1>
                             </div>
 
-                            <table class="table table-striped table-bordered m-0" data-ip="<?= $printer->ip ?>">
+                            <table class="table table-striped table-bordered m-0" data-host="<?= $printer->host ?>">
                                 <tbody>
                                     <tr>
                                         <td>Toner</td>
@@ -58,6 +58,11 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+
+            <?php if(empty($printers)): ?>
+                <hr></hr>
+                <p>Não há impressoras no banco de dados.</p>
+            <?php endif; ?>
         </div>
     </div>
 </main>

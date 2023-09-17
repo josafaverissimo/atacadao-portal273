@@ -1,5 +1,5 @@
-function getPrinterStats(printerIp) {
-    const url = `${baseUrl}/reports/printers/getPrinterData/${printerIp}`
+function getPrinterStats(printerHost) {
+    const url = `${baseUrl}/reports/printers/getPrinterData/${printerHost}`
 
     return fetch(url).then(response => response.json())
 }
@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const printersStatsTables = [].map.call(document.querySelectorAll("table"), PrinterStatsTable)
 
     printersStatsTables.forEach(table => {
-        const { ip } = table.table.dataset
-        const getPrinterStatsPromise = getPrinterStats(ip)
+        const { host } = table.table.dataset
+        const getPrinterStatsPromise = getPrinterStats(host)
 
         getPrinterStatsPromise.then(response => {
             if(response.success) {
