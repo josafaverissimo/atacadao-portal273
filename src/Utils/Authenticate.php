@@ -15,23 +15,13 @@ class Authenticate
 
     private function setCredentials(): void
     {
-        $headers = getallheaders();
-        $authorization = $headers["Authorization"] ?? null;
+        $credentials = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
-        if (empty($authorization)) {
+        if (empty($credentials)) {
             return;
         }
 
-        $this->credentials = explode(
-            ":",
-            base64_decode(
-                str_replace(
-                    "Basic ",
-                    "",
-                    $authorization
-                )
-            )
-        );
+        $this->credentials = $credentials;
     }
 
     public function getCredentials(): ?array
@@ -49,11 +39,9 @@ class Authenticate
             return false;
         }
 
-        [$user, $password] = $credentials;
-
         $sql = $usersModel->getSql();
         $success = $sql->select($usersModel->getTable())
-            ->where("username =", $user)
+            ->where("username =", $credentials["user"])
             ->execute();
 
         if (!$success) {
@@ -68,6 +56,6 @@ class Authenticate
 
         $userPasswordHash = $user->password;
 
-        return password_verify($password, $userPasswordHash);
+        return password_verify($credentials["password"], $userPasswordHash);
     }
 }

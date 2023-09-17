@@ -11,7 +11,7 @@ $router->get("/best-practices", CONF_CONTROLLER_BUILDING_PAGE);
 
 $router->group(["prefix" => "login"], function () {
     $this->get("/", "Login:index");
-    $this->get("/do-login", "Login:doLogin");
+    $this->post("/do-login", "Login:doLogin");
 });
 
 $router->group(["prefix" => "reports", "middlewares" => ["Auth"]], function () {

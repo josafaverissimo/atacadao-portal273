@@ -6,18 +6,18 @@ function authenticate() {
 
         const user = event.target.user.value
         const password = event.target.password.value
-        const credentials = btoa(`${user}:${password}`)
+        const body = (new URLSearchParams({user, password})).toString()
 
         fetch(`${baseUrl}/login/do-login`, {
             headers: {
-                Authorization: `Basic ${credentials}`
-            }
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            method: "POST",
+            body,
         }).then(response => response.json())
             .then(json => {
                 if(json.success) {
-                    sessionStorage.setItem("authorization",  credentials)
-
-                    window.location.href = `${baseUrl}/`
+                    window.location.assign(json.redirect)
                 }
             })
     })

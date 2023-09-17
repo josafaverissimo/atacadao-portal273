@@ -9,7 +9,9 @@ class Auth implements IMiddleware
 {
     public function call(): void
     {
-        if (!$_SESSION["logged"]) {
+        if (empty($_SESSION["logged"])) {
+            $_SESSION["requestedResource"] = Helpers::baseUrl($_SERVER["REQUEST_URI"]);
+
             header("Location: " . Helpers::baseUrl("/login"));
             exit;
         }

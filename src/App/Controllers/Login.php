@@ -27,7 +27,8 @@ class Login extends Controller
         }
 
         echo json_encode([
-            "success" => $success
+            "success" => $success,
+            "redirect" => $_SESSION["requestedResource"]
         ]);
     }
 }
