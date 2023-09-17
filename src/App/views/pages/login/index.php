@@ -13,6 +13,15 @@
     </head>
 
     <body>
+        <div class="toast align-items-center text-bg-danger border-0 position-fixed end-0 top-0 m-3" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <span style="font-size: 1.2rem">Usuário ou senha incorretos 😾👊</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+
         <main class="container-fluid container-lg">
             <div class="pt-5 my-5 px-5 text-center rounded-2 shadow-lg">
                 <div>
