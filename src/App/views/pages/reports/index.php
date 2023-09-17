@@ -22,7 +22,7 @@ use Src\Utils\Helpers; ?>
                     <div class="list-group-item list-group-item-action flex-column align-items-start not-found" hidden>
                         <p class="mb-1 text-center py-3">Relatório não encontrado</p>
                     </div>
-                    <?php foreach($reports["interno"] as $report): ?>
+                    <?php foreach(($reports["interno"] ?? []) as $report): ?>
                         <a href="<?= $report->resource ?>" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h1 class="h5 mb-1"><?= ucfirst($report->name); ?></h1>
@@ -32,6 +32,10 @@ use Src\Utils\Helpers; ?>
                             <small class="fst-italic"><em>Relatório gerado pela equipe do cpd</em></small>
                         </a>
                     <?php endforeach; ?>
+
+                    <?php if(empty($reports["interno"])): ?>
+                        <p class="p-2 m-0 shadow-none text-center">Não há relatórios no banco de dados.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -47,19 +51,23 @@ use Src\Utils\Helpers; ?>
                     <div class="list-group-item list-group-item-action flex-column align-items-start not-found" hidden>
                         <p class="mb-1 text-center py-3">Relatório não encontrado</p>
                     </div>
-                    <?php foreach($reports["save"] as $report): ?>
+                    <?php foreach(($reports["save"] ?? []) as $report): ?>
                         <a
                             href="<?= Helpers::baseUrl("/reports-files/{$report->resource}") ?>"
                             <?= !empty($report->resource) ? "target=\"_blank\"" : "" ?>
                                 class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h1 class="h5 mb-1"><?= $report->name ?></h1>
-                                <small>Há 3 dias</small>
+                                <small>Há 1 dia</small>
                             </div>
                             <p class="mb-1"><?= ucfirst(mb_strtolower($report->description)) ?></p>
                             <small class="fst-italic"><em>Relatório gerado durante a rotina batch</em></small>
                         </a>
                     <?php endforeach; ?>
+
+                    <?php if(empty($reports["save"])): ?>
+                        <p class="p-2 m-0 shadow-none text-center">Não há relatórios no banco de dados.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
