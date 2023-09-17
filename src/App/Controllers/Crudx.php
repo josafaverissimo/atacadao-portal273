@@ -60,7 +60,7 @@ class Crudx extends Controller
                 [
                     "tableToUpdate" => "printers",
                     "name" => "Impressoras",
-                    "columns" => ["Nome", "Ip", "Impressões", "Impressões de ontem"],
+                    "columns" => ["Nome", "Host", "Impressões", "Impressões de ontem"],
                     "rows" => $this->getPrintersRows()
                 ],
                 [
@@ -164,7 +164,7 @@ class Crudx extends Controller
         $printersModel = new PrintersModel();
 
         return array_map(
-            fn(IOrm $orm) => (array) $orm->getRow("name", "ip", "currentPrints", "lastDayPrints"),
+            fn(IOrm $orm) => (array) $orm->getRow("name", "host", "currentPrints", "lastDayPrints"),
             $printersModel->getAll()
         );
     }
@@ -350,7 +350,7 @@ class Crudx extends Controller
             $affectedRows += $printersModel->push([
                 "name" => $printer->name,
                 "image" => $printer->image,
-                "ip" => $printer->ip,
+                "host" => $printer->host,
                 "currentPrints" => 0,
                 "lastDayPrints" => 0
             ]);

@@ -60,7 +60,7 @@ create table is_printers
     id            int(11) unsigned auto_increment primary key,
     name          varchar(20)        not null,
     image         varchar(50)        not null,
-    ip            varchar(15) unique not null,
+    host            varchar(15) unique not null,
     currentPrints int(11)            not null default 0,
     lastDayPrints int(11)            not null default 0
 );
