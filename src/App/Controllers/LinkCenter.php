@@ -20,7 +20,11 @@ class LinkCenter extends Controller
                 function(array $rows, LinkOrm $orm) {
                     $row = (array) $orm->getRow("name", "resource", "linkCategoryId");
                     $category = $orm->getLinkCategoryOrm()->name;
-                    $row["notTargetBlank"] = !str_contains($row["resource"], Helpers::baseUrl());
+                    $row["notTargetBlank"] = !str_contains($row["resource"], "http");
+
+                    if($row["notTargetBlank"]) {
+                        $row["resource"] = Helpers::baseUrl($row["resource"]);
+                    }
 
                     unset($row["linkCategoryId"]);
 

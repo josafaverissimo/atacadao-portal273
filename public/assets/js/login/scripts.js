@@ -18,9 +18,9 @@ function authenticate() {
             .then(json => {
                 if(json.success) {
                     window.location.assign(json.redirect)
+                } else {
+                    bootstrap.Toast.getOrCreateInstance(document.querySelector(".toast")).show()
                 }
-
-                bootstrap.Toast.getOrCreateInstance(document.querySelector(".toast")).show()
             })
     })
 }

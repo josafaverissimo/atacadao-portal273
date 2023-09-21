@@ -30,9 +30,10 @@ class Login extends Controller
 
         if ($success) {
             $this->session->set("logged", true);
+            $redirect = $this->session->flashdata("requestedResource");
         }
 
-        $redirect = $this->session->flashdata("requestedResource") ?? Helpers::baseUrl("/");
+        $redirect ??= Helpers::baseUrl("/");
 
         echo json_encode([
             "success" => $success,

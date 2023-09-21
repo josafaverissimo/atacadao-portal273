@@ -46,7 +46,7 @@
                     $image = "default";
 
                     if($this->session->has("requestedResource")) {
-                        $lastUrlExploded = explode("/", $this->session->flashdata("requestedResource"));
+                        $lastUrlExploded = explode("/", $this->session->get("requestedResource"));
                         $lastUri = $lastUrlExploded[count($lastUrlExploded) - 1];
                         $pages = ["crudx", "reports"];
                         $image = in_array($lastUri, $pages) ? $lastUri : "default";
