@@ -1,5 +1,11 @@
 <?php
     use Src\Utils\Helpers;
+
+    /**
+     * @var string $title
+     * @var array $unitsOptions
+     * @var array $unitPhonesRows
+     */
 ?>
 
 <?php $this->template("base", ["title" => $title]); ?>

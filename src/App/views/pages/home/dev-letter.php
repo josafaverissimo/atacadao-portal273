@@ -1,5 +1,9 @@
 <?php
     use Src\Utils\Helpers;
+
+    /**
+     * @var string $title
+     */
 ?>
 
 <?php $this->template("base", ["title" => $title]); ?>

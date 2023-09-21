@@ -1,5 +1,10 @@
 <?php
     use Src\Utils\Helpers;
+
+    /**
+     * @var string $classes
+     * @var array $rows
+     */
 ?>
 
 <?php $this->setSection("head"); ?>

@@ -4,27 +4,27 @@
 
 <span class="time">
     <?php
-    $months = [
-        "janeiro",
-        "fevereiro",
-        "março",
-        "abril",
-        "maio",
-        "junho",
-        "julho",
-        "agosto",
-        "setembro",
-        "outubro",
-        "novembro",
-        "dezembro"
-    ];
+        $months = [
+            "janeiro",
+            "fevereiro",
+            "março",
+            "abril",
+            "maio",
+            "junho",
+            "julho",
+            "agosto",
+            "setembro",
+            "outubro",
+            "novembro",
+            "dezembro"
+        ];
 
-    $now = new DateTime("now");
-    $time = $now->format("H:i:s");
-    $date = $now->format("d") . " de ";
-    $month = ((int) $now->format("m")) - 1;
-    $date .= $months[$month];
-    $date .= " de " . $now->format("Y");
+        $now = new DateTime("now");
+        $time = $now->format("H:i:s");
+        $date = $now->format("d") . " de ";
+        $month = ((int) $now->format("m")) - 1;
+        $date .= $months[$month];
+        $date .= " de " . $now->format("Y");
     ?>
     <time datetime="<?= $time; ?>">
         <?= $time; ?>

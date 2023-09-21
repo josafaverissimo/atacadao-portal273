@@ -1,5 +1,9 @@
 <?php
     use Src\Utils\Helpers;
+
+    /**
+     * @var string $title
+     */
 ?>
 
 <!doctype html>

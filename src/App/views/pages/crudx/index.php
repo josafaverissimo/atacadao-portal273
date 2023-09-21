@@ -1,5 +1,10 @@
 <?php
     use Src\Utils\Helpers;
+
+    /**
+     * @var string $title
+     * @var array $tables
+     */
 ?>
 
 <?php $this->template("base", ["title" => $title]); ?>

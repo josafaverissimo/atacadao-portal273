@@ -2,6 +2,12 @@
     use Src\Utils\Helpers;
     use Src\Interfaces\Database\IOrm;
     use Src\App\Models\Orms\BirthdayPersonOrm;
+
+    /**
+     * @var string $title
+     * @var IOrm[] $birthdayPeople
+     * @var IOrm[] $unitPhones
+     */
 ?>
 
 <?php $this->template("base", ["title" => $title]); ?>
@@ -42,9 +48,9 @@
                         "thead" => ["Nome", "Data"],
                         "classes" => "",
                         "rows" => array_map(
-                                fn(BirthdayPersonOrm $orm) =>
-                                    $orm->formatBirthday()->getRowExcept("id"),
-                                $birthdayPeople
+                            fn(BirthdayPersonOrm $orm) =>
+                                $orm->formatBirthday()->getRowExcept("id"),
+                            $birthdayPeople
                         ),
                         "attributes" => [
                             "data-search-filter" => "#birthday-people-search-filter"

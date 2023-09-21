@@ -1,5 +1,11 @@
 <?php
     use Src\Utils\Helpers;
+
+    /**
+     * @var string $id
+     * @var string $name
+     * @var array $options
+     */
 ?>
 
 <?php $this->setSection("head"); ?>
