@@ -57,13 +57,12 @@
 
                             <div class="p-2 d-flex flex-column align-items-center">
                                 <div class="mb-1 table-actions">
-                                    <button class="btn btn-outline-dark text-sm btn-sm">
+                                    <button class="btn btn-outline-dark text-sm btn-sm create-button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                                         </svg>
                                     </button>
-                                    <button
-                                        class="btn btn-outline-dark text-sm update-button mx-2 btn-sm"
+                                    <button class="btn btn-outline-dark text-sm update-button mx-2 btn-sm"
                                         data-target="<?= Helpers::baseUrl("/crudx/table/{$table["tableToUpdate"]}") ?>"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
@@ -71,7 +70,9 @@
                                             <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
                                         </svg>
                                     </button>
-                                    <button class="btn btn-outline-dark text-sm btn-sm" type="button">
+                                    <button class="btn btn-outline-dark text-sm btn-sm expand-button"
+                                        data-table="<?= $table["tableToUpdate"] ?>-table"
+                                    >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/>
                                         </svg>
@@ -85,6 +86,7 @@
 
                             <?=
                                 $this->getViewHtml("/components/my-table", [
+                                    "id" => "{$table["tableToUpdate"]}-table",
                                     "classes" => "my-table",
                                     "thead" => $table["columns"],
                                     "rows" => $table["rows"],
@@ -98,6 +100,66 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div id="modal-table-wrapper">
+        <div class="modal fade"
+            id="modal-expanded-table"
+            aria-hidden="true"
+            aria-labelledby="expanded-table"
+            tabindex="-1"
+        >
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Tabela</h1>
+                        <button type="button" class="btn-close close"></button>
+                    </div>
+                    <div class="modal-body overflow-y-scroll">
+                        <div id="create-form-wrapper" class="mb-3">
+                            <div class="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#create-form-accordion"
+                                        >
+                                            Formulário de inserção
+                                        </button>
+                                    </h2>
+                                    <div id="create-form-accordion" class="accordion-collapse collapse">
+                                        <div class="accordion-body d-flex justify-content-center">
+                                            <form class="d-flex flex-column align-items-center">
+                                                <div class="d-flex align-items-center justify-content-center mb-2">
+                                                    <div class="me-2">
+                                                        <label for="email" class="form-label">Email</label>
+                                                        <input type="email" class="form-control" id="email">
+                                                    </div>
+                                                    <div>
+                                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                                    </div>
+                                                </div>
+
+                                                <div class="w-100">
+                                                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="main"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark close">Fechar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
