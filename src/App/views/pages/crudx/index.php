@@ -15,33 +15,33 @@
 
 
 <main>
-    <div class="container-fluid container-lg d-flex align-items-center">
-        <div class="p-4 pb-0 p-lg-0 pt-lg-5 p-md-5 align-items-center rounded-3 border shadow-lg bg-white"
-            style="width: 90vw; height: 100%"
-        >
-            <div class="row justify-content-center">
-                <div class="p-3 p-lg-5 pt-lg-3">
-                    <h1 class="display-3 fst-italic">CrudX</h1>
-                    <p class="lead my-3">
-                        Cadastre, Filtre, Atualize ou Delete.
-                    </p>
+    <div class="container-fluid container-lg">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-8 col-md-12" style="height: 100%">
+                <div class="px-3 p-4 pb-0 p-lg-0 pt-lg-5 p-md-5 align-items-center rounded-3 border shadow-lg bg-white">
+                    <div class="p-3 p-lg-5 pt-lg-3">
+                        <h1 class="display-3 fst-italic">CrudX</h1>
+                        <p class="lead my-3">
+                            Cadastre, Filtre, Atualize ou Delete.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="px-lg-5 px-3 my-3">
-            <div class="border-start border-2 px-3 py-2 border-info shadow rounded-2 bg-white">
-                <span><em><strong>Para adicionar</strong></em></span>
-                <p class="text-indent">Clique sobre o botão de adicionar ou maximize a tabela.</p>
+            <div class="col-lg-4 col-md-12 px-lg-5 px-3 my-3">
+                <div class="border-start border-2 px-3 py-2 border-info shadow rounded-2 bg-white">
+                    <span><em><strong>Para adicionar</strong></em></span>
+                    <p class="text-indent">Clique sobre o botão de adicionar ou maximize a tabela.</p>
 
-                <span><em><strong>Para buscar</strong></em></span>
-                <p class="text-indent">Apenas utilize o campo de filtro para buscar o que quer.</p>
+                    <span><em><strong>Para buscar</strong></em></span>
+                    <p class="text-indent">Apenas utilize o campo de filtro para buscar o que quer.</p>
 
-                <span><em><strong>Para atualizar ou deletar</strong></em></span>
-                <p class="text-indent">Clique com o botão direito sobre a linha deseja.</p>
+                    <span><em><strong>Para atualizar ou deletar</strong></em></span>
+                    <p class="text-indent">Clique com o botão direito sobre a linha deseja.</p>
 
-                <span><em><strong>Para recarregar</strong></em></span>
-                <p class="text-indent">Leia a documentação do projeto para entender como recarregar as tabelas.</p>
+                    <span><em><strong>Para recarregar</strong></em></span>
+                    <p class="text-indent">Leia a documentação do projeto para entender como recarregar as tabelas.</p>
+                </div>
             </div>
         </div>
     </div>
