@@ -29,8 +29,8 @@
                         "uri" => "/best-practices"
                     ],
                     [
-                        "name" => "Intranet Matriz",
-                        "url" => "http://portal.atacadao.com.br/",
+                        "name" => "Central de Links",
+                        "url" => Helpers::baseUrl("/"),
                         "blank" => true
                     ],
                 ]
