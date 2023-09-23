@@ -15,32 +15,33 @@
 
 
 <main>
-    <div class="container-fluid container-lg">
-        <div class="p-4 pb-0 p-lg-0 pt-lg-5 p-md-5 align-items-center rounded-3 border shadow-lg mb-3 bg-white">
-            <div class="row">
-                <div class="col-8 p-3 p-lg-5 pt-lg-3">
+    <div class="container-fluid container-lg d-flex align-items-center">
+        <div class="p-4 pb-0 p-lg-0 pt-lg-5 p-md-5 align-items-center rounded-3 border shadow-lg bg-white"
+            style="width: 90vw; height: 100%"
+        >
+            <div class="row justify-content-center">
+                <div class="p-3 p-lg-5 pt-lg-3">
                     <h1 class="display-3 fst-italic">CrudX</h1>
                     <p class="lead my-3">
                         Cadastre, Filtre, Atualize ou Delete.
                     </p>
                 </div>
+            </div>
+        </div>
 
-                <div class="col-4 px-lg-5 px-3 position-relative">
-                    <div
-                        class="bg-light border-start border-2 px-3 py-2 border-info
-                            bg-info bg-opacity-10 shadow rounded-2 position-relative"
-                        style="top: -2rem"
-                    >
-                        <span><em><strong>*Para Buscar*</strong></em></span>
-                        <p class="text-indent">Apenas utilize o campo de filtro para buscar o que quer.</p>
+        <div class="px-lg-5 px-3 my-3">
+            <div class="border-start border-2 px-3 py-2 border-info shadow rounded-2 bg-white">
+                <span><em><strong>Para adicionar</strong></em></span>
+                <p class="text-indent">Clique sobre o botão de adicionar ou maximize a tabela.</p>
 
-                        <span><em><strong>*Para Adicionar ou Deletar*</strong></em></span>
-                        <p class="text-indent">Clique com o botão direito sobre a linha deseja.</p>
+                <span><em><strong>Para buscar</strong></em></span>
+                <p class="text-indent">Apenas utilize o campo de filtro para buscar o que quer.</p>
 
-                        <span><em><strong>*Para Atualizar*</strong></em></span>
-                        <p class="text-indent">Salve um arquivo json no formato correto na pasta /dataset.</p>
-                    </div>
-                </div>
+                <span><em><strong>Para atualizar ou deletar</strong></em></span>
+                <p class="text-indent">Clique com o botão direito sobre a linha deseja.</p>
+
+                <span><em><strong>Para recarregar</strong></em></span>
+                <p class="text-indent">Leia a documentação do projeto para entender como recarregar as tabelas.</p>
             </div>
         </div>
     </div>
