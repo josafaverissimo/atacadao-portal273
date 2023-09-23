@@ -34,6 +34,8 @@ function doTableActions(tableActions, myTableInstance) {
     const createButton = tableActions.querySelector(".create-button")
     const updateButton = tableActions.querySelector(".update-button")
     const expandButton = tableActions.querySelector(".expand-button")
+    const { tableToUpdate } = tableActions.dataset
+    const tableCard = document.querySelector(`#table-card-${tableToUpdate}`)
 
     function createButtonAction() {
         createButton.addEventListener("click",() => {
@@ -47,7 +49,8 @@ function doTableActions(tableActions, myTableInstance) {
     }
 
     function updateButtonAction() {
-        const requester = Requester(updateButton.dataset.target)
+        const target = `${baseUrl}/crudx/table/${tableToUpdate}`
+        const requester = Requester(target)
 
         updateButton.addEventListener("click", () => {
             myTableInstance.startLoading()
