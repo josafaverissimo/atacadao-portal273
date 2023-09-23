@@ -22,7 +22,7 @@
                     <div class="p-3 p-lg-5 pt-lg-3">
                         <h1 class="display-3 fst-italic">CrudX</h1>
                         <p class="lead my-3">
-                            Cadastre, Filtre, Atualize ou Delete.
+                            Cadastre, Filtre, Atualize ou Delete qualquer tabela do banco de dados.
                         </p>
                     </div>
                 </div>
