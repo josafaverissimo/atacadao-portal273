@@ -64,8 +64,7 @@ function doTableActions(tableActions, myTableInstance) {
     }
 
     function expandTable() {
-        const tableId = expandButton.closest("button").dataset.table
-        const myTable = document.querySelector(`#${tableId}`).cloneNode(true)
+        const myTable = tableCard.querySelector(`.my-table`).cloneNode(true)
         fullscreenModal.clearBody()
         fullscreenModal.append(myTable)
 
@@ -75,7 +74,7 @@ function doTableActions(tableActions, myTableInstance) {
 
 
     function expandButtonAction() {
-        expandButton.addEventListener("click", () => expandTable())
+        expandButton.addEventListener("click", expandTable)
     }
 
     function startActions() {

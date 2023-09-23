@@ -101,7 +101,6 @@
 
                             <?=
                                 $this->getViewHtml("/components/my-table", [
-                                    "id" => "{$table["tableToUpdate"]}-table",
                                     "classes" => "my-table",
                                     "thead" => $table["columns"],
                                     "rows" => $table["rows"],
