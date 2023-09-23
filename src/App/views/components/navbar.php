@@ -29,9 +29,9 @@
                         "uri" => "/best-practices"
                     ],
                     [
-                        "name" => "Central de Links",
-                        "url" => Helpers::baseUrl("/"),
-                        "blank" => true
+                        "name" => "Ramais",
+                        "url" => Helpers::baseUrl("/phones"),
+                        "uri" => "/phones"
                     ],
                 ]
             ?>
