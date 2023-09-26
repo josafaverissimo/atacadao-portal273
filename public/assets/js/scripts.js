@@ -37,6 +37,14 @@ function getCookie(name) {
     return null
 }
 
+function createNode(html) {
+    const genericElementWrapper = document.createElement("div")
+
+    genericElementWrapper.innerHTML = html
+
+    return genericElementWrapper.firstElementChild
+}
+
 function notRefresh() {
     const anchors = document.querySelectorAll("a")
 
