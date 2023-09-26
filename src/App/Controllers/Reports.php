@@ -3,8 +3,16 @@
 namespace Src\App\Controllers;
 
 use Src\Core\Controller;
-use Src\App\Models\{PrintersModel, ReportsModel};
-use Src\Utils\{Html, HttpSocket};
+
+use Src\App\Models\{
+    PrintersModel,
+    ReportsModel
+};
+
+use Src\Utils\{
+    Html,
+    HttpSocket
+};
 
 class Reports extends Controller
 {

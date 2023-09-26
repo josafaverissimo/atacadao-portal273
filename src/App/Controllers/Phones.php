@@ -5,7 +5,10 @@ namespace Src\App\Controllers;
 use Src\Core\Controller;
 
 use Src\Interfaces\Database\IOrm;
-use Src\App\Models\{UnitsPhonesModel, UnitsModel};
+use Src\App\Models\{
+    UnitsPhonesModel,
+    UnitsModel
+};
 
 class Phones extends Controller
 {

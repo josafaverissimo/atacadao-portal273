@@ -3,12 +3,25 @@
 namespace Src\App\Controllers;
 
 use Src\App\Models\{
-    BirthdayPeopleModel, LinksCategoriesModel, LinksModel, UnitsModel, UnitsPhonesModel, UsersModel, PrintersModel,
-    ReportsModel, ReportsCategoriesModel
+    BirthdayPeopleModel,
+    LinksCategoriesModel,
+    LinksModel,
+    UnitsModel,
+    UnitsPhonesModel,
+    UsersModel,
+    PrintersModel,
+    ReportsModel,
+    ReportsCategoriesModel
 };
 
 use Src\App\Models\Orms\{
-    LinkCategoryOrm, BirthdayPersonOrm, UnitPhoneOrm, UnitOrm, LinkOrm, ReportOrm, ReportCategoryOrm
+    LinkCategoryOrm,
+    BirthdayPersonOrm,
+    UnitPhoneOrm,
+    UnitOrm,
+    LinkOrm,
+    ReportOrm,
+    ReportCategoryOrm
 };
 
 use Src\Core\Controller;
@@ -16,7 +29,8 @@ use Src\Interfaces\Database\IOrm;
 use Src\Utils\{Helpers, HttpSocket};
 
 class Crudx extends Controller
-{    public function index(): void
+{
+    public function index(): void
     {
         $data = [
             "title" => "Atualizar dados",
