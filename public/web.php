@@ -31,6 +31,17 @@ $router->group(["prefix" => "crudx", "middlewares" => ["Auth"]], function () {
     $this->get("/table/(:alpha)", "Crudx:updateTable");
 });
 
+$router->group(["prefix" => "units"], function() {
+    $this->get("/getAll", "Units:getAll");
+});
+
+$router->group(["prefix" => "links-categories"], function() {
+    $this->get("/getAll", "LinksCategories:getAll");
+});
+
+$router->group(["prefix" => "reports-categories"], function() {
+    $this->get("/getAll", "ReportsCategories:getAll");
+});
 
 $router->dispatch();
 
