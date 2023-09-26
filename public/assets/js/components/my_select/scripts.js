@@ -1,9 +1,8 @@
-function mySelect(onChange = null) {
-    const selectElements = document.querySelectorAll(".my-select")
-    const selectOptionsData = {}
+function MySelect(mySelectWrapper, onChange) {
+    const selectOptionsData = []
 
-    function getSelectOptions(select) {
-        const options = select.querySelectorAll("option")
+    function getSelectOptions() {
+        const options = mySelectWrapper.querySelectorAll("option")
         return [].reduce.call(options, (options, option) => {
             options.push({
                 id: option.id,
@@ -15,56 +14,51 @@ function mySelect(onChange = null) {
         }, [])
     }
 
-    function changeValue(select, option) {
-        select.querySelector("button").textContent = option.textContent
-        select.querySelector(`#${option.id}`).selected = true
+    function changeValue(option) {
+        mySelectWrapper.querySelector("button").textContent = option.textContent
+        mySelectWrapper.querySelector(`#${option.id}`).selected = true
 
-        if(onChange !== null) {
+        if(onChange) {
             onChange(option.value)
         }
     }
 
-    function insertLiDropdownItem(select, option) {
-        const optionsWrapper = getOptionsWrapper(select)
+    function insertLiDropdownItem(option) {
+        const optionsWrapper = getOptionsWrapper()
         const liDropdownItem = document.createElement("li")
         liDropdownItem.classList.add("dropdown-item", "text-capitalize")
         liDropdownItem.textContent = option.textContent
         liDropdownItem.setAttribute("role", "button")
 
         liDropdownItem.addEventListener("click", () => {
-            changeValue(select, option)
+            changeValue(option)
         })
 
         optionsWrapper.appendChild(liDropdownItem)
     }
 
-    function getOptionsWrapper(select) {
-        return select.querySelector("ul ul")
+    function getOptionsWrapper() {
+        return mySelectWrapper.querySelector("ul ul")
     }
 
-    function fillValues() {
-        selectElements.forEach(select => {
-            const optionsById = getSelectOptions(select)
-            const inputElement = select.querySelector("input")
+    function fillOptions() {
+        const optionsById = getSelectOptions()
+        const inputElement = mySelectWrapper.querySelector("input")
 
-            selectOptionsData[select.id] = []
+        optionsById.forEach(option => {
+            insertLiDropdownItem(option)
+            selectOptionsData.push(option)
+        })
 
-            optionsById.forEach(option => {
-                insertLiDropdownItem(select, option)
-                selectOptionsData[select.id].push(option)
-            })
-
-            inputElement.addEventListener("input", () => {
-                listeningInput(select, inputElement)
-            })
+        inputElement.addEventListener("input", () => {
+            listeningInput(inputElement)
         })
     }
 
-    function listeningInput(select, inputElement) {
+    function listeningInput(inputElement) {
         const currentValue = inputElement.value.toLowerCase()
-        const selectOptionData = selectOptionsData[select.id]
 
-        const filteredSelectOptionData = selectOptionData.reduce((options, option) => {
+        const filteredSelectOptionData = selectOptionsData.reduce((options, option) => {
             if(option.textContent.indexOf(currentValue) !== -1) {
                 options.push(option)
             }
@@ -72,17 +66,71 @@ function mySelect(onChange = null) {
             return options
         }, [])
 
-        cleanOptionsWrapper(select)
+        cleanOptionsWrapper()
 
         filteredSelectOptionData.forEach(option => {
-            insertLiDropdownItem(select, option)
+            insertLiDropdownItem(option)
         })
     }
 
-    function cleanOptionsWrapper(select) {
-        const optionsWrapper = getOptionsWrapper(select)
+    function cleanOptionsWrapper() {
+        const optionsWrapper = getOptionsWrapper()
         optionsWrapper.innerHTML = ""
     }
 
-    fillValues()
+    return {
+        fillOptions
+    }
+}
+
+function MySelectNode(data = {}) {
+    const node = createGenericNode()
+
+    function createGenericNode() {
+        return createNode(`
+            <div id="${data.id || ""}" class="dropdown my-select ${data.classes || ""}">
+                <div class="d-flex flex-column align-items-center">            
+                    <label>${data.label}</label>   
+                    <select name="${data.name || ""}">
+                        ${!!data.options ? data.options.reduce((options, option) => {
+                            options += `
+                                <option id="my-select-${data.id || ""}-option-${option.id}"
+                                    value="${option.value}"
+                                >
+                                   ${option.textContent}
+                                </option>
+                            `
+                            return options
+                        }, "") : ""}
+                    </select>
+                </div>
+                
+                <button class="btn btn-light btn-outline-dark dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    type="button"
+                >
+                    ${data.buttonPlaceHolder || "Selecione uma opção"}
+                </button>
+    
+                <div class="dropdown-menu">
+                    <ul class="list-group-flush px-2">
+                        <li class="list-group-item">
+                            <input type="text" class="form-control" placeholder="${data.inputPlaceHolder || "Pesquisar"}">
+                            <div class="dropdown-divider"></div>
+                        </li>
+        
+                        <ul class="p-0"></ul>
+                    </ul>
+                </div>
+            </div>`
+        )
+    }
+
+    function getGenericNode() {
+        return node
+    }
+
+    return {
+        getGenericNode
+    }
 }
