@@ -29,6 +29,11 @@ function Requester (target)  {
     }
 }
 
+function getData(target) {
+    const requester = Requester(target)
+    return requester.send().then(response => response.json())
+}
+
 function doTableActions(tableActions, myTableInstance) {
     const fullscreenModal = FullscreenModal()
     const createButton = tableActions.querySelector(".create-button")
@@ -65,16 +70,174 @@ function doTableActions(tableActions, myTableInstance) {
 
     function expandTable() {
         const myTable = tableCard.querySelector(`.my-table`).cloneNode(true)
+        const tableTitle = tableCard.querySelector("h1").textContent
+        const fullscreenModalTitleElement = fullscreenModal.getNode().querySelector("h1")
+
+        setFormByTable(tableToUpdate)
+
+        fullscreenModalTitleElement.textContent = tableTitle
+
         fullscreenModal.clearBody()
         fullscreenModal.append(myTable)
-
         fullscreenModal.show()
     }
 
-
-
     function expandButtonAction() {
         expandButton.addEventListener("click", expandTable)
+    }
+
+    function makeInputWrapperElementElement({id, name, inputData}) {
+        const type = inputData.type
+        const inputWrapperElementByType = {
+            "text": () => createNode(`
+                <div class="d-flex flex-column align-items-center px-2">
+                    <label for="${id}-input">${name}</label>
+                    <input type="text" id="${id}-input" name="${name}" class="form-control">
+                </div>
+            `),
+            "select": () => {
+                const options = inputData.options
+
+                const mySelectNode = MySelectNode({
+                    id: `${id}-my-select`,
+                    name: name,
+                    label: name,
+                    options
+                }).getGenericNode()
+
+                MySelect(mySelectNode).fillOptions()
+
+                return mySelectNode
+            }
+        }
+
+        return inputWrapperElementByType[type]()
+    }
+
+    async function setFormByTable(table) {
+        const formDataByTable = {
+            birthdayPeople: {
+                name: {
+                    type: "text"
+                },
+                birthday: {
+                    type: "text"
+                }
+            },
+            units: {
+                name: {
+                    type: "text",
+                },
+                number: {
+                    type: "text"
+                }
+            },
+            unitsPhones: {
+                number: {
+                    type: "text",
+                },
+                sector: {
+                    type: "text"
+                },
+                owner: {
+                    type: "text"
+                },
+                unit: {
+                    type: "select",
+                    options: (await getData(`${baseUrl}/units/getAll`)).map(data => {
+                        return {
+                            id: data.id,
+                            value: data.id,
+                            textContent: data.name
+                        }
+                    })
+                }
+            },
+            users: {
+                username: {
+                    type: "text"
+                }
+            },
+            links: {
+                name: {
+                    type: "text"
+                },
+                link: {
+                    type: "text"
+                },
+                category: {
+                    type: "select",
+                    options: (await getData(`${baseUrl}/links-categories/getAll`)).map(data => {
+                        return {
+                            id: data.id,
+                            value: data.id,
+                            textContent: data.name
+                        }
+                    })
+                }
+            },
+            linksCategories: {
+                name: {
+                    type: "text"
+                }
+            },
+            printers: {
+                name: {
+                    type: "text"
+                },
+                host: {
+                    type: "text"
+                },
+                currentPrints: {
+                    type: "text"
+                },
+                lastDayPrints: {
+                    type: "text"
+                }
+            },
+            reports: {
+                name: {
+                    type: "text"
+                },
+                description: {
+                    type: "text"
+                },
+                resource: {
+                    type: "text"
+                },
+                category: {
+                    type: "select",
+                    options: (await getData(`${baseUrl}/reports-categories/getAll`)).map(data => {
+                        return {
+                            id: data.id,
+                            value: data.id,
+                            textContent: data.name
+                        }
+                    })
+                }
+            },
+            reportsCategories: {
+                name: {
+                    type: "text"
+                }
+            }
+        }
+        const formData = formDataByTable[table]
+        const fullscreenModalFormInputsWrapper = fullscreenModal.getNode()
+            .querySelector("#create-form-accordion form #inputs-wrapper")
+
+        fullscreenModalFormInputsWrapper.innerHTML = ""
+
+        Object.entries(formData).forEach(entry => {
+            const [inputName, inputData] = entry
+            const inputWrapperElement = makeInputWrapperElementElement({
+                id: inputName,
+                name: inputName,
+                inputData
+            })
+
+            fullscreenModalFormInputsWrapper.appendChild(inputWrapperElement)
+        })
     }
 
     function startActions() {
@@ -124,8 +287,6 @@ function FullscreenModal() {
         hide
     }
 }
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const fullscreenModal = FullscreenModal()

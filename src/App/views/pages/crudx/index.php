@@ -10,7 +10,8 @@
 <?php $this->template("base", ["title" => $title]); ?>
 
 <?php $this->setSection("head"); ?>
-    <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/crudx/styles.css"); ?>">
+    <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/components/my_select/styles.css") ?>">
+    <link rel="stylesheet" href="<?= Helpers::baseUrl("/assets/css/crudx/styles.css") ?>">
 <?php $this->endSection("head"); ?>
 
 
@@ -146,18 +147,9 @@
                                     <div id="create-form-accordion" class="accordion-collapse collapse">
                                         <div class="accordion-body d-flex justify-content-center">
                                             <form class="d-flex flex-column align-items-center">
-                                                <div class="d-flex align-items-center justify-content-center mb-2">
-                                                    <div class="me-2">
-                                                        <label for="email" class="form-label">Email</label>
-                                                        <input type="email" class="form-control" id="email">
-                                                    </div>
-                                                    <div>
-                                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                                    </div>
-                                                </div>
+                                                <div id="inputs-wrapper" class="d-flex align-items-end mb-3"></div>
 
-                                                <div class="w-100">
+                                                <div style="width: 6em">
                                                     <button type="submit" class="btn btn-primary w-100">Submit</button>
                                                 </div>
                                             </form>
@@ -179,5 +171,6 @@
 </main>
 
 <?php $this->setSection("footer"); ?>
+    <script src="<?=  Helpers::baseUrl("/assets/js/components/my_select/scripts.js") ?>"></script>
     <script src="<?= Helpers::baseUrl("/assets/js/crudx/scripts.js") ?>"></script>
 <?php $this->endSection("footer"); ?>
