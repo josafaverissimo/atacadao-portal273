@@ -2,7 +2,7 @@
 
 namespace Src\Core\Router;
 
-use Src\Core\Enums\Middlewares as MiddlewaresEnum;
+use Src\Core\Enums\MiddlewaresEnum;
 
 class Middleware
 {
