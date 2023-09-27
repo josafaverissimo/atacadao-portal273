@@ -89,7 +89,7 @@ function doTableActions(tableActions, myTableInstance) {
     function makeInputWrapperElementElement({id, name, inputData}) {
         const type = inputData.type
         const inputWrapperElementByType = {
-            "text": () => createNode(`
+            "text": () => createNodeFromHtml(`
                 <div class="d-flex flex-column align-items-center px-2">
                     <label for="${id}-input">${name}</label>
                     <input type="text" id="${id}-input" name="${name}" class="form-control">

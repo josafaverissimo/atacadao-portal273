@@ -37,7 +37,7 @@ function getCookie(name) {
     return null
 }
 
-function createNode(html) {
+function createNodeFromHtml(html) {
     const genericElementWrapper = document.createElement("div")
 
     genericElementWrapper.innerHTML = html
