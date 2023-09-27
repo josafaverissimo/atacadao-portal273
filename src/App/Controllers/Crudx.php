@@ -419,40 +419,40 @@ class Crudx extends Controller
     {
         $tableFunctions = [
             "birthdayPeople" => [
-                "getAll" => fn() => $this->getBirthdayPeopleRows(),
-                "update" => fn() => $this->updateBirthdayPeople()
+                "getAll" => $this->getBirthdayPeopleRows(...),
+                "update" => $this->updateBirthdayPeople(...)
             ],
             "units" => [
-                "getAll" => fn() => $this->getUnitsRows(),
-                "update" => fn() => $this->updateUnits()
+                "getAll" => $this->getUnitsRows(...),
+                "update" => $this->updateUnits(...)
             ],
             "unitsPhones" => [
-                "getAll" => fn() => $this->getUnitsPhonesRows(),
-                "update" => fn() => $this->updateUnitsPhones()
+                "getAll" => $this->getUnitsPhonesRows(...),
+                "update" => $this->updateUnitsPhones(...)
             ],
             "users" => [
-                "getAll" => fn() => $this->getUsersRows(),
+                "getAll" => $this->getUsersRows(...),
                 "update" => fn() => 0
             ],
             "links" => [
-                "getAll" => fn() => $this->getLinksRows(),
-                "update" => fn() => $this->updateLinks()
+                "getAll" => $this->getLinksRows(...),
+                "update" => $this->updateLinks(...)
             ],
             "linksCategories" => [
-                "getAll" => fn() => $this->getLinksCategoriesRows(),
-                "update" => fn() => $this->updateLinksCategories()
+                "getAll" => $this->getLinksCategoriesRows(...),
+                "update" => $this->updateLinksCategories(...)
             ],
             "printers" => [
-                "getAll" => fn() => $this->getPrintersRows(),
-                "update" => fn() => $this->updatePrinters()
+                "getAll" => $this->getPrintersRows(...),
+                "update" => $this->updatePrinters(...)
             ],
             "reports" => [
-                "getAll" => fn() => $this->getReportsRows(),
-                "update" => fn() => $this->updateReports()
+                "getAll" => $this->getReportsRows(...),
+                "update" => $this->updateReports(...)
             ],
             "reportsCategories" => [
-                "getAll" => fn() => $this->getReportsCategoriesRows(),
-                "update" => fn() => $this->updateReportsCategories()
+                "getAll" => $this->getReportsCategoriesRows(...),
+                "update" => $this->updateReportsCategories(...)
             ]
         ];
 
@@ -463,5 +463,10 @@ class Crudx extends Controller
             "rows" => $rows,
             "affectedRows" => $affectedRows
         ]);
+    }
+
+    public function insertRowInTable(string $table): void
+    {
+
     }
 }
