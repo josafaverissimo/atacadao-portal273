@@ -467,6 +467,11 @@ class Crudx extends Controller
 
     public function insertRowInTable(string $table): void
     {
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
+        echo Helpers::jsonOutput([
+            "table" => $table,
+            "post" => $post
+        ]);
     }
 }

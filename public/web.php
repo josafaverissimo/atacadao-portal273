@@ -29,6 +29,7 @@ $router->group(["prefix" => "phones"], function () {
 $router->group(["prefix" => "crudx", "middlewares" => ["Auth"]], function () {
     $this->get("/", "Crudx:index");
     $this->get("/table/(:alpha)", "Crudx:updateTable");
+    $this->post("/create/(:alpha)", "Crudx:insertRowInTable");
 });
 
 $router->group(["prefix" => "units"], function() {

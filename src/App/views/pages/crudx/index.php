@@ -61,11 +61,11 @@
                                 <div class="mb-1 table-actions" data-table-to-update="<?= $table["tableToUpdate"] ?>">
                                     <button class="btn btn-outline-dark text-sm btn-sm create-button">
                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                             width="16"
-                                             height="16"
-                                             fill="currentColor"
-                                             class="bi bi-plus-lg"
-                                             viewBox="0 0 16 16"
+                                            width="16"
+                                            height="16"
+                                            fill="currentColor"
+                                            class="bi bi-plus-lg"
+                                            viewBox="0 0 16 16"
                                         >
                                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                                         </svg>
@@ -132,19 +132,19 @@
                         <button type="button" class="btn-close close"></button>
                     </div>
                     <div class="modal-body overflow-y-scroll">
-                        <div id="create-form-wrapper" class="mb-3">
+                        <div class="mb-3">
                             <div class="accordion">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed"
                                                 type="button"
                                                 data-bs-toggle="collapse"
-                                                data-bs-target="#create-form-accordion"
+                                                data-bs-target="#create-form-wrapper"
                                         >
                                             Formulário de inserção
                                         </button>
                                     </h2>
-                                    <div id="create-form-accordion" class="accordion-collapse collapse">
+                                    <div id="create-form-wrapper" class="accordion-collapse collapse">
                                         <div class="accordion-body d-flex justify-content-center">
                                             <form class="d-flex flex-column align-items-center">
                                                 <div id="inputs-wrapper" class="d-flex align-items-end mb-3"></div>

@@ -29,13 +29,21 @@ function Requester (target)  {
     }
 }
 
-function getData(target) {
+function getData(target, data) {
     const requester = Requester(target)
+
+    if(data) {
+        if(data.method) requester.setMethod(data.method)
+        if(data.headers) requester.setHeaders(data.headers)
+        if(data.body) requester.setBody(data.body)
+    }
+
     return requester.send().then(response => response.json())
 }
 
 function doTableActions(tableActions, myTableInstance) {
     const fullscreenModal = FullscreenModal()
+    const fullscreenModalForm = fullscreenModal.getNode().querySelector("#create-form-wrapper form")
     const createButton = tableActions.querySelector(".create-button")
     const updateButton = tableActions.querySelector(".update-button")
     const expandButton = tableActions.querySelector(".expand-button")
@@ -75,8 +83,9 @@ function doTableActions(tableActions, myTableInstance) {
 
         setFormByTable(tableToUpdate)
 
-        fullscreenModalTitleElement.textContent = tableTitle
+        fullscreenModalForm.dataset.tableToUpdate = tableToUpdate
 
+        fullscreenModalTitleElement.textContent = tableTitle
         fullscreenModal.clearBody()
         fullscreenModal.append(myTable)
         fullscreenModal.show()
@@ -223,8 +232,7 @@ function doTableActions(tableActions, myTableInstance) {
             }
         }
         const formData = formDataByTable[table]
-        const fullscreenModalFormInputsWrapper = fullscreenModal.getNode()
-            .querySelector("#create-form-accordion form #inputs-wrapper")
+        const fullscreenModalFormInputsWrapper = fullscreenModalForm.querySelector("#inputs-wrapper")
 
         fullscreenModalFormInputsWrapper.innerHTML = ""
 
@@ -291,11 +299,32 @@ function FullscreenModal() {
 document.addEventListener("DOMContentLoaded", () => {
     const fullscreenModal = FullscreenModal()
     const nodeFullscreenModal = fullscreenModal.getNode()
+    const nodeFullscreenModalForm = nodeFullscreenModal.querySelector("form")
 
     nodeFullscreenModal.querySelectorAll("button.close").forEach(button => {
         button.addEventListener("click", () => {
             fullscreenModal.hide()
         })
+    })
+
+    nodeFullscreenModalForm.addEventListener("submit", async event => {
+        event.preventDefault()
+
+        const tableToUpdate = nodeFullscreenModalForm.dataset.tableToUpdate
+        const formData = new FormData()
+
+        nodeFullscreenModalForm.querySelectorAll("input,select")
+            .forEach(({name, value}) => {
+                formData.append(name, value)
+            }
+        )
+
+        const response = await getData(`${baseUrl}/crudx/create/${tableToUpdate}`, {
+            method: "post",
+            body: formData
+        })
+
+        console.log(response)
     })
 
     document.querySelectorAll(".update-table").forEach(tableWrapper => {
