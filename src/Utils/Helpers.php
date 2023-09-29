@@ -97,4 +97,18 @@ final class Helpers
     {
         return date("d/m/Y", strtotime($date));
     }
+
+    public static function dateBrToSystemFormat(string $date): string
+    {
+        return implode("-",
+            array_reverse(
+                explode("/", $date)
+            )
+        );
+    }
+
+    public static function filterInputArray(int $input = INPUT_POST): array
+    {
+        return filter_input_array($input, FILTER_SANITIZE_SPECIAL_CHARS);
+    }
 }
