@@ -51,14 +51,14 @@ function doTableActions(tableActions, myTableInstance) {
     const tableCard = document.querySelector(`#table-card-${tableToUpdate}`)
 
     function createButtonAction() {
-        createButton.addEventListener("click",() => {
-            const html = `
-                <div>
-                
-                </div>
-            `;
-            expandTable()
-        })
+        // createButton.addEventListener("click",() => {
+        //     const html = `
+        //         <div>
+        //
+        //         </div>
+        //     `;
+        //     expandTable()
+        // })
     }
 
     function updateButtonAction() {
@@ -95,22 +95,50 @@ function doTableActions(tableActions, myTableInstance) {
         expandButton.addEventListener("click", expandTable)
     }
 
+    function translateInputNameToPortuguese(inputName) {
+        return {
+            name: "nome",
+            birthday: "aniversário",
+            number: "número",
+            sector: "setor",
+            owner: "responsável",
+            unit: "filial",
+            username: "nome de usuário",
+            password: "senha",
+            host: "host",
+            image: "imagem",
+            currentPrints: "total de impressões",
+            lastDayPrints: "impressões de ontem",
+            link: "link",
+            description: "description",
+            resource: "recurso",
+            category: "categoria"
+        }[inputName]
+    }
+
     function makeInputWrapperElementElement({id, name, inputData}) {
         const type = inputData.type
+        const nameTranslated = translateInputNameToPortuguese(name) || name
         const inputWrapperElementByType = {
-            "text": () => createNodeFromHtml(`
+            text: () => createNodeFromHtml(`
                 <div class="d-flex flex-column align-items-center px-2">
-                    <label for="${id}-input">${name}</label>
+                    <label for="${id}-input">${nameTranslated}</label>
                     <input type="text" id="${id}-input" name="${name}" class="form-control">
                 </div>
             `),
-            "select": () => {
+            password: () => createNodeFromHtml(`
+                <div class="d-flex flex-column align-items-center px-2">
+                    <label for="${id}-input">${nameTranslated}</label>
+                    <input type="password" id="${id}-input" name="${name}" class="form-control">
+                </div>
+            `),
+            select: () => {
                 const options = inputData.options
 
                 const mySelectNode = MySelectNode({
                     id: `${id}-my-select`,
                     name: name,
-                    label: name,
+                    label: nameTranslated,
                     options
                 }).getGenericNode()
 
@@ -165,13 +193,16 @@ function doTableActions(tableActions, myTableInstance) {
             users: {
                 username: {
                     type: "text"
+                },
+                password: {
+                    type: "password"
                 }
             },
             links: {
                 name: {
                     type: "text"
                 },
-                link: {
+                resource: {
                     type: "text"
                 },
                 category: {
@@ -195,6 +226,9 @@ function doTableActions(tableActions, myTableInstance) {
                     type: "text"
                 },
                 host: {
+                    type: "text"
+                },
+                image: {
                     type: "text"
                 },
                 currentPrints: {

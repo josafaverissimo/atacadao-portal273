@@ -25,11 +25,112 @@ use Src\App\Models\Orms\{
 };
 
 use Src\Core\Controller;
-use Src\Interfaces\Database\IOrm;
 use Src\Utils\{Helpers, HttpSocket};
+use Src\Interfaces\{Database\IOrm, App\Controllers\ICrud};
 
 class Crudx extends Controller
 {
+    private \StdClass $tableActions;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->tableActions = (object) [
+            "birthdayPeople" => new class {
+                public function __construct(
+                    private readonly BirthdayPeople $birthdayPeopleController = new BirthdayPeople()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->birthdayPeopleController->create();
+                }
+            },
+            "units" => new class {
+                public function __construct(
+                    private readonly Units $unitsController = new Units()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->unitsController->create();
+                }
+            },
+            "unitsPhones" => new class {
+                public function __construct(
+                    private readonly UnitsPhones $unitsPhonesController = new UnitsPhones()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->unitsPhonesController->create();
+                }
+            },
+            "links" => new class {
+                public function __construct(
+                    private readonly Links $linksController = new Links()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->linksController->create();
+                }
+            },
+            "linksCategories" => new class {
+                public function __construct(
+                    private readonly LinksCategories $linksCategoriesController = new LinksCategories()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->linksCategoriesController->create();
+                }
+            },
+            "printers" => new class {
+                public function __construct(
+                    private readonly Printers $printersController = new Printers()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->printersController->create();
+                }
+            },
+            "reports" => new class {
+                public function __construct(
+                    private readonly Reports $reportsController = new Reports()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->reportsController->create();
+                }
+            },
+            "reportsCategories" => new class {
+                public function __construct(
+                    private readonly ReportsCategories $reportsCategoriesController = new ReportsCategories()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->reportsCategoriesController->create();
+                }
+            },
+            "users" => new class {
+
+                public function __construct(
+                    private readonly Users $usersController = new Users()
+                ) {}
+
+                public function create(): int
+                {
+                    return $this->usersController->create();
+                }
+            }
+        ];
+    }
+    
     public function index(): void
     {
         $data = [
@@ -228,11 +329,7 @@ class Crudx extends Controller
         foreach($birthdayPeopleJson as $birthdayPeopleRow) {
             $affectedRows += $birthdayPeopleModel->push([
                 "name" => mb_convert_case($birthdayPeopleRow->nome, MB_CASE_LOWER),
-                "birthday" => implode("-",
-                    array_reverse(
-                        explode("/", $birthdayPeopleRow->aniversario)
-                    )
-                )
+                "birthday" => Helpers::dateBrToSystemFormat($birthdayPeopleRow->aniversario)
             ]);
         }
 
@@ -467,11 +564,10 @@ class Crudx extends Controller
 
     public function insertRowInTable(string $table): void
     {
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        $rowsAffected = $this->tableActions->$table->create();
 
         echo Helpers::jsonOutput([
-            "table" => $table,
-            "post" => $post
+           "success" => $rowsAffected > 0
         ]);
     }
 }

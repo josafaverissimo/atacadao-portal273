@@ -9,20 +9,33 @@ use Src\App\Models\{
     ReportsModel
 };
 
-use Src\Utils\{
-    Html,
-    HttpSocket
-};
+use Src\Utils\{Helpers, Html, HttpSocket};
 
 class Reports extends Controller
 {
+    public function __construct(
+       private readonly ReportsModel $reportsModel = new ReportsModel()
+    ) {
+        parent::__construct();
+    }
+
+    public function create(): int
+    {
+        $post = $this->getPost();
+
+        return $this->reportsModel->push([
+            "name" => $post["name"],
+            "description" => $post["description"],
+            "resource" => $post["resource"],
+            "reportCategoryId" => $post["category"]
+        ]);
+    }
+
     public function index(): void
     {
-        $reportsModel = new ReportsModel();
-
         $data = [
             "title" => "Relatórios",
-            "reports" => $reportsModel->getAllByCategories()
+            "reports" => $this->reportsModel->getAllByCategories()
         ];
 
         $this->renderView("/pages/reports/index", $data);

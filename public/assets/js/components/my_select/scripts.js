@@ -87,7 +87,7 @@ function MySelectNode(data = {}) {
     const node = createGenericNode()
 
     function createGenericNode() {
-        return createNode(`
+        return createNodeFromHtml(`
             <div id="${data.id || ""}" class="dropdown my-select ${data.classes || ""}">
                 <div class="d-flex flex-column align-items-center">            
                     <label>${data.label}</label>   
