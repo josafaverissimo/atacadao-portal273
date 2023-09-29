@@ -92,7 +92,7 @@ abstract class Model implements IModel
         return $this->sql->affectedRows();
     }
 
-    public function reset(): void
+    public function truncate(): void
     {
         $this->delete();
 
