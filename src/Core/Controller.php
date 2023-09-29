@@ -3,6 +3,7 @@
 namespace Src\Core;
 
 use Src\Utils\Session;
+use Src\Utils\Helpers;
 
 abstract class Controller
 {
@@ -11,6 +12,11 @@ abstract class Controller
     public function __construct()
     {
         $this->session = Session::getInstance();
+    }
+
+    protected function getPost(): array
+    {
+        return Helpers::filterInputArray();
     }
 
     protected function renderView(string $path, array $data = []): void
