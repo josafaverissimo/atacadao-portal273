@@ -23,7 +23,7 @@
                     <div class="p-3 p-lg-5 pt-lg-3">
                         <h1 class="display-3 fst-italic">CrudX</h1>
                         <p class="lead my-3">
-                            Cadastre, Filtre, Atualize ou Delete qualquer tabela do banco de dados.
+                            Cadastre, Filtre, Atualize ou Delete quaisquer dados das tabela do banco de dados.
                         </p>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                                         </svg>
                                     </button>
-                                    <button class="btn btn-outline-dark text-sm btn-sm mx-2 update-button">
+                                    <button class="btn btn-outline-dark text-sm btn-sm mx-2 reload-button">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             width="16"
                                             height="16"
