@@ -45,7 +45,7 @@ function doTableActions(tableActions, myTableInstance) {
     const fullscreenModal = FullscreenModal()
     const fullscreenModalForm = fullscreenModal.getNode().querySelector("#create-form-wrapper form")
     const createButton = tableActions.querySelector(".create-button")
-    const updateButton = tableActions.querySelector(".update-button")
+    const reloadButton = tableActions.querySelector(".reload-button")
     const expandButton = tableActions.querySelector(".expand-button")
     const { tableToUpdate } = tableActions.dataset
     const tableCard = document.querySelector(`#table-card-${tableToUpdate}`)
@@ -61,11 +61,11 @@ function doTableActions(tableActions, myTableInstance) {
         // })
     }
 
-    function updateButtonAction() {
-        const target = `${baseUrl}/crudx/table/${tableToUpdate}`
+    function reloadButtonAction() {
+        const target = `${baseUrl}/crudx/reload/${tableToUpdate}`
         const requester = Requester(target)
 
-        updateButton.addEventListener("click", () => {
+        reloadButton.addEventListener("click", () => {
             myTableInstance.startLoading()
             requester.send()
                 .then(response => response.json())
@@ -284,7 +284,7 @@ function doTableActions(tableActions, myTableInstance) {
 
     function startActions() {
         createButtonAction()
-        updateButtonAction()
+        reloadButtonAction()
         expandButtonAction()
     }
 
