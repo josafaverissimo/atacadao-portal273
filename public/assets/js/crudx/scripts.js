@@ -185,7 +185,7 @@ function doTableActions(tableActions, myTableInstance) {
                         return {
                             id: data.id,
                             value: data.id,
-                            textContent: data.name
+                            textContent: `${String(data.number).padStart(3, "000")} - ${data.name}`
                         }
                     })
                 }
