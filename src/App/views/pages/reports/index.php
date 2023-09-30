@@ -28,7 +28,7 @@
                         <p class="mb-1 text-center py-3">Relatório não encontrado</p>
                     </div>
                     <?php foreach(($reports["interno"] ?? []) as $report): ?>
-                        <a href="<?= $report->resource ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <a href="<?= Helpers::baseUrl($report->resource) ?>" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
                                 <h1 class="h5 mb-1"><?= ucfirst($report->name); ?></h1>
                                 <small>Há 1 dia</small>
