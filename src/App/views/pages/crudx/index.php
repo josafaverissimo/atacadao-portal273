@@ -59,17 +59,6 @@
 
                             <div class="p-2 d-flex flex-column align-items-center">
                                 <div class="mb-1 table-actions" data-table-to-update="<?= $table["tableToUpdate"] ?>">
-                                    <button class="btn btn-outline-dark text-sm btn-sm create-button">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            width="16"
-                                            height="16"
-                                            fill="currentColor"
-                                            class="bi bi-plus-lg"
-                                            viewBox="0 0 16 16"
-                                        >
-                                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-                                        </svg>
-                                    </button>
                                     <button class="btn btn-outline-dark text-sm btn-sm mx-2 reload-button">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             width="16"
@@ -159,6 +148,10 @@
                             </div>
                         </div>
 
+                        <div id="table-expanded-search-filter" class="d-flex mt-3 mb-2" role="search">
+                            <input class="form-control me-2 text-sm" type="search" placeholder="Digite algo para pesquisar" aria-label="Pesquisar">
+                            <button class="btn btn-outline-secondary text-sm" type="button">Limpar</button>
+                        </div>
                         <div class="main"></div>
                     </div>
                     <div class="modal-footer">
