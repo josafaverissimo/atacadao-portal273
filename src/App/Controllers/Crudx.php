@@ -666,7 +666,7 @@ class Crudx extends Controller
     public function insertRowInTable(string $table): void
     {
         echo Helpers::jsonOutput([
-           "success" => empty($this->tableActions->$table->create())
+           "success" => !empty($this->tableActions->$table->create())
         ]);
     }
 }
