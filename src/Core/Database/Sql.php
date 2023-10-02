@@ -136,4 +136,9 @@ final class Sql
     {
         return $this->statement->rowCount();
     }
+
+    public function lastInsertId(): int
+    {
+        return $this->dbInstance->lastInsertId();
+    }
 }
