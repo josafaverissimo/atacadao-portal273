@@ -118,6 +118,12 @@ function MyTable(table) {
         loadRows(rows)
     }
 
+    function append(row) {
+        tbody.push(row)
+
+        loadRows(tbody)
+    }
+
     function startLoading() {
         tableSpinner.removeAttribute("hidden")
         table.classList.add("loading")
@@ -135,6 +141,7 @@ function MyTable(table) {
     }
 
     return {
+        append,
         loadNewRows,
         startLoading,
         endLoading
