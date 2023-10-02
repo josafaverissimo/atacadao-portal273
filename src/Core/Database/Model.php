@@ -82,7 +82,7 @@ abstract class Model implements IModel
     {
         $this->sql->insert($this->table, $valuesByColumns)->execute();
 
-        return $this->sql->affectedRows();
+        return $this->sql->lastInsertId();
     }
 
     public function delete(): int
