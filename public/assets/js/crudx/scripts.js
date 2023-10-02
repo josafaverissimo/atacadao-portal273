@@ -44,17 +44,10 @@ function getData(target, data) {
 function doTableActions(tableActions, myTableInstance) {
     const fullscreenModal = FullscreenModal()
     const fullscreenModalForm = fullscreenModal.getNode().querySelector("#create-form-wrapper form")
-    const createButton = tableActions.querySelector(".create-button")
     const reloadButton = tableActions.querySelector(".reload-button")
     const expandButton = tableActions.querySelector(".expand-button")
     const { tableToUpdate } = tableActions.dataset
     const tableCard = document.querySelector(`#table-card-${tableToUpdate}`)
-
-    function createButtonAction() {
-        createButton.addEventListener("click",() => {
-            expandTable()
-        })
-    }
 
     function reloadButtonAction() {
         const target = `${baseUrl}/crudx/reload/${tableToUpdate}`
@@ -85,6 +78,11 @@ function doTableActions(tableActions, myTableInstance) {
         const myTable = tableCard.querySelector(`.my-table`).cloneNode(true)
         const tableTitle = tableCard.querySelector("h1").textContent
         const fullscreenModalTitleElement = fullscreenModal.getNode().querySelector("h1")
+
+        myTable.setAttribute("data-search-filter", "#table-expanded-search-filter")
+        MyTable(myTable)
+
+        fullscreenModal.clearForm()
 
         setFormByTable(tableToUpdate)
 
@@ -273,8 +271,6 @@ function doTableActions(tableActions, myTableInstance) {
         const formData = formDataByTable[table]
         const fullscreenModalFormInputsWrapper = fullscreenModalForm.querySelector("#inputs-wrapper")
 
-        fullscreenModalFormInputsWrapper.innerHTML = ""
-
         Object.entries(formData).forEach(entry => {
             const [inputName, inputData] = entry
             const inputWrapperElement = makeInputWrapperElementElement({
@@ -288,7 +284,6 @@ function doTableActions(tableActions, myTableInstance) {
     }
 
     function startActions() {
-        createButtonAction()
         reloadButtonAction()
         expandButtonAction()
     }
@@ -299,6 +294,7 @@ function doTableActions(tableActions, myTableInstance) {
 function FullscreenModal() {
     const nodeFullscreenModal = document.querySelector("#modal-expanded-table")
     const bootstrapFullscreenModal = bootstrap.Modal.getOrCreateInstance(nodeFullscreenModal)
+    const form = nodeFullscreenModal.querySelector("form")
     const body = nodeFullscreenModal.querySelector(".modal-body")
 
     function getNode() {
@@ -307,6 +303,10 @@ function FullscreenModal() {
 
     function getBoostrapInstance() {
         return bootstrapFullscreenModal
+    }
+
+    function clearForm() {
+        form.querySelector("#inputs-wrapper").innerHTML = ""
     }
 
     function clearBody() {
@@ -329,9 +329,43 @@ function FullscreenModal() {
         getBoostrapInstance,
         getNode,
         append,
+        clearForm,
         clearBody,
         show,
         hide
+    }
+}
+
+function insertRowInTableByFormData(table, formData) {
+    const myTableInstance = MyTable(document.querySelector(`#table-card-${table} .my-table`))
+    const myTableInstanceTableExanded = MyTable(document.querySelector(
+        `#modal-table-wrapper div.main .my-table`
+    ))
+
+    formData = Array.from(formData).reduce((inputsData, inputData) => {
+        const [key, value] = inputData
+        inputsData[key] = value
+
+        return inputsData
+    }, [])
+
+    const getRowByTableName = {
+        birthdayPeople: ({name, birthday}) =>[name, birthday],
+        units: ({name, number}) => [name, number],
+        unitsPhones: ({number, sector, owner, unit}) => [number, sector, owner, unit],
+        users: ({username}) => [username],
+        links: ({name, resource, category}) => [name, resource, category],
+        linksCategories: ({name}) => [name],
+        printers: ({name, host, currentPrints, lastDayPrints}) => [name, host, currentPrints, lastDayPrints],
+        reports: ({name, description}) => [name, description],
+        reportsCategories: ({name}) => [name]
+    }
+
+    append(getRowByTableName[table](formData))
+
+    function append(row) {
+        myTableInstance.append(row)
+        myTableInstanceTableExanded.append(row)
     }
 }
 
@@ -344,6 +378,12 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", () => {
             fullscreenModal.hide()
         })
+    })
+
+    nodeFullscreenModal.addEventListener("hide.bs.modal", () => {
+        nodeFullscreenModal.querySelector("#table-expanded-search-filter input").value = ""
+        nodeFullscreenModal.querySelector(".accordion-button").classList.add("collapsed")
+        nodeFullscreenModal.querySelector(".accordion-collapse").classList.remove("show")
     })
 
     nodeFullscreenModalForm.addEventListener("submit", async event => {
@@ -363,7 +403,9 @@ document.addEventListener("DOMContentLoaded", () => {
             body: formData
         })
 
-        console.log(response)
+        if(response.success) {
+            insertRowInTableByFormData(tableToUpdate, formData)
+        }
     })
 
     document.querySelectorAll(".update-table").forEach(tableWrapper => {
