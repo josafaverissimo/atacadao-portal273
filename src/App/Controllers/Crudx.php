@@ -99,6 +99,11 @@ class Crudx extends Controller
 
                     return $affectedRows;
                 }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return [];
+                }
             },
             "units" => new class implements ICrud {
                 public function __construct(
@@ -154,6 +159,11 @@ class Crudx extends Controller
                     }
 
                     return $affectedRows;
+                }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return ["unitsPhones"];
                 }
             },
             "unitsPhones" => new class implements ICrud{
@@ -228,9 +238,13 @@ class Crudx extends Controller
 
                     return $affectedRows;
                 }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return [];
+                }
             },
             "users" => new class implements ICrud{
-
                 public function __construct(
                     private readonly Users $usersController = new Users()
                 ) {}
@@ -263,6 +277,11 @@ class Crudx extends Controller
                 public function reloadTable(): int
                 {
                     return 0;
+                }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return [];
                 }
             },
             "links" => new class implements ICrud {
@@ -324,6 +343,11 @@ class Crudx extends Controller
 
                     return $affectedRows;
                 }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return [];
+                }
             },
             "linksCategories" => new class implements ICrud {
                 public function __construct(
@@ -377,6 +401,11 @@ class Crudx extends Controller
 
                     return $affectedRows;
                 }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return ["links"];
+                }
             },
             "printers" => new class implements ICrud {
                 public function __construct(
@@ -427,6 +456,11 @@ class Crudx extends Controller
                     }
 
                     return $affectedRows;
+                }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return [];
                 }
             },
             "reports" => new class implements ICrud {
@@ -487,6 +521,11 @@ class Crudx extends Controller
 
                     return $affectedRows;
                 }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return [];
+                }
             },
             "reportsCategories" => new class implements ICrud {
                 public function __construct(
@@ -533,6 +572,11 @@ class Crudx extends Controller
                     }
 
                     return $affectedRows;
+                }
+
+                public function getAffectedTablesWhenReloadTable(): array
+                {
+                    return ["reports"];
                 }
             }
         ];
@@ -607,11 +651,16 @@ class Crudx extends Controller
     {
         $affectedRows = $this->tableActions->$table->reloadTable();
         $rows = $this->tableActions->$table->read();
+        $affectedTables = $this->tableActions->$table->getAffectedTablesWhenReloadTable();
 
-        echo Helpers::jsonOutput([
+        $response = [
             "rows" => $rows,
             "affectedRows" => $affectedRows
-        ]);
+        ];
+
+        if(!empty($affectedTables)) $response["affectedTables"] = $affectedTables;
+
+        echo Helpers::jsonOutput($response);
     }
 
     public function insertRowInTable(string $table): void

@@ -51,14 +51,9 @@ function doTableActions(tableActions, myTableInstance) {
     const tableCard = document.querySelector(`#table-card-${tableToUpdate}`)
 
     function createButtonAction() {
-        // createButton.addEventListener("click",() => {
-        //     const html = `
-        //         <div>
-        //
-        //         </div>
-        //     `;
-        //     expandTable()
-        // })
+        createButton.addEventListener("click",() => {
+            expandTable()
+        })
     }
 
     function reloadButtonAction() {
@@ -70,6 +65,16 @@ function doTableActions(tableActions, myTableInstance) {
             requester.send()
                 .then(response => response.json())
                 .then(json => {
+                    if(json.affectedTables) {
+                        json.affectedTables.forEach(affectedTable => {
+                            const myTableAffectedTableInstance = MyTable(document.querySelector(
+                                `#table-card-${affectedTable} .my-table`
+                            ))
+
+                            myTableAffectedTableInstance.loadNewRows([])
+                        })
+                    }
+
                     myTableInstance.loadNewRows(json.rows.map(Object.values))
                     myTableInstance.endLoading()
                 })
