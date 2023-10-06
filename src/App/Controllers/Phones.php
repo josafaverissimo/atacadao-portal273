@@ -54,8 +54,8 @@ class Phones extends Controller
 
         return array_map(fn(IOrm $orm) => [
             $orm->number,
-            mb_convert_case($orm->owner, MB_CASE_TITLE),
-            mb_convert_case($orm->sector, MB_CASE_TITLE)
+            mb_convert_case($orm->sector, MB_CASE_TITLE),
+            mb_convert_case($orm->owner, MB_CASE_TITLE)
         ], $unitsPhones);
     }
 
