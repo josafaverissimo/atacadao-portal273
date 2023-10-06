@@ -7,8 +7,9 @@ function getUnitPhones(unitId) {
 document.addEventListener("DOMContentLoaded", () => {
     const mainTable = document.querySelector("#unit-phones")
     const myTable = MyTable(mainTable)
+    const mySelectWrapper = document.getElementById("select-unit")
 
-    mySelect(function(value) {
+    MySelect(mySelectWrapper, function(value) {
         myTable.startLoading()
 
         getUnitPhones(value)
@@ -17,5 +18,5 @@ document.addEventListener("DOMContentLoaded", () => {
                 myTable.loadNewRows(json.rows)
                 myTable.endLoading()
             })
-    })
+    }).fillOptions()
 })
