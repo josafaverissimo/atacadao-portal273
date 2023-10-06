@@ -14,7 +14,7 @@ class PrinterOrm implements IOrm
             "id" => null,
             "name" => null,
             "image" => null,
-            "ip" => null,
+            "host" => null,
             "currentPrints" => null,
             "lastDayPrints" => null
         ];

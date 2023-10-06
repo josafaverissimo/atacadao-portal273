@@ -73,7 +73,9 @@ abstract class Model implements IModel
             "comparison" => $columnAndComparison,
             "value" => $value
         ];
-        $rows = $this->getAll($where);
+        $rows = $this->getAll([
+            "where" => $where
+        ]);
 
         return count($rows) === 0 ? null : $rows[0];
     }
