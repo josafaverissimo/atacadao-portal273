@@ -44,7 +44,7 @@ class Reports extends Controller
     private function requestPrinterStatsPage($ip): ?string
     {
         $httpSocket = new HttpSocket($ip, 8080);
-        if($httpSocket->getError() !== "success") {
+        if(!$httpSocket->isConnected()) {
             $httpSocket->close();
             return null;
         }
